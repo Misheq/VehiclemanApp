@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_height="match_parent"
+    android:layout_width="match_parent">
+
+    <TextView
+        android:id="@+id/titleManage"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:text="Manage"
+        android:textSize="40dp"
+        android:layout_marginTop="25dp"
+        android:layout_centerHorizontal="true"
+        android:textAlignment="center"
+        />
+
+    <TextView
+        android:id="@+id/navProfile"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAllCaps="false"
+        android:textSize="20sp"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentTop="true"
+        android:layout_marginTop="20dp"
+        android:layout_marginLeft="20dp"
+        android:text="Profile"/>
+
+    <TextView
+        android:id="@+id/navLogin"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAllCaps="false"
+        android:textSize="20sp"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentTop="true"
+        android:layout_marginTop="20dp"
+        android:layout_marginRight="20dp"
+        android:text="Login"/>
+
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:layout_below="@id/titleManage"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="80dp"
+        >
+
+        <Button
+            android:layout_marginBottom="5dp"
+            android:layout_width="150dp"
+            android:layout_height="65dp"
+            android:textSize="18sp"
+            android:textAllCaps="false"
+            android:text="Persons" />
+
+        <Button
+            android:layout_marginTop="5dp"
+            android:layout_width="150dp"
+            android:layout_height="65dp"
+            android:textSize="18sp"
+            android:textAllCaps="false"
+            android:text="Vehicles" />
+
+    </LinearLayout>
+</RelativeLayout>
