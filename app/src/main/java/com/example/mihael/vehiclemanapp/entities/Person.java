@@ -1,28 +1,36 @@
 package com.example.mihael.vehiclemanapp.entities;
 
-/**
- * Manager representation model
- */
+import java.util.ArrayList;
+import java.util.List;
 
-public class Manager {
+public class Person {
 
-    private int managerId;
+    private int personId;
     private String firstName;
     private String lastName;
     private String email;
-    private String phone;
-    private String companyName;
+    private String companyName = "";
+    private String phone = "";
+    private List<Vehicle> vehicles;
 
-    public Manager() {
-
+    public Person() {
+        vehicles = new ArrayList<Vehicle>();
     }
 
-    public int getManagerId() {
-        return managerId;
+    public int getPersonId() {
+        return personId;
     }
 
-    public void setManagerId(int managerId) {
-        this.managerId = managerId;
+    public void setPersonId(int personId) {
+        this.personId = personId;
+    }
+
+    public List<Vehicle> getVehicles() {
+        return vehicles;
+    }
+
+    public void setVehicles(List<Vehicle> vehicles) {
+        this.vehicles = vehicles;
     }
 
     public String getFirstName() {
@@ -41,6 +49,14 @@ public class Manager {
         this.lastName = lastName;
     }
 
+    public String getCompanyName() {
+        return companyName;
+    }
+
+    public void setCompanyName(String companyName) {
+        this.companyName = companyName;
+    }
+
     public String getEmail() {
         return email;
     }
@@ -56,12 +72,5 @@ public class Manager {
     public void setPhone(String phone) {
         this.phone = phone;
     }
-
-    public String getCompanyName() {
-        return companyName;
-    }
-
-    public void setCompanyName(String companyName) {
-        this.companyName = companyName;
-    }
 }
+
