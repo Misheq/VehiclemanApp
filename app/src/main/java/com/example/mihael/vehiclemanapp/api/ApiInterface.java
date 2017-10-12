@@ -1,6 +1,8 @@
 package com.example.mihael.vehiclemanapp.api;
 
 import com.example.mihael.vehiclemanapp.entities.Manager;
+import com.example.mihael.vehiclemanapp.entities.Person;
+import com.example.mihael.vehiclemanapp.entities.Vehicle;
 
 import java.util.List;
 
@@ -19,4 +21,10 @@ public interface ApiInterface {
 
     @GET("managers/{id}")
     Call<Manager> getManagerById(@Path("id") int id);
+
+    @GET("vehicles")
+    Call<List<Vehicle>> getVehicles();
+
+    @GET("persons")
+    Call<List<Person>> getPersons();
 }

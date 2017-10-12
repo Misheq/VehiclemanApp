@@ -1,4 +1,4 @@
-package com.example.mihael.vehiclemanapp.view;
+package com.example.mihael.vehiclemanapp.adaptors;
 
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -15,17 +15,17 @@ import com.example.mihael.vehiclemanapp.entities.Manager;
  * Addapter which recycles objects to view
  */
 
-public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.MyViewHolder> {
+public class ManagerRecyclerAdapter extends RecyclerView.Adapter<ManagerRecyclerAdapter.MyViewHolder> {
 
     private List<Manager> managers;
 
-    public RecyclerAdapter(List<Manager> managers) {
+    public ManagerRecyclerAdapter(List<Manager> managers) {
         this.managers = managers;
     }
 
     @Override
     public MyViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.row_item, parent, false);
+        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.manager_row_item, parent, false);
         return new MyViewHolder(view);
     }
 

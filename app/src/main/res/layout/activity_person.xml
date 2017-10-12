@@ -4,11 +4,11 @@
     android:layout_width="match_parent">
 
     <TextView
-        android:id="@+id/titleManage"
+        android:id="@+id/titlePersons"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentTop="true"
-        android:text="Manage"
+        android:text="Persons"
         android:textSize="40dp"
         android:layout_marginTop="25dp"
         android:layout_centerHorizontal="true"
@@ -16,7 +16,8 @@
         />
 
     <TextView
-        android:id="@+id/navProfile"
+        android:id="@+id/navManage"
+        android:text="Manage"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textAllCaps="false"
@@ -25,10 +26,11 @@
         android:layout_alignParentTop="true"
         android:layout_marginTop="20dp"
         android:layout_marginLeft="20dp"
-        android:text="Profile"/>
+        />
 
     <TextView
-        android:id="@+id/navLogin"
+        android:id="@+id/navAddPerson"
+        android:text="Add +"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textAllCaps="false"
@@ -37,34 +39,27 @@
         android:layout_alignParentTop="true"
         android:layout_marginTop="20dp"
         android:layout_marginRight="20dp"
-        android:text="Login"/>
+        />
 
-    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:orientation="vertical"
-        android:layout_below="@id/titleManage"
+    <SearchView
+        android:id="@+id/searchPerson"
+        android:layout_width="300dp"
+        android:layout_height="40dp"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="80dp"
-        >
+        android:layout_below="@id/titlePersons"
+        android:layout_marginTop="30dp"
+        android:background="#dddddd"
+        ></SearchView>
 
-        <Button
-            android:layout_marginBottom="5dp"
-            android:layout_width="150dp"
-            android:layout_height="65dp"
-            android:textSize="18sp"
-            android:textAllCaps="false"
-            android:onClick="startPersonActivity"
-            android:text="Persons" />
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/recyclerView"
+        android:layout_below="@id/searchPerson"
+        android:layout_marginTop="20dp"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:scrollbars="vertical">
 
-        <Button
-            android:layout_marginTop="5dp"
-            android:layout_width="150dp"
-            android:layout_height="65dp"
-            android:textSize="18sp"
-            android:textAllCaps="false"
-            android:onClick="startVehicleActivity"
-            android:text="Vehicles" />
+    </android.support.v7.widget.RecyclerView>
 
-    </LinearLayout>
+
 </RelativeLayout>
