@@ -18,19 +18,40 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".view.VehiclesActivity">
+        <activity
+            android:name=".view.VehiclesActivity"
+            android:parentActivityName=".view.MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.VIEW" />
 
                 <category android:name="android.intent.category.ALTERNATIVE" />
             </intent-filter>
         </activity>
-        <activity android:name=".view.PersonActivity">
+        <activity
+            android:name=".view.PersonsActivity"
+            android:parentActivityName=".view.MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.VIEW" />
 
                 <category android:name="android.intent.category.ALTERNATIVE" />
             </intent-filter>
+        </activity>
+        <activity
+            android:name=".view.AddPersonActivity"
+            android:parentActivityName=".view.PersonsActivity">
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW" />
+
+                <category android:name="android.intent.category.ALTERNATIVE" />
+            </intent-filter>
+        </activity>
+        <activity android:name=".view.AddVehicleActivity"
+            android:parentActivityName=".view.VehiclesActivity">
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW" />
+
+                <category android:name="android.intent.category.ALTERNATIVE" />
+            </intent-filter>>
         </activity>
     </application>
 

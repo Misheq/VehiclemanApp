@@ -1,10 +1,12 @@
 package com.example.mihael.vehiclemanapp.view;
 
+import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
+import android.view.View;
 
 import com.example.mihael.vehiclemanapp.R;
 import com.example.mihael.vehiclemanapp.adaptors.VehicleRecyclerAdapter;
@@ -56,7 +58,13 @@ public class VehiclesActivity extends AppCompatActivity {
         });
     }
 
-     /*
+    public void startAddVehicleActivity(View view) {
+        Intent intent = new Intent(this, AddVehicleActivity.class);
+        startActivity(intent);
+    }
+}
+
+ /*
         recyclerView = findViewById(R.id.recyclerView);
         layoutManager = new LinearLayoutManager(this);
         recyclerView.setLayoutManager(layoutManager);
@@ -112,4 +120,3 @@ public class VehiclesActivity extends AppCompatActivity {
             }
         });
     */
-}

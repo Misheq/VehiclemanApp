@@ -1,10 +1,12 @@
 package com.example.mihael.vehiclemanapp.view;
 
+import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
+import android.view.View;
 
 import com.example.mihael.vehiclemanapp.R;
 import com.example.mihael.vehiclemanapp.adaptors.PersonRecyclerAdapter;
@@ -18,7 +20,7 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class PersonActivity extends AppCompatActivity {
+public class PersonsActivity extends AppCompatActivity {
 
     private RecyclerView recyclerView;
     private RecyclerView.LayoutManager layoutManager;
@@ -30,7 +32,7 @@ public class PersonActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_person);
+        setContentView(R.layout.activity_persons);
 
         recyclerView = findViewById(R.id.recyclerView);
         layoutManager = new LinearLayoutManager(this);
@@ -52,8 +54,13 @@ public class PersonActivity extends AppCompatActivity {
 
             @Override
             public void onFailure(Call<List<Person>> call, Throwable t) {
-                Log.d("MYTAG","something is wrong");
+                Log.d("MYTAG", "something is wrong");
             }
         });
+    }
+
+    public void startAddPersonActivity(View view) {
+        Intent intent = new Intent(this, AddPersonActivity.class);
+        startActivity(intent);
     }
 }

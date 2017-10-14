@@ -34,6 +34,14 @@ public class Vehicle {
         this.registrationNumber = registrationNumber;
     }
 
+    @Override
+    public String toString() {
+        return "Vehicle{" +
+                "vehicleType='" + vehicleType + '\'' +
+                ", registrationNumber='" + registrationNumber + '\'' +
+                '}';
+    }
+
     // String brand;
     // String model;
     // String company;
