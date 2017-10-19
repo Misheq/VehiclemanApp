@@ -15,30 +15,6 @@
         android:textAlignment="center"
         />
 
-    <TextView
-        android:id="@+id/navProfile"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textAllCaps="false"
-        android:textSize="20sp"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentTop="true"
-        android:layout_marginTop="20dp"
-        android:layout_marginLeft="20dp"
-        android:text="Profile"/>
-
-    <TextView
-        android:id="@+id/navLogin"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textAllCaps="false"
-        android:textSize="20sp"
-        android:layout_alignParentRight="true"
-        android:layout_alignParentTop="true"
-        android:layout_marginTop="20dp"
-        android:layout_marginRight="20dp"
-        android:text="Login"/>
-
     <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -47,6 +23,14 @@
         android:layout_centerHorizontal="true"
         android:layout_marginTop="80dp"
         >
+
+        <Button
+            android:layout_marginBottom="5dp"
+            android:layout_width="150dp"
+            android:layout_height="65dp"
+            android:textSize="18sp"
+            android:textAllCaps="false"
+            android:text="Profile" />
 
         <Button
             android:layout_marginBottom="5dp"
@@ -65,6 +49,14 @@
             android:textAllCaps="false"
             android:onClick="startVehicleActivity"
             android:text="Vehicles" />
+
+        <Button
+            android:layout_marginTop="5dp"
+            android:layout_width="150dp"
+            android:layout_height="65dp"
+            android:textSize="18sp"
+            android:textAllCaps="false"
+            android:text="Logout" />
 
     </LinearLayout>
 </RelativeLayout>

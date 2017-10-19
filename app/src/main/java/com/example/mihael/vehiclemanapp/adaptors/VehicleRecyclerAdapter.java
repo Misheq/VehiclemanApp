@@ -4,6 +4,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.TextView;
 
 import com.example.mihael.vehiclemanapp.R;
@@ -30,24 +31,24 @@ public class VehicleRecyclerAdapter extends RecyclerView.Adapter<VehicleRecycler
         holder.id.setText(String.valueOf(vehicles.get(position).getVehicleId()));
         holder.type.setText(vehicles.get(position).getVehicleType());
         holder.reg.setText(vehicles.get(position).getRegistrationNumber());
+        holder.deleteButton.setTag(String.valueOf(vehicles.get(position).getVehicleId()));
     }
 
     @Override
     public int getItemCount() {
-        if (vehicles == null) {
-            return 0;
-        }
         return vehicles.size();
     }
 
     public class MyViewHolder extends RecyclerView.ViewHolder {
         TextView id, type, reg;
+        Button deleteButton;
 
         public MyViewHolder(View itemView) {
             super(itemView);
             id = itemView.findViewById(R.id.id);
             type = itemView.findViewById(R.id.type);
             reg = itemView.findViewById(R.id.reg);
+            deleteButton = itemView.findViewById(R.id.buttonDelete);
         }
     }
 }

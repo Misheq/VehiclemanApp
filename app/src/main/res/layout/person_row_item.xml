@@ -2,8 +2,11 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="horizontal"
     android:layout_width="match_parent"
-    android:layout_height="80dp">
-
+    android:layout_marginTop="3dp"
+    android:layout_marginBottom="3dp"
+    android:background="#66bbbb"
+    android:layout_height="60dp">
+<!--
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="match_parent"
@@ -14,10 +17,13 @@
         android:layout_marginLeft="10dp"
         android:id="@+id/id"
         />
+-->
     <TextView
-        android:layout_width="wrap_content"
+        android:layout_width="0dp"
+        android:layout_weight="1"
         android:layout_height="match_parent"
         android:text="Mihael"
+        android:textAlignment="center"
         android:textSize="14dp"
         android:textStyle="bold"
         android:gravity="center_vertical"
@@ -25,8 +31,10 @@
         android:id="@+id/firstName"
         />
     <TextView
-        android:layout_width="wrap_content"
+        android:layout_width="0dp"
+        android:layout_weight="1"
         android:layout_height="match_parent"
+        android:textAlignment="center"
         android:text="Zsivics"
         android:textSize="14dp"
         android:textStyle="bold"
@@ -35,7 +43,9 @@
         android:id="@+id/lastName"
         />
     <TextView
-        android:layout_width="wrap_content"
+        android:layout_width="0dp"
+        android:layout_weight="1"
+        android:textAlignment="center"
         android:layout_height="match_parent"
         android:text="asdasdasd@asd"
         android:textSize="14dp"
@@ -44,6 +54,8 @@
         android:layout_marginLeft="10dp"
         android:id="@+id/email"
         />
+
+    <!--
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="match_parent"
@@ -63,6 +75,17 @@
         android:gravity="center_vertical"
         android:layout_marginLeft="10dp"
         android:id="@+id/companyName"
+        />
+        -->
+
+    <Button
+        android:id="@+id/buttonDelete"
+        android:layout_width="0dp"
+        android:layout_weight="1"
+        android:layout_height="45dp"
+        android:text="delete"
+        android:textAllCaps="false"
+        android:onClick="deletePersonById"
         />
 
 </LinearLayout>

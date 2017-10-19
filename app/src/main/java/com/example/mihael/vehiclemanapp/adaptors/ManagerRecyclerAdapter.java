@@ -41,9 +41,6 @@ public class ManagerRecyclerAdapter extends RecyclerView.Adapter<ManagerRecycler
 
     @Override
     public int getItemCount() {
-        if (managers == null) {
-            return 0;
-        }
         return managers.size();
     }
 

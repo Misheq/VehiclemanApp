@@ -7,6 +7,8 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.View;
+import android.widget.Button;
+import android.widget.Toast;
 
 import com.example.mihael.vehiclemanapp.R;
 import com.example.mihael.vehiclemanapp.adaptors.VehicleRecyclerAdapter;
@@ -33,6 +35,16 @@ public class VehiclesActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_vehicles);
 
+        loadVehicleList();
+    }
+
+    public void startAddVehicleActivity(View view) {
+        Intent intent = new Intent(this, AddVehicleActivity.class);
+        startActivity(intent);
+    }
+
+    public void loadVehicleList() {
+
         recyclerView = findViewById(R.id.recyclerView);
         layoutManager = new LinearLayoutManager(this);
         recyclerView.setLayoutManager(layoutManager);
@@ -58,9 +70,30 @@ public class VehiclesActivity extends AppCompatActivity {
         });
     }
 
-    public void startAddVehicleActivity(View view) {
-        Intent intent = new Intent(this, AddVehicleActivity.class);
-        startActivity(intent);
+    public void deleteVehicleById(View view) {
+        Button button = view.findViewById(R.id.buttonDelete);
+
+        final int vehicleId = Integer.parseInt((String) button.getTag());
+
+        Call<Void> call = apiInterface.deleteVehicle(vehicleId);
+        call.enqueue(new Callback<Void>() {
+            @Override
+            public void onResponse(Call<Void> call, Response<Void> response) {
+                int statusCode = response.code();
+                if(statusCode == 204) {
+                    Toast.makeText(VehiclesActivity.this, "Vehicle deleted successfully. Id: " + vehicleId , Toast.LENGTH_SHORT).show();
+                    loadVehicleList();
+                } else {
+                    Toast.makeText(VehiclesActivity.this, "Delete failed", Toast.LENGTH_SHORT).show();
+                }
+            }
+
+            @Override
+            public void onFailure(Call<Void> call, Throwable t) {
+                Toast.makeText(VehiclesActivity.this, "Delete failed on failure", Toast.LENGTH_SHORT).show();
+                Log.d("MY_TAG", "Delete went wrong");
+            }
+        });
     }
 }
 
