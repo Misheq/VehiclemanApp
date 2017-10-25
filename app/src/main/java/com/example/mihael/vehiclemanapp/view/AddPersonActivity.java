@@ -2,20 +2,21 @@ package com.example.mihael.vehiclemanapp.view;
 
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.View;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.EditText;
+import android.widget.Spinner;
 import android.widget.Toast;
 
 import com.example.mihael.vehiclemanapp.R;
-import com.example.mihael.vehiclemanapp.adaptors.PersonRecyclerAdapter;
 import com.example.mihael.vehiclemanapp.api.ApiClient;
 import com.example.mihael.vehiclemanapp.api.ApiInterface;
 import com.example.mihael.vehiclemanapp.entities.Person;
 import com.example.mihael.vehiclemanapp.entities.PersonVehicleMapper;
 import com.example.mihael.vehiclemanapp.entities.Vehicle;
+import com.example.mihael.vehiclemanapp.helpers.CustomOnItemSelectedListener;
 
 import org.json.JSONObject;
 
@@ -29,16 +30,79 @@ import retrofit2.Response;
 public class AddPersonActivity extends AppCompatActivity {
 
     private ApiInterface apiInterface;
+    private Spinner vehicleSpinner;
+    private List<Vehicle> vehicles = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_person);
+
+        loadSpinnerData();
+    }
+
+    private void addVehicleOnSpinner(List<Vehicle> vehicles) {
+        vehicleSpinner = findViewById(R.id.spinnerVehicles);
+        vehicleSpinner.setOnItemSelectedListener(new CustomOnItemSelectedListener());
+
+        ArrayAdapter<String> adapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_item, vehiclesToString(vehicles));
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        vehicleSpinner.setAdapter(adapter);
+    }
+
+    private List<String> vehiclesToString(List<Vehicle> vehicles) {
+        List<String> vehiclesList = new ArrayList<>();
+
+        vehiclesList.add("Select Vehicle");
+
+        for(Vehicle v : vehicles) {
+            vehiclesList.add(v.toString());
+        }
+
+        return vehiclesList;
+    }
+
+    private void loadSpinnerData() {
+
+        apiInterface = ApiClient.getApiClient().create(ApiInterface.class);
+
+        // returns vehicle list
+        Call<List<Vehicle>> call = apiInterface.getVehicles();
+        call.enqueue(new Callback<List<Vehicle>>() {
+            @Override
+            public void onResponse(Call<List<Vehicle>> call, Response<List<Vehicle>> response) {
+                int statusCode = response.code();
+                if(statusCode == 200) {
+                    Log.d("DEBUG", "Get vehicles successful");
+                    vehicles = response.body();
+                    addVehicleOnSpinner(vehicles);
+                    Toast.makeText(AddPersonActivity.this, "Read vehicles status: " + statusCode, Toast.LENGTH_SHORT).show();
+                } else {
+                    Toast.makeText(AddPersonActivity.this, "Read vehicles status: " + statusCode, Toast.LENGTH_SHORT).show();
+                }
+            }
+
+            @Override
+            public void onFailure(Call<List<Vehicle>> call, Throwable t) {
+                Log.d("MYTAG","something is wrong");
+            }
+        });
     }
 
     private void savePerson(Person person) {
 
-        PersonVehicleMapper pvm = new PersonVehicleMapper(person, new ArrayList<Vehicle>());
+        List<Vehicle> vehicleList = new ArrayList<>();
+
+        /* gets only string from spinner
+        Object selectedVehicle = vehicleSpinner.getSelectedItem();
+
+        if(!selectedVehicle.toString().equals("Select Vehicle")) {
+            Vehicle v = (Vehicle) selectedVehicle;
+            vehicleList.add(v);
+        }
+        */
+
+        PersonVehicleMapper pvm = new PersonVehicleMapper(person, vehicleList);
 
         apiInterface = ApiClient.getApiClient().create(ApiInterface.class);
 

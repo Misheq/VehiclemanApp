@@ -77,7 +77,7 @@ public class PersonsActivity extends AppCompatActivity {
 
         Button button = view.findViewById(R.id.buttonDelete);
 
-        final int personId = Integer.parseInt((String) button.getTag());
+        int personId = Integer.parseInt((String) button.getTag());
 
         Call<Void> call = apiInterface.deletePerson(personId);
         call.enqueue(new Callback<Void>() {
@@ -85,7 +85,7 @@ public class PersonsActivity extends AppCompatActivity {
             public void onResponse(Call<Void> call, Response<Void> response) {
                 int statusCode = response.code();
                 if(statusCode == 204) {
-                    Toast.makeText(PersonsActivity.this, "Person deleted successfully " + personId , Toast.LENGTH_SHORT).show();
+                    Toast.makeText(PersonsActivity.this, "Person deleted successfully" , Toast.LENGTH_SHORT).show();
                     loadPersonList();
                 } else {
                     Toast.makeText(PersonsActivity.this, "Delete failed", Toast.LENGTH_SHORT).show();
@@ -94,7 +94,6 @@ public class PersonsActivity extends AppCompatActivity {
 
             @Override
             public void onFailure(Call<Void> call, Throwable t) {
-                Toast.makeText(PersonsActivity.this, "Delete failed on failure", Toast.LENGTH_SHORT).show();
                 Log.d("MY_TAG", "Delete went wrong");
             }
         });
