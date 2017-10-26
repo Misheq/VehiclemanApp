@@ -36,7 +36,7 @@ public class Vehicle {
 
     @Override
     public String toString() {
-        return registrationNumber + " " + vehicleType;
+        return vehicleType + " " + registrationNumber;
     }
 
     // String brand;

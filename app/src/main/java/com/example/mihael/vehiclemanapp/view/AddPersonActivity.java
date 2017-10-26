@@ -4,7 +4,6 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
-import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.Spinner;
@@ -41,32 +40,13 @@ public class AddPersonActivity extends AppCompatActivity {
         loadSpinnerData();
     }
 
-    private void addVehicleOnSpinner(List<Vehicle> vehicles) {
-        vehicleSpinner = findViewById(R.id.spinnerVehicles);
-        vehicleSpinner.setOnItemSelectedListener(new CustomOnItemSelectedListener());
-
-        ArrayAdapter<String> adapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_item, vehiclesToString(vehicles));
-        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        vehicleSpinner.setAdapter(adapter);
-    }
-
-    private List<String> vehiclesToString(List<Vehicle> vehicles) {
-        List<String> vehiclesList = new ArrayList<>();
-
-        vehiclesList.add("Select Vehicle");
-
-        for(Vehicle v : vehicles) {
-            vehiclesList.add(v.toString());
-        }
-
-        return vehiclesList;
-    }
-
     private void loadSpinnerData() {
 
         apiInterface = ApiClient.getApiClient().create(ApiInterface.class);
 
         // returns vehicle list
+        // should only return vehicles with no person and current person
+
         Call<List<Vehicle>> call = apiInterface.getVehicles();
         call.enqueue(new Callback<List<Vehicle>>() {
             @Override
@@ -76,10 +56,9 @@ public class AddPersonActivity extends AppCompatActivity {
                     Log.d("DEBUG", "Get vehicles successful");
                     vehicles = response.body();
                     addVehicleOnSpinner(vehicles);
-                    Toast.makeText(AddPersonActivity.this, "Read vehicles status: " + statusCode, Toast.LENGTH_SHORT).show();
-                } else {
-                    Toast.makeText(AddPersonActivity.this, "Read vehicles status: " + statusCode, Toast.LENGTH_SHORT).show();
                 }
+
+                Log.d("DEBUG", "Get vehicles not successful, status: " + statusCode);
             }
 
             @Override
@@ -89,18 +68,30 @@ public class AddPersonActivity extends AppCompatActivity {
         });
     }
 
+    private void addVehicleOnSpinner(List<Vehicle> vehicles) {
+        vehicleSpinner = findViewById(R.id.spinnerVehicles);
+        vehicleSpinner.setOnItemSelectedListener(new CustomOnItemSelectedListener());
+
+        Vehicle dummyVehicle = new Vehicle();
+        dummyVehicle.setVehicleType("Select");
+        dummyVehicle.setRegistrationNumber("vehicle");
+        vehicles.add(0, dummyVehicle);
+
+        ArrayAdapter<Vehicle> adapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_item, vehicles);
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        vehicleSpinner.setAdapter(adapter);
+    }
+
     private void savePerson(Person person) {
 
         List<Vehicle> vehicleList = new ArrayList<>();
 
-        /* gets only string from spinner
         Object selectedVehicle = vehicleSpinner.getSelectedItem();
 
-        if(!selectedVehicle.toString().equals("Select Vehicle")) {
+        if(!selectedVehicle.toString().equals("Select vehicle")) {
             Vehicle v = (Vehicle) selectedVehicle;
             vehicleList.add(v);
         }
-        */
 
         PersonVehicleMapper pvm = new PersonVehicleMapper(person, vehicleList);
 

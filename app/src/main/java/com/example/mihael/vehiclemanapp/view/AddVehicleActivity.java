@@ -4,7 +4,9 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.ArrayAdapter;
 import android.widget.EditText;
+import android.widget.Spinner;
 import android.widget.Toast;
 
 import com.example.mihael.vehiclemanapp.R;
@@ -13,6 +15,7 @@ import com.example.mihael.vehiclemanapp.api.ApiInterface;
 import com.example.mihael.vehiclemanapp.entities.Person;
 import com.example.mihael.vehiclemanapp.entities.PersonVehicleMapper;
 import com.example.mihael.vehiclemanapp.entities.Vehicle;
+import com.example.mihael.vehiclemanapp.helpers.CustomOnItemSelectedListener;
 
 import org.json.JSONObject;
 
@@ -26,30 +29,77 @@ import retrofit2.Response;
 public class AddVehicleActivity extends AppCompatActivity {
 
     private ApiInterface apiInterface;
+    private Spinner personSpinner;
+    private List<Person> persons;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_vehicle);
+
+        loadSpinnerData();
+    }
+
+    private void loadSpinnerData() {
+
+        apiInterface = ApiClient.getApiClient().create(ApiInterface.class);
+
+        // returns persons list
+        Call<List<Person>> call = apiInterface.getPersons();
+        call.enqueue(new Callback<List<Person>>() {
+            @Override
+            public void onResponse(Call<List<Person>> call, Response<List<Person>> response) {
+                int statusCode = response.code();
+
+                if(statusCode == 200) {
+                    Log.d("DEBUG", "Get persons successful");
+                    persons = response.body();
+                    addPersonOnSpinner(persons);
+                }
+
+                Log.d("DEBUG", "Get persons not successful, status: " + statusCode);
+            }
+
+            @Override
+            public void onFailure(Call<List<Person>> call, Throwable t) {
+                Log.d("MYTAG","something is wrong");
+            }
+        });
+    }
+
+    private void addPersonOnSpinner(List<Person> persons) {
+        personSpinner = findViewById(R.id.spinnerPersons);
+        personSpinner.setOnItemSelectedListener(new CustomOnItemSelectedListener());
+
+        Person dummyPerson = new Person();
+        dummyPerson.setFirstName("Select");
+        dummyPerson.setLastName("person");
+        persons.add(0, dummyPerson);
+
+        ArrayAdapter<Person> adapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_item, persons);
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        personSpinner.setAdapter(adapter);
     }
 
     private void saveVehicle(Vehicle vehicle) {
 
         apiInterface = ApiClient.getApiClient().create(ApiInterface.class);
 
-        // creates vehicle without person
-        List<Vehicle> vehicleList = new ArrayList<Vehicle>();
+        Person person;
+        Object selectedPerson = personSpinner.getSelectedItem();
+
+        // if not dummy person, then set person from spinner
+        if(!selectedPerson.toString().equals("Select person")) {
+            person = (Person) selectedPerson;
+        } else {
+            person = null;
+        }
+
+        // sets vehicle
+        List<Vehicle> vehicleList = new ArrayList<>();
         vehicleList.add(vehicle);
 
-        /*
-        Person dummyPerson = new Person();
-        dummyPerson.setPersonId(0);
-        dummyPerson.setFirstName("AAAA");
-        dummyPerson.setLastName("BBBB");
-        dummyPerson.setEmail("sdsdsdsd");
-        */
-
-        PersonVehicleMapper pvm = new PersonVehicleMapper(new Person(), vehicleList); // maybe not allowed because person has vehicle list
+        PersonVehicleMapper pvm = new PersonVehicleMapper(person, vehicleList);
 
         Call<PersonVehicleMapper> call = apiInterface.createVehicle(pvm);
         call.enqueue(new Callback<PersonVehicleMapper>() {
