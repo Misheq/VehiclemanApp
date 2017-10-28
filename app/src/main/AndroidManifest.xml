@@ -45,13 +45,32 @@
                 <category android:name="android.intent.category.ALTERNATIVE" />
             </intent-filter>
         </activity>
-        <activity android:name=".view.AddVehicleActivity"
+        <activity
+            android:name=".view.AddVehicleActivity"
             android:parentActivityName=".view.VehiclesActivity">
             <intent-filter>
                 <action android:name="android.intent.action.VIEW" />
 
                 <category android:name="android.intent.category.ALTERNATIVE" />
-            </intent-filter>>
+            </intent-filter>
+        </activity>
+        <activity
+            android:name=".view.EditPersonActivity"
+            android:parentActivityName=".view.PersonsActivity">
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW" />
+
+                <category android:name="android.intent.category.ALTERNATIVE" />
+            </intent-filter>
+        </activity>
+        <activity
+            android:name=".view.EditVehicleActivity"
+            android:parentActivityName=".view.VehiclesActivity">
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW" />
+
+                <category android:name="android.intent.category.ALTERNATIVE" />
+            </intent-filter>
         </activity>
     </application>
 

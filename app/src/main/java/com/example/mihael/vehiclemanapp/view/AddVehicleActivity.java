@@ -15,6 +15,7 @@ import com.example.mihael.vehiclemanapp.api.ApiInterface;
 import com.example.mihael.vehiclemanapp.entities.Person;
 import com.example.mihael.vehiclemanapp.entities.PersonVehicleMapper;
 import com.example.mihael.vehiclemanapp.entities.Vehicle;
+import com.example.mihael.vehiclemanapp.helpers.InputValidator;
 
 import org.json.JSONObject;
 
@@ -132,31 +133,14 @@ public class AddVehicleActivity extends AppCompatActivity {
         EditText type = findViewById(R.id.inputType);
         EditText registration = findViewById(R.id.inputRegistration);
 
-        if(isVehicleInputValid()){
+        InputValidator inVal = new InputValidator(getWindow().getDecorView().getRootView());
+
+        if(inVal.isVehicleInputValid()){
             Vehicle vehicle = new Vehicle();
             vehicle.setVehicleType(type.getText().toString());
             vehicle.setRegistrationNumber(registration.getText().toString());
 
             saveVehicle(vehicle);
         }
-    }
-
-    private boolean isVehicleInputValid() {
-        EditText type = findViewById(R.id.inputType);
-        EditText registration = findViewById(R.id.inputRegistration);
-
-        boolean isInputValid = true;
-
-        if(type.getText().toString().length() == 0) {
-            type.setError("Vehicle type is required!");
-            isInputValid = false;
-        }
-
-        if(registration.getText().toString().length() == 0) {
-            registration.setError("Registration is required!");
-            isInputValid = false;
-        }
-
-        return isInputValid;
     }
 }

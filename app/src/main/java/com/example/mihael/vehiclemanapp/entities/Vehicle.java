@@ -1,10 +1,13 @@
 package com.example.mihael.vehiclemanapp.entities;
 
-public class Vehicle {
+import java.io.Serializable;
+
+public class Vehicle implements Serializable {
 
     private int vehicleId;
     private String vehicleType;
     private String registrationNumber;
+    private Person person;
 
     public Vehicle() {
 
@@ -32,6 +35,14 @@ public class Vehicle {
 
     public void setRegistrationNumber(String registrationNumber) {
         this.registrationNumber = registrationNumber;
+    }
+
+    public Person getPerson() {
+        return person;
+    }
+
+    public void setPerson(Person person) {
+        this.person = person;
     }
 
     @Override

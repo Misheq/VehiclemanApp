@@ -1,5 +1,6 @@
 package com.example.mihael.vehiclemanapp.adaptors;
 
+import android.content.Intent;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -11,6 +12,7 @@ import android.widget.Toast;
 
 import com.example.mihael.vehiclemanapp.R;
 import com.example.mihael.vehiclemanapp.entities.Vehicle;
+import com.example.mihael.vehiclemanapp.view.EditVehicleActivity;
 
 import java.util.List;
 
@@ -57,8 +59,9 @@ public class VehicleRecyclerAdapter extends RecyclerView.Adapter<VehicleRecycler
         @Override
         public void onClick(View view) {
             Vehicle v = vehicles.get(getLayoutPosition());
-            Toast.makeText(view.getContext(), v.toString() + " clicked", Toast.LENGTH_SHORT).show();
-            Log.d("CLICK", v.toString() + " clicked");
+            Intent intent = new Intent(view.getContext(), EditVehicleActivity.class);
+            intent.putExtra("vehicle", v);
+            view.getContext().startActivity(intent);
         }
 
     }

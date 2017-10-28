@@ -1,9 +1,10 @@
 package com.example.mihael.vehiclemanapp.entities;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Person {
+public class Person implements Serializable {
 
     private int personId;
     private String firstName;

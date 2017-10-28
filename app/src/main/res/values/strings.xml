@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">VehiclemanApp</string>
+    <string name="title_activity_update_person">UpdatePersonActivity</string>
 </resources>

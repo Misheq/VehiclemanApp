@@ -1,18 +1,16 @@
 package com.example.mihael.vehiclemanapp.adaptors;
 
+import android.content.Intent;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.example.mihael.vehiclemanapp.R;
 import com.example.mihael.vehiclemanapp.entities.Person;
-import com.example.mihael.vehiclemanapp.interfaces.ItemDeleteListener;
-import com.example.mihael.vehiclemanapp.view.PersonsActivity;
+import com.example.mihael.vehiclemanapp.view.EditPersonActivity;
 
 import java.util.List;
 
@@ -64,11 +62,16 @@ public class PersonRecyclerAdapter extends RecyclerView.Adapter<PersonRecyclerAd
             itemView.setOnClickListener(this);
         }
 
+        /**
+         * Get person p and start other activity with p
+         * @param view
+         */
         @Override
         public void onClick(View view) {
             Person p = persons.get(getLayoutPosition());
-            Toast.makeText(view.getContext(), p.getFirstName() + " clicked", Toast.LENGTH_SHORT).show();
-            Log.d("CLICK", p.getFirstName() + " clicked");
+            Intent intent = new Intent(view.getContext(), EditPersonActivity.class);
+            intent.putExtra("person", p);
+            view.getContext().startActivity(intent);
         }
     }
 }

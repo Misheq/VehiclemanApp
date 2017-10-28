@@ -15,6 +15,7 @@ import com.example.mihael.vehiclemanapp.api.ApiInterface;
 import com.example.mihael.vehiclemanapp.entities.Person;
 import com.example.mihael.vehiclemanapp.entities.PersonVehicleMapper;
 import com.example.mihael.vehiclemanapp.entities.Vehicle;
+import com.example.mihael.vehiclemanapp.helpers.InputValidator;
 
 import org.json.JSONObject;
 
@@ -133,7 +134,9 @@ public class AddPersonActivity extends AppCompatActivity {
         EditText phone = findViewById(R.id.inputPhone);
         EditText company = findViewById(R.id.inputCompany);
 
-        if(isPersonInputValid()) {
+        InputValidator inVal = new InputValidator(getWindow().getDecorView().getRootView());
+
+        if(inVal.isPersonInputValid()) {
             Person person = new Person();
             person.setFirstName(firstName.getText().toString());
             person.setLastName(lastName.getText().toString());
@@ -143,30 +146,5 @@ public class AddPersonActivity extends AppCompatActivity {
 
             savePerson(person);
         }
-    }
-
-    public boolean isPersonInputValid() {
-        EditText firstName = findViewById(R.id.inputFirstName);
-        EditText lastName = findViewById(R.id.inputLastName);
-        EditText email = findViewById(R.id.inputEmail);
-
-        boolean isValid = true;
-
-        if(firstName.getText().toString().length() == 0) {
-            firstName.setError("First name is required!");
-            isValid = false;
-        }
-
-        if(lastName.getText().toString().length() == 0) {
-            lastName.setError("Last name is required!");
-            isValid = false;
-        }
-
-        if(email.getText().toString().length() == 0) {
-            email.setError("Email is required!");
-            isValid = false;
-        }
-
-        return isValid;
     }
 }
