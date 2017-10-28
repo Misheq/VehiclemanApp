@@ -1,11 +1,13 @@
 package com.example.mihael.vehiclemanapp.adaptors;
 
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.mihael.vehiclemanapp.R;
 import com.example.mihael.vehiclemanapp.entities.Vehicle;
@@ -39,7 +41,7 @@ public class VehicleRecyclerAdapter extends RecyclerView.Adapter<VehicleRecycler
         return vehicles.size();
     }
 
-    public class MyViewHolder extends RecyclerView.ViewHolder {
+    public class MyViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener{
         TextView id, type, reg;
         Button deleteButton;
 
@@ -49,6 +51,15 @@ public class VehicleRecyclerAdapter extends RecyclerView.Adapter<VehicleRecycler
             type = itemView.findViewById(R.id.type);
             reg = itemView.findViewById(R.id.reg);
             deleteButton = itemView.findViewById(R.id.buttonDelete);
+            itemView.setOnClickListener(this);
         }
+
+        @Override
+        public void onClick(View view) {
+            Vehicle v = vehicles.get(getLayoutPosition());
+            Toast.makeText(view.getContext(), v.toString() + " clicked", Toast.LENGTH_SHORT).show();
+            Log.d("CLICK", v.toString() + " clicked");
+        }
+
     }
 }

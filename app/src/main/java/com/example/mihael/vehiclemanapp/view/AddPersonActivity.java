@@ -15,7 +15,6 @@ import com.example.mihael.vehiclemanapp.api.ApiInterface;
 import com.example.mihael.vehiclemanapp.entities.Person;
 import com.example.mihael.vehiclemanapp.entities.PersonVehicleMapper;
 import com.example.mihael.vehiclemanapp.entities.Vehicle;
-import com.example.mihael.vehiclemanapp.helpers.CustomOnItemSelectedListener;
 
 import org.json.JSONObject;
 
@@ -70,7 +69,6 @@ public class AddPersonActivity extends AppCompatActivity {
 
     private void addVehicleOnSpinner(List<Vehicle> vehicles) {
         vehicleSpinner = findViewById(R.id.spinnerVehicles);
-        vehicleSpinner.setOnItemSelectedListener(new CustomOnItemSelectedListener());
 
         Vehicle dummyVehicle = new Vehicle();
         dummyVehicle.setVehicleType("Select");
