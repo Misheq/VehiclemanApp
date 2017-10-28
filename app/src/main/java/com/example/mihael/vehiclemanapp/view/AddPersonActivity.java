@@ -135,13 +135,40 @@ public class AddPersonActivity extends AppCompatActivity {
         EditText phone = findViewById(R.id.inputPhone);
         EditText company = findViewById(R.id.inputCompany);
 
-        Person person = new Person();
-        person.setFirstName(firstName.getText().toString());
-        person.setLastName(lastName.getText().toString());
-        person.setEmail(email.getText().toString());
-        person.setPhone(phone.getText().toString());
-        person.setCompanyName(company.getText().toString());
+        if(isPersonInputValid()) {
+            Person person = new Person();
+            person.setFirstName(firstName.getText().toString());
+            person.setLastName(lastName.getText().toString());
+            person.setEmail(email.getText().toString());
+            person.setPhone(phone.getText().toString());
+            person.setCompanyName(company.getText().toString());
 
-        savePerson(person);
+            savePerson(person);
+        }
+    }
+
+    public boolean isPersonInputValid() {
+        EditText firstName = findViewById(R.id.inputFirstName);
+        EditText lastName = findViewById(R.id.inputLastName);
+        EditText email = findViewById(R.id.inputEmail);
+
+        boolean isValid = true;
+
+        if(firstName.getText().toString().length() == 0) {
+            firstName.setError("First name is required!");
+            isValid = false;
+        }
+
+        if(lastName.getText().toString().length() == 0) {
+            lastName.setError("Last name is required!");
+            isValid = false;
+        }
+
+        if(email.getText().toString().length() == 0) {
+            email.setError("Email is required!");
+            isValid = false;
+        }
+
+        return isValid;
     }
 }
