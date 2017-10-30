@@ -30,13 +30,12 @@ public class PersonRecyclerAdapter extends RecyclerView.Adapter<PersonRecyclerAd
 
     @Override
     public void onBindViewHolder(PersonRecyclerAdapter.MyViewHolder holder, int position) {
-        //holder.id.setText(String.valueOf(persons.get(position).getPersonId()));
         holder.firstName.setText(persons.get(position).getFirstName());
         holder.lastName.setText(persons.get(position).getLastName());
         holder.email.setText(persons.get(position).getEmail());
-
         holder.deleteButton.setTag(String.valueOf(persons.get(position).getPersonId()));
 
+            //holder.id.setText(String.valueOf(persons.get(position).getPersonId()));
             //holder.phone.setText(persons.get(position).getPhone());
             //holder.company.setText(persons.get(position).getCompanyName());
     }
@@ -47,17 +46,18 @@ public class PersonRecyclerAdapter extends RecyclerView.Adapter<PersonRecyclerAd
     }
 
     public class MyViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
-        TextView id, firstName, lastName, email, phone, company;
+        TextView firstName, lastName, email; // id, phone, company;
         Button deleteButton;
 
         public MyViewHolder(View itemView) {
             super(itemView);
                 //id = itemView.findViewById(R.id.id);
+                //phone = itemView.findViewById(R.id.phone);
+                //company = itemView.findViewById(R.id.companyName);
+
             firstName = itemView.findViewById(R.id.firstName);
             lastName = itemView.findViewById(R.id.lastName);
             email = itemView.findViewById(R.id.email);
-                //phone = itemView.findViewById(R.id.phone);
-                //company = itemView.findViewById(R.id.companyName);
             deleteButton = itemView.findViewById(R.id.buttonDelete);
             itemView.setOnClickListener(this);
         }

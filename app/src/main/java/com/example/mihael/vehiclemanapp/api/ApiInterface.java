@@ -12,6 +12,7 @@ import retrofit2.http.Body;
 import retrofit2.http.DELETE;
 import retrofit2.http.GET;
 import retrofit2.http.POST;
+import retrofit2.http.PUT;
 import retrofit2.http.Path;
 
 /**
@@ -37,6 +38,11 @@ public interface ApiInterface {
     @POST("vehicles")
     Call<PersonVehicleMapper> createVehicle(@Body PersonVehicleMapper pvm);
 
+
+    // TODO: implement
+    @PUT("vehicles/{id}")
+    Call<Vehicle> updateVehicle(@Path("id") int id, @Body Vehicle vehicle);
+
     @DELETE("vehicles/{id}")
     Call<Void> deleteVehicle(@Path("id") int id);
 
@@ -46,6 +52,10 @@ public interface ApiInterface {
 
     @POST("persons")
     Call<PersonVehicleMapper> createPerson(@Body PersonVehicleMapper pvm);
+
+    // TODO: implement
+    @PUT("vehicles/{id}")
+    Call<Person> updateVehicle(@Path("id") int id, @Body Person person);
 
     @DELETE("persons/{id}")
     Call<Void> deletePerson(@Path("id") int id);

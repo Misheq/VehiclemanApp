@@ -7,6 +7,7 @@ public class Vehicle implements Serializable {
     private int vehicleId;
     private String vehicleType;
     private String registrationNumber;
+    private String assigneeId;
     private Person person;
 
     public Vehicle() {
@@ -35,6 +36,14 @@ public class Vehicle implements Serializable {
 
     public void setRegistrationNumber(String registrationNumber) {
         this.registrationNumber = registrationNumber;
+    }
+
+    public String getAssigneeId() {
+        return assigneeId;
+    }
+
+    public void setAssigneeId(String assigneeId) {
+        this.assigneeId = assigneeId;
     }
 
     public Person getPerson() {

@@ -31,6 +31,8 @@ public class EditPersonActivity extends AppCompatActivity {
         EditText email = findViewById(R.id.inputEmail);
         EditText phone = findViewById(R.id.inputPhone);
         EditText company = findViewById(R.id.inputCompany);
+
+        // TODO: not used yet, create helper class/method to get valid (unnasigned at create, and unnasigned + own at edit) person and vehicle spinner items.
         Spinner vehicle = findViewById(R.id.spinnerVehicles);
 
         firstName.setText(p.getFirstName());

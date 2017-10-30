@@ -15,7 +15,7 @@ public class Person implements Serializable {
     private List<Vehicle> vehicles;
 
     public Person() {
-        vehicles = new ArrayList<Vehicle>();
+        vehicles = new ArrayList<>();
     }
 
     public int getPersonId() {
