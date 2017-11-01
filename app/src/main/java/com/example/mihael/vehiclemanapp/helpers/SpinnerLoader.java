@@ -25,15 +25,15 @@ import retrofit2.Response;
 
 public class SpinnerLoader {
 
-    ApiInterface apiInterface;
-    List<Person> persons = new ArrayList<>();
-    List<Vehicle> vehicles = new ArrayList<>();
-    Spinner personsSpinner;
-    Spinner vehiclesSpinner;
-    View view;
-    ArrayAdapter<Person> personArrayAdapter;
+    private ApiInterface apiInterface;
+    private List<Person> persons = new ArrayList<>();
+    private List<Vehicle> vehicles = new ArrayList<>();
+    private Spinner personsSpinner;
+    private Spinner vehiclesSpinner;
+    private View view;
 
     private SpinnerEventListener spinnerEventListenerVehicle;
+    private SpinnerEventListener spinnerEventListenerPerson;
 
     public SpinnerLoader(View view) {
         this.view = view;
@@ -83,13 +83,54 @@ public class SpinnerLoader {
         dummyPerson.setLastName("person");
         persons.add(0, dummyPerson);
 
-        personArrayAdapter = new ArrayAdapter<>(view.getContext(), android.R.layout.simple_spinner_item, persons);
-        personArrayAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        personsSpinner.setAdapter(personArrayAdapter);
+        ArrayAdapter<Person> adapter = new ArrayAdapter<>(view.getContext(), android.R.layout.simple_spinner_item, persons);
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        personsSpinner.setAdapter(adapter);
     }
 
-    public ArrayAdapter<Person> getPersonArrayAdapter() {
-        return personArrayAdapter;
+    public void loadVehicleSpinnerForPerson() {
+
+        apiInterface = ApiClient.getApiClient().create(ApiInterface.class);
+
+        // returns vehicle list
+        // should only return vehicles with no person and current person
+
+        Call<List<Vehicle>> call = apiInterface.getVehicles();
+        call.enqueue(new Callback<List<Vehicle>>() {
+            @Override
+            public void onResponse(Call<List<Vehicle>> call, Response<List<Vehicle>> response) {
+                int statusCode = response.code();
+                if(statusCode == 200) {
+                    Log.d("DEBUG", "Get vehicles successful");
+                    vehicles = response.body();
+                    addVehicleOnSpinner(vehicles);
+
+                    if (spinnerEventListenerPerson != null) {
+                        spinnerEventListenerPerson.onEventAccured();
+                    }
+                }
+
+                Log.d("DEBUG", "Get vehicles not successful, status: " + statusCode);
+            }
+
+            @Override
+            public void onFailure(Call<List<Vehicle>> call, Throwable t) {
+                Log.d("MYTAG","something is wrong");
+            }
+        });
+    }
+
+    public void addVehicleOnSpinner(List<Vehicle> vehicles) {
+        vehiclesSpinner = view.findViewById(R.id.spinnerVehicles);
+
+        Vehicle dummyVehicle = new Vehicle();
+        dummyVehicle.setVehicleType("Select");
+        dummyVehicle.setRegistrationNumber("vehicle");
+        vehicles.add(0, dummyVehicle);
+
+        ArrayAdapter<Vehicle> adapter = new ArrayAdapter<>(view.getContext(), android.R.layout.simple_spinner_item, vehicles);
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        vehiclesSpinner.setAdapter(adapter);
     }
 
     public List<Person> getPersons() {
@@ -107,9 +148,4 @@ public class SpinnerLoader {
     public Spinner getVehiclesSpinner() {
         return vehiclesSpinner;
     }
-
-    //loadVehiclesSpinnerForPerson() {
-    //
-    //}
-
 }

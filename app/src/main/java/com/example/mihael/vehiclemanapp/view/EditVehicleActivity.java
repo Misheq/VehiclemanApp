@@ -5,7 +5,6 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
-import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.Toast;
@@ -14,7 +13,6 @@ import com.example.mihael.vehiclemanapp.R;
 import com.example.mihael.vehiclemanapp.api.ApiClient;
 import com.example.mihael.vehiclemanapp.api.ApiInterface;
 import com.example.mihael.vehiclemanapp.entities.Person;
-import com.example.mihael.vehiclemanapp.entities.PersonVehicleMapper;
 import com.example.mihael.vehiclemanapp.entities.Vehicle;
 import com.example.mihael.vehiclemanapp.helpers.InputValidator;
 import com.example.mihael.vehiclemanapp.helpers.SpinnerLoader;
@@ -22,7 +20,6 @@ import com.example.mihael.vehiclemanapp.interfaces.SpinnerEventListener;
 
 import org.json.JSONObject;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import retrofit2.Call;
@@ -31,13 +28,11 @@ import retrofit2.Response;
 
 public class EditVehicleActivity extends AppCompatActivity {
 
-    private ApiInterface apiInterface;
-    private Spinner personSpinner;
+    private Spinner spinnerWithPersons;
     private View view;
     private SpinnerLoader spinnerLoader = new SpinnerLoader(view);
     private EditText type;
     private EditText registration;
-    private Spinner vehicleSpinner;
 
     private int passedVehicleId;
 
@@ -64,8 +59,7 @@ public class EditVehicleActivity extends AppCompatActivity {
     private void setFieldsFromVehicle(Vehicle vehicle) {
         type = findViewById(R.id.inputType);
         registration = findViewById(R.id.inputRegistration);
-        vehicleSpinner = spinnerLoader.getPersonsSpinner();
-        //vehicleSpinner.setSelection(0);
+        spinnerWithPersons = spinnerLoader.getPersonsSpinner();
 
         type.setText(vehicle.getVehicleType());
         registration.setText(vehicle.getRegistrationNumber());
@@ -81,7 +75,7 @@ public class EditVehicleActivity extends AppCompatActivity {
                     break;
                 }
             }
-            vehicleSpinner.setSelection(personPosition);
+            spinnerWithPersons.setSelection(personPosition);
         }
     }
 
@@ -99,9 +93,9 @@ public class EditVehicleActivity extends AppCompatActivity {
 
         type = findViewById(R.id.inputType);
         registration = findViewById(R.id.inputRegistration);
-        personSpinner = findViewById(R.id.spinnerPersons);
+        spinnerWithPersons = findViewById(R.id.spinnerPersons);
 
-        Object selectedPerson = personSpinner.getSelectedItem();
+        Object selectedPerson = spinnerWithPersons.getSelectedItem();
 
         if(!selectedPerson.toString().equals("Select person")) {
             Person person = (Person) selectedPerson;
@@ -124,7 +118,7 @@ public class EditVehicleActivity extends AppCompatActivity {
 
     private void editVehicle(Vehicle vehicle) {
 
-        apiInterface = ApiClient.getApiClient().create(ApiInterface.class);
+        ApiInterface apiInterface = ApiClient.getApiClient().create(ApiInterface.class);
 
         Call<Vehicle> call = apiInterface.updateVehicle(vehicle.getVehicleId(), vehicle);
         call.enqueue(new Callback<Vehicle>() {

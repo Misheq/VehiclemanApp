@@ -38,7 +38,6 @@ public interface ApiInterface {
     @POST("vehicles")
     Call<PersonVehicleMapper> createVehicle(@Body PersonVehicleMapper pvm);
 
-    // TODO: implement
     @PUT("vehicles/{id}")
     Call<Vehicle> updateVehicle(@Path("id") int id, @Body Vehicle vehicle);
 
@@ -52,9 +51,8 @@ public interface ApiInterface {
     @POST("persons")
     Call<PersonVehicleMapper> createPerson(@Body PersonVehicleMapper pvm);
 
-    // TODO: implement
     @PUT("vehicles/{id}")
-    Call<Person> updateVehicle(@Path("id") int id, @Body Person person);
+    Call<Person> updatePerson(@Path("id") int id, @Body Person person);
 
     @DELETE("persons/{id}")
     Call<Void> deletePerson(@Path("id") int id);
