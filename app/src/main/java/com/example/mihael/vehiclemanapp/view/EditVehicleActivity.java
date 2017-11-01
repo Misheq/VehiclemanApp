@@ -5,6 +5,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.Toast;
@@ -16,6 +17,8 @@ import com.example.mihael.vehiclemanapp.entities.Person;
 import com.example.mihael.vehiclemanapp.entities.PersonVehicleMapper;
 import com.example.mihael.vehiclemanapp.entities.Vehicle;
 import com.example.mihael.vehiclemanapp.helpers.InputValidator;
+import com.example.mihael.vehiclemanapp.helpers.SpinnerLoader;
+import com.example.mihael.vehiclemanapp.interfaces.SpinnerEventListener;
 
 import org.json.JSONObject;
 
@@ -30,6 +33,13 @@ public class EditVehicleActivity extends AppCompatActivity {
 
     private ApiInterface apiInterface;
     private Spinner personSpinner;
+    private View view;
+    private SpinnerLoader spinnerLoader = new SpinnerLoader(view);
+    private EditText type;
+    private EditText registration;
+    private Spinner vehicleSpinner;
+
+    private int passedVehicleId;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -37,21 +47,41 @@ public class EditVehicleActivity extends AppCompatActivity {
         setContentView(R.layout.activity_edit_vehicle);
 
         Intent intent = getIntent();
+        final Vehicle vehicle = (Vehicle) intent.getSerializableExtra("vehicle");
+        passedVehicleId = vehicle.getVehicleId();
 
-        Vehicle vehicle = (Vehicle) intent.getSerializableExtra("vehicle");
-        setFieldsFromVehicle(vehicle);
+        view = getWindow().getDecorView().getRootView();
+        spinnerLoader = new SpinnerLoader(view);
+        spinnerLoader.loadPersonsSpinnerForVehicle();
+        spinnerLoader.setEventListener(new SpinnerEventListener() {
+            @Override
+            public void onEventAccured() {
+                setFieldsFromVehicle(vehicle);
+            }
+        });
     }
 
     private void setFieldsFromVehicle(Vehicle vehicle) {
-        EditText type = findViewById(R.id.inputType);
-        EditText registration = findViewById(R.id.inputRegistration);
-        Spinner vehicleSpinner = findViewById(R.id.spinnerPersons);
+        type = findViewById(R.id.inputType);
+        registration = findViewById(R.id.inputRegistration);
+        vehicleSpinner = spinnerLoader.getPersonsSpinner();
+        //vehicleSpinner.setSelection(0);
 
         type.setText(vehicle.getVehicleType());
         registration.setText(vehicle.getRegistrationNumber());
 
-        if(!(vehicle.getPerson() == null)) {
-            // select the vehicle.toString() to be displayed
+        int personPosition = 0;
+
+        if(!(vehicle.getAssigneeId().equals(""))) {
+
+            List<Person> personList = spinnerLoader.getPersons();
+            for(int i = 0; i < personList.size(); i++) {
+                if (personList.get(i).getPersonId() == Integer.parseInt(vehicle.getAssigneeId())) {
+                    personPosition = i;
+                    break;
+                }
+            }
+            vehicleSpinner.setSelection(personPosition);
         }
     }
 
@@ -64,20 +94,31 @@ public class EditVehicleActivity extends AppCompatActivity {
      */
     public void setVehicleFromForm(View view) {
 
-        EditText type = findViewById(R.id.inputType);
-        EditText registration = findViewById(R.id.inputRegistration);
+        Vehicle vehicle = new Vehicle();
+        vehicle.setVehicleId(passedVehicleId);
 
-        InputValidator inVal = new InputValidator(getWindow().getDecorView().getRootView());
+        type = findViewById(R.id.inputType);
+        registration = findViewById(R.id.inputRegistration);
+        personSpinner = findViewById(R.id.spinnerPersons);
 
+        Object selectedPerson = personSpinner.getSelectedItem();
+
+        if(!selectedPerson.toString().equals("Select person")) {
+            Person person = (Person) selectedPerson;
+            vehicle.setAssigneeId(String.valueOf(person.getPersonId()));
+        } else {
+            vehicle.setAssigneeId("");
+        }
+
+        InputValidator inVal = new InputValidator(this.view);
         if(inVal.isVehicleInputValid()) {
-            Vehicle vehicle = new Vehicle();
             vehicle.setVehicleType(type.getText().toString());
             vehicle.setRegistrationNumber(registration.getText().toString());
 
             Log.d("UPDATE", "Vehicle updated");
 
             // will call update to server
-            // editVehicle(vehicle);
+            editVehicle(vehicle);
         }
     }
 
@@ -85,29 +126,13 @@ public class EditVehicleActivity extends AppCompatActivity {
 
         apiInterface = ApiClient.getApiClient().create(ApiInterface.class);
 
-        Person person;
-        Object selectedPerson = personSpinner.getSelectedItem();
-
-        // if not dummy person, then set person from spinner
-        if(!selectedPerson.toString().equals("Select person")) {
-            person = (Person) selectedPerson;
-        } else {
-            person = null;
-        }
-
-        // sets vehicle
-        List<Vehicle> vehicleList = new ArrayList<>();
-        vehicleList.add(vehicle);
-
-        PersonVehicleMapper pvm = new PersonVehicleMapper(person, vehicleList);
-
-        Call<PersonVehicleMapper> call = apiInterface.updateVehicle(vehicle.getVehicleId(), pvm);
-        call.enqueue(new Callback<PersonVehicleMapper>() {
+        Call<Vehicle> call = apiInterface.updateVehicle(vehicle.getVehicleId(), vehicle);
+        call.enqueue(new Callback<Vehicle>() {
             @Override
-            public void onResponse(Call<PersonVehicleMapper> call, Response<PersonVehicleMapper> response) {
+            public void onResponse(Call<Vehicle> call, Response<Vehicle> response) {
                 int statusCode = response.code();
 
-                if(statusCode == 204) {
+                if(statusCode == 200) {
                     Log.d("STATUS_CODE", "status:" + statusCode + "\nVehicle updated successfully!");
                     Toast.makeText(EditVehicleActivity.this, "Vehicle updated", Toast.LENGTH_LONG).show();
                 } else {
@@ -124,7 +149,7 @@ public class EditVehicleActivity extends AppCompatActivity {
             }
 
             @Override
-            public void onFailure(Call<PersonVehicleMapper> call, Throwable t) {
+            public void onFailure(Call<Vehicle> call, Throwable t) {
                 Log.d("MY_ERROR", "something is wrong with vehicle update");
             }
         });
