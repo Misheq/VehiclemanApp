@@ -50,7 +50,7 @@ public class EditVehicleActivity extends AppCompatActivity {
         spinnerLoader.loadPersonsSpinnerForVehicle();
         spinnerLoader.setEventListener(new SpinnerEventListener() {
             @Override
-            public void onEventAccured() {
+            public void onEventOccured() {
                 setFieldsFromVehicle(vehicle);
             }
         });

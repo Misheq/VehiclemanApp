@@ -32,15 +32,14 @@ public class SpinnerLoader {
     private Spinner vehiclesSpinner;
     private View view;
 
-    private SpinnerEventListener spinnerEventListenerVehicle;
-    private SpinnerEventListener spinnerEventListenerPerson;
+    private SpinnerEventListener spinnerEventListener;
 
     public SpinnerLoader(View view) {
         this.view = view;
     }
 
-    public void setEventListener(SpinnerEventListener spinnerEventListenerVehicle) {
-        this.spinnerEventListenerVehicle = spinnerEventListenerVehicle;
+    public void setEventListener(SpinnerEventListener eventListener) {
+        this.spinnerEventListener = eventListener;
     }
 
     public void loadPersonsSpinnerForVehicle() {
@@ -59,8 +58,8 @@ public class SpinnerLoader {
                     persons = response.body();
                     addPersonOnSpinner(persons);
 
-                    if (spinnerEventListenerVehicle != null) {
-                        spinnerEventListenerVehicle.onEventAccured();
+                    if (spinnerEventListener != null) {
+                        spinnerEventListener.onEventOccured();
                     }
 
                 }else {
@@ -88,7 +87,7 @@ public class SpinnerLoader {
         personsSpinner.setAdapter(adapter);
     }
 
-    public void loadVehicleSpinnerForPerson() {
+    public void loadVehiclesSpinnerForPerson() {
 
         apiInterface = ApiClient.getApiClient().create(ApiInterface.class);
 
@@ -105,8 +104,8 @@ public class SpinnerLoader {
                     vehicles = response.body();
                     addVehicleOnSpinner(vehicles);
 
-                    if (spinnerEventListenerPerson != null) {
-                        spinnerEventListenerPerson.onEventAccured();
+                    if (spinnerEventListener != null) {
+                        spinnerEventListener.onEventOccured();
                     }
                 }
 

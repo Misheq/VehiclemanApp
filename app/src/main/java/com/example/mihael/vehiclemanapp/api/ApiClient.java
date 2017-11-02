@@ -10,7 +10,7 @@ import retrofit2.converter.gson.GsonConverterFactory;
 public class ApiClient {
 
     public static final String DOMAIN = "192.168.0.104";
-    public static final String PORT = ":3333";
+    public static final String PORT = ":3334";
     public static final String BASE_URL = "http://" + DOMAIN + PORT + "/vehicleman/api/";
     public static Retrofit retrofit = null;
 

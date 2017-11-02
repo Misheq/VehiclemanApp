@@ -5,5 +5,5 @@ package com.example.mihael.vehiclemanapp.interfaces;
  */
 
 public interface SpinnerEventListener {
-    public void onEventAccured();
+    public void onEventOccured();
 }

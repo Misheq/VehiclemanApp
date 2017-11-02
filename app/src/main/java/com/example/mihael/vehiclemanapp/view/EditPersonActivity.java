@@ -52,10 +52,10 @@ public class EditPersonActivity extends AppCompatActivity {
 
         view = getWindow().getDecorView().getRootView();
         spinnerLoader = new SpinnerLoader(view);
-        spinnerLoader.loadPersonsSpinnerForVehicle();
+        spinnerLoader.loadVehiclesSpinnerForPerson();
         spinnerLoader.setEventListener(new SpinnerEventListener() {
             @Override
-            public void onEventAccured() {
+            public void onEventOccured() {
                 setFieldsFromPerson(person);
             }
         });

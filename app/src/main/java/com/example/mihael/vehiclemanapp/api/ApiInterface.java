@@ -51,7 +51,7 @@ public interface ApiInterface {
     @POST("persons")
     Call<PersonVehicleMapper> createPerson(@Body PersonVehicleMapper pvm);
 
-    @PUT("vehicles/{id}")
+    @PUT("persons/{id}")
     Call<Person> updatePerson(@Path("id") int id, @Body Person person);
 
     @DELETE("persons/{id}")
