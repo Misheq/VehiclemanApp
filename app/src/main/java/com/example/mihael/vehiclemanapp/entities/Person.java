@@ -4,6 +4,12 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Person model representation
+ * This is an employee in a company
+ * An employee can have an assigned vehicle
+ */
+
 public class Person implements Serializable {
 
     private int personId;

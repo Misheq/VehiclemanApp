@@ -2,6 +2,12 @@ package com.example.mihael.vehiclemanapp.entities;
 
 import java.io.Serializable;
 
+/**
+ * Vehicle model representation
+ * This is a vehicle (car, motorbike, utility...) in a company
+ * A vehicle can have an assigned employee
+ */
+
 public class Vehicle implements Serializable {
 
     private int vehicleId;

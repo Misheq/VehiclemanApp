@@ -27,6 +27,12 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
+import static com.example.mihael.vehiclemanapp.helpers.Constants.SELECT_VEHICLE;
+
+/**
+ * Activity which is responsible for editing existing persons
+ */
+
 public class EditPersonActivity extends AppCompatActivity {
 
     private int passedPersonId;
@@ -50,8 +56,13 @@ public class EditPersonActivity extends AppCompatActivity {
         final Person person = (Person) intent.getSerializableExtra("person");
         passedPersonId = person.getPersonId();
 
+        int currentVehicleId = -1;
+        if(person.getVehicles().size() != 0) {
+            currentVehicleId = person.getVehicles().get(0).getVehicleId();
+        }
+
         view = getWindow().getDecorView().getRootView();
-        spinnerLoader = new SpinnerLoader(view);
+        spinnerLoader = new SpinnerLoader(view, currentVehicleId);
         spinnerLoader.loadVehiclesSpinnerForPerson();
         spinnerLoader.setEventListener(new SpinnerEventListener() {
             @Override
@@ -86,7 +97,7 @@ public class EditPersonActivity extends AppCompatActivity {
 
         if(!p.getVehicles().isEmpty()) {
             List<Vehicle> vehicleList = spinnerLoader.getVehicles();
-            for(int i = 0; i < vehicleList.size(); i++) {
+            for(int i = 1; i < vehicleList.size(); i++) {
                 if(vehicleList.get(i).getVehicleId() == p.getVehicles().get(0).getVehicleId()) {
                     vehiclePosition = i;
                     break;
@@ -111,7 +122,7 @@ public class EditPersonActivity extends AppCompatActivity {
         Object selectedVehicle = spinnerWithVehicles.getSelectedItem();
         List<Vehicle> vehList = new ArrayList<>();
 
-        if(!selectedVehicle.toString().equals("Select vehicle")) {
+        if(!selectedVehicle.toString().equals(SELECT_VEHICLE)) {
             Vehicle vehicle = (Vehicle) selectedVehicle;
             vehList.add(vehicle);
             person.setVehicles(vehList);

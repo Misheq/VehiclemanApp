@@ -1,9 +1,13 @@
 package com.example.mihael.vehiclemanapp.interfaces;
 
 /**
- * Created by mihae on 2017. 11. 01..
+ * Simple interface for event listener
+ * Waits for event
+ *
+ * Use when you need to call a function after
+ * a callback returned
  */
 
 public interface SpinnerEventListener {
-    public void onEventOccured();
+    void onEventOccured();
 }

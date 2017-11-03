@@ -7,8 +7,16 @@ import android.widget.EditText;
 
 import com.example.mihael.vehiclemanapp.R;
 
+import static com.example.mihael.vehiclemanapp.helpers.Constants.EMAIL_REQUIRED;
+import static com.example.mihael.vehiclemanapp.helpers.Constants.FIRST_NAME_REQUIRED;
+import static com.example.mihael.vehiclemanapp.helpers.Constants.LAST_NAME_REQUIRED;
+import static com.example.mihael.vehiclemanapp.helpers.Constants.REG_NUM_REQUIRED;
+import static com.example.mihael.vehiclemanapp.helpers.Constants.VEHICLE_TYPE_REQUIRED;
+
 /**
- * Created by mihae on 2017. 10. 28..
+ * UI input check for vehicle and person input to reduce errors
+ * The class checks if all necessary fields are entered
+ * and alerts the user if something is missing
  */
 
 public class InputValidator {
@@ -27,17 +35,17 @@ public class InputValidator {
         boolean isValid = true;
 
         if(firstName.getText().toString().length() == 0) {
-            firstName.setError("First name is required!");
+            firstName.setError(FIRST_NAME_REQUIRED);
             isValid = false;
         }
 
         if(lastName.getText().toString().length() == 0) {
-            lastName.setError("Last name is required!");
+            lastName.setError(LAST_NAME_REQUIRED);
             isValid = false;
         }
 
         if(email.getText().toString().length() == 0) {
-            email.setError("Email is required!");
+            email.setError(EMAIL_REQUIRED);
             isValid = false;
         }
 
@@ -51,12 +59,12 @@ public class InputValidator {
         boolean isInputValid = true;
 
         if(type.getText().toString().length() == 0) {
-            type.setError("Vehicle type is required!");
+            type.setError(VEHICLE_TYPE_REQUIRED);
             isInputValid = false;
         }
 
         if(registration.getText().toString().length() == 0) {
-            registration.setError("Registration is required!");
+            registration.setError(REG_NUM_REQUIRED);
             isInputValid = false;
         }
 

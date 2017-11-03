@@ -3,15 +3,15 @@ package com.example.mihael.vehiclemanapp.api;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
+import static com.example.mihael.vehiclemanapp.helpers.Constants.BASE_URL;
+
 /**
  * Retrofit api client for handling api calls
+ * Communicates with back-end
  */
 
 public class ApiClient {
 
-    public static final String DOMAIN = "192.168.0.104";
-    public static final String PORT = ":3334";
-    public static final String BASE_URL = "http://" + DOMAIN + PORT + "/vehicleman/api/";
     public static Retrofit retrofit = null;
 
     public static Retrofit getApiClient() {

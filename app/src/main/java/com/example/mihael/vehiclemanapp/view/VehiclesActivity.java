@@ -23,6 +23,10 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
+/**
+ * Activity responsible for listing existing vehicles from database
+ */
+
 public class VehiclesActivity extends AppCompatActivity {
 
     private RecyclerView recyclerView;
@@ -60,13 +64,18 @@ public class VehiclesActivity extends AppCompatActivity {
             @Override
             public void onResponse(Call<List<Vehicle>> call, Response<List<Vehicle>> response) {
                 int statusCode = response.code();
-                vehicles = response.body();
-                vehicleRecyclerAdapter = new VehicleRecyclerAdapter(vehicles);
-                recyclerView.setAdapter(vehicleRecyclerAdapter);
+                if(statusCode == 200) {
+                    vehicles = response.body();
+                    vehicleRecyclerAdapter = new VehicleRecyclerAdapter(vehicles);
+                    recyclerView.setAdapter(vehicleRecyclerAdapter);
+                } else {
+                    Toast.makeText(VehiclesActivity.this, "Loading vehicles failed. Status: " + statusCode, Toast.LENGTH_SHORT).show();
+                }
             }
 
             @Override
             public void onFailure(Call<List<Vehicle>> call, Throwable t) {
+                Toast.makeText(VehiclesActivity.this, "Loading vehicles failed.\nPlease check internet connection." , Toast.LENGTH_SHORT).show();
                 Log.d("MYTAG","something is wrong");
             }
         });

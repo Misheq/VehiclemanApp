@@ -25,6 +25,10 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
+/**
+ * Activity responsible for listing existing persons from database
+ */
+
 public class PersonsActivity extends AppCompatActivity {
 
     private RecyclerView recyclerView;
@@ -58,13 +62,18 @@ public class PersonsActivity extends AppCompatActivity {
             @Override
             public void onResponse(Call<List<Person>> call, Response<List<Person>> response) {
                 int statusCode = response.code();
-                persons = response.body();
-                personRecyclerAdapter = new PersonRecyclerAdapter(persons);
-                recyclerView.setAdapter(personRecyclerAdapter);
+                if(statusCode == 200) {
+                    persons = response.body();
+                    personRecyclerAdapter = new PersonRecyclerAdapter(persons);
+                    recyclerView.setAdapter(personRecyclerAdapter);
+                } else {
+                    Toast.makeText(PersonsActivity.this, "Loading persons failed. Status: " + statusCode, Toast.LENGTH_SHORT).show();
+                }
             }
 
             @Override
             public void onFailure(Call<List<Person>> call, Throwable t) {
+                Toast.makeText(PersonsActivity.this, "Loading persons failed.\nPlease check internet connection", Toast.LENGTH_SHORT).show();
                 Log.d("MYTAG", "something is wrong");
             }
         });

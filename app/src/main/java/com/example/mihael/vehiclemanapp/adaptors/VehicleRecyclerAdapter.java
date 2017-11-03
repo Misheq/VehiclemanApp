@@ -16,6 +16,13 @@ import com.example.mihael.vehiclemanapp.view.EditVehicleActivity;
 
 import java.util.List;
 
+import static com.example.mihael.vehiclemanapp.helpers.Constants.VEHICLE;
+
+/**
+ * Vehicle recycler adapter handles recycler view
+ * for listing vehicle row items
+ */
+
 public class VehicleRecyclerAdapter extends RecyclerView.Adapter<VehicleRecyclerAdapter.MyViewHolder> {
 
     private List<Vehicle> vehicles;
@@ -60,7 +67,7 @@ public class VehicleRecyclerAdapter extends RecyclerView.Adapter<VehicleRecycler
         public void onClick(View view) {
             Vehicle v = vehicles.get(getLayoutPosition());
             Intent intent = new Intent(view.getContext(), EditVehicleActivity.class);
-            intent.putExtra("vehicle", v);
+            intent.putExtra(VEHICLE, v);
             view.getContext().startActivity(intent);
         }
 

@@ -7,6 +7,10 @@ import android.view.View;
 
 import com.example.mihael.vehiclemanapp.R;
 
+/**
+ * Main activity responsible for navigating between screens
+ */
+
 public class MainActivity extends AppCompatActivity {
 
     @Override

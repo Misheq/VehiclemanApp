@@ -26,11 +26,17 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
+import static com.example.mihael.vehiclemanapp.helpers.Constants.SELECT_PERSON;
+
+/**
+ * Activity which is responsible for editing existing vehicles
+ */
+
 public class EditVehicleActivity extends AppCompatActivity {
 
     private Spinner spinnerWithPersons;
     private View view;
-    private SpinnerLoader spinnerLoader = new SpinnerLoader(view);
+    private SpinnerLoader spinnerLoader;
     private EditText type;
     private EditText registration;
 
@@ -45,8 +51,13 @@ public class EditVehicleActivity extends AppCompatActivity {
         final Vehicle vehicle = (Vehicle) intent.getSerializableExtra("vehicle");
         passedVehicleId = vehicle.getVehicleId();
 
+        int currentPersonId = -1;
+        if(!vehicle.getAssigneeId().equals("")) {
+            currentPersonId = Integer.parseInt(vehicle.getAssigneeId());
+        }
+
         view = getWindow().getDecorView().getRootView();
-        spinnerLoader = new SpinnerLoader(view);
+        spinnerLoader = new SpinnerLoader(view, currentPersonId);
         spinnerLoader.loadPersonsSpinnerForVehicle();
         spinnerLoader.setEventListener(new SpinnerEventListener() {
             @Override
@@ -97,7 +108,7 @@ public class EditVehicleActivity extends AppCompatActivity {
 
         Object selectedPerson = spinnerWithPersons.getSelectedItem();
 
-        if(!selectedPerson.toString().equals("Select person")) {
+        if(!selectedPerson.toString().equals(SELECT_PERSON)) {
             Person person = (Person) selectedPerson;
             vehicle.setAssigneeId(String.valueOf(person.getPersonId()));
         } else {

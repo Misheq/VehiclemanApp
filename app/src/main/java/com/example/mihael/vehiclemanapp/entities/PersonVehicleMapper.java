@@ -3,6 +3,11 @@ package com.example.mihael.vehiclemanapp.entities;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Helper model for crating objects on the backend
+ * Used for creating vehicles and persons
+ */
+
 public class PersonVehicleMapper {
 
     Person person;

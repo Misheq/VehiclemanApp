@@ -14,6 +14,13 @@ import com.example.mihael.vehiclemanapp.view.EditPersonActivity;
 
 import java.util.List;
 
+import static com.example.mihael.vehiclemanapp.helpers.Constants.PERSON;
+
+/**
+ * Person recycler adapter handles recycler view
+ * for listing person row items
+ */
+
 public class PersonRecyclerAdapter extends RecyclerView.Adapter<PersonRecyclerAdapter.MyViewHolder>{
 
     private List<Person> persons;
@@ -70,7 +77,7 @@ public class PersonRecyclerAdapter extends RecyclerView.Adapter<PersonRecyclerAd
         public void onClick(View view) {
             Person p = persons.get(getLayoutPosition());
             Intent intent = new Intent(view.getContext(), EditPersonActivity.class);
-            intent.putExtra("person", p);
+            intent.putExtra(PERSON, p);
             view.getContext().startActivity(intent);
         }
     }

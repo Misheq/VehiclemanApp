@@ -1,7 +1,8 @@
 package com.example.mihael.vehiclemanapp.entities;
 
 /**
- * Manager representation model
+ * Manager model representation
+ * This is the user of the app
  */
 
 public class Manager {

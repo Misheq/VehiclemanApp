@@ -26,6 +26,10 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
+/**
+ * Activity which is responsible for creating persons
+ */
+
 public class AddPersonActivity extends AppCompatActivity {
 
     private ApiInterface apiInterface;
