@@ -27,6 +27,7 @@ import retrofit2.Callback;
 import retrofit2.Response;
 
 import static com.example.mihael.vehiclemanapp.helpers.Constants.SELECT_PERSON;
+import static com.example.mihael.vehiclemanapp.helpers.Constants.VEHICLE;
 
 /**
  * Activity which is responsible for editing existing vehicles
@@ -48,7 +49,7 @@ public class EditVehicleActivity extends AppCompatActivity {
         setContentView(R.layout.activity_edit_vehicle);
 
         Intent intent = getIntent();
-        final Vehicle vehicle = (Vehicle) intent.getSerializableExtra("vehicle");
+        final Vehicle vehicle = (Vehicle) intent.getSerializableExtra(VEHICLE);
         passedVehicleId = vehicle.getVehicleId();
 
         int currentPersonId = -1;
