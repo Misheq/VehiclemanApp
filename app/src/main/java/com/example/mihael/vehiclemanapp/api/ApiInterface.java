@@ -42,7 +42,7 @@ public interface ApiInterface {
     Call<List<Vehicle>> getVehicles();
 
     @POST(VEHICLES)
-    Call<PersonVehicleMapper> createVehicle(@Body PersonVehicleMapper pvm);
+    Call<Vehicle> createVehicle(@Body Vehicle vehicle);
 
     @PUT(VEHICLES + SEPARATOR + ID_PARAM)
     Call<Vehicle> updateVehicle(@Path(ID) int id, @Body Vehicle vehicle);
@@ -55,7 +55,7 @@ public interface ApiInterface {
     Call<List<Person>> getPersons();
 
     @POST(PERSONS)
-    Call<PersonVehicleMapper> createPerson(@Body PersonVehicleMapper pvm);
+    Call<Person> createPerson(@Body Person person);
 
     @PUT(PERSONS + SEPARATOR + ID_PARAM)
     Call<Person> updatePerson(@Path(ID) int id, @Body Person person);

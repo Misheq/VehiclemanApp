@@ -111,6 +111,7 @@ public class EditVehicleActivity extends AppCompatActivity {
         if(!selectedPerson.toString().equals(SELECT_PERSON)) {
             Person person = (Person) selectedPerson;
             vehicle.setAssigneeId(String.valueOf(person.getPersonId()));
+            vehicle.setPerson(person);
         } else {
             vehicle.setAssigneeId("");
         }

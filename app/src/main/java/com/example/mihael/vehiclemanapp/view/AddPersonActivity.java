@@ -16,6 +16,8 @@ import com.example.mihael.vehiclemanapp.entities.Person;
 import com.example.mihael.vehiclemanapp.entities.PersonVehicleMapper;
 import com.example.mihael.vehiclemanapp.entities.Vehicle;
 import com.example.mihael.vehiclemanapp.helpers.InputValidator;
+import com.example.mihael.vehiclemanapp.helpers.SpinnerLoader;
+import com.example.mihael.vehiclemanapp.interfaces.SpinnerEventListener;
 
 import org.json.JSONObject;
 
@@ -26,6 +28,8 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
+import static com.example.mihael.vehiclemanapp.helpers.Constants.SELECT_VEHICLE;
+
 /**
  * Activity which is responsible for creating persons
  */
@@ -33,78 +37,63 @@ import retrofit2.Response;
 public class AddPersonActivity extends AppCompatActivity {
 
     private ApiInterface apiInterface;
-    private Spinner vehicleSpinner;
-    private List<Vehicle> vehicles = new ArrayList<>();
+    private View view;
+    private SpinnerLoader spinnerLoader;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_person);
 
-        loadSpinnerData();
+        view = getWindow().getDecorView().getRootView();
+        spinnerLoader = new SpinnerLoader(view, -1);
+        spinnerLoader.loadVehiclesSpinnerForPerson();
     }
 
-    private void loadSpinnerData() {
+    public void setPersonFromForm(View view) {
 
-        apiInterface = ApiClient.getApiClient().create(ApiInterface.class);
+        EditText firstName = findViewById(R.id.inputFirstName);
+        EditText lastName = findViewById(R.id.inputLastName);
+        EditText email = findViewById(R.id.inputEmail);
+        EditText phone = findViewById(R.id.inputPhone);
+        EditText company = findViewById(R.id.inputCompany);
+        Spinner vehiclesSpinner = findViewById(R.id.spinnerVehicles);
 
-        // returns vehicle list
-        // should only return vehicles with no person and current person
 
-        Call<List<Vehicle>> call = apiInterface.getVehicles();
-        call.enqueue(new Callback<List<Vehicle>>() {
-            @Override
-            public void onResponse(Call<List<Vehicle>> call, Response<List<Vehicle>> response) {
-                int statusCode = response.code();
-                if(statusCode == 200) {
-                    Log.d("DEBUG", "Get vehicles successful");
-                    vehicles = response.body();
-                    addVehicleOnSpinner(vehicles);
-                }
+        Object selectedVehicle = vehiclesSpinner.getSelectedItem();
+        List<Vehicle> vehicleList = new ArrayList<>();
 
-                Log.d("DEBUG", "Get vehicles not successful, status: " + statusCode);
-            }
+        Person person = new Person();
 
-            @Override
-            public void onFailure(Call<List<Vehicle>> call, Throwable t) {
-                Log.d("MYTAG","something is wrong");
-            }
-        });
-    }
+        if(!selectedVehicle.toString().equals(SELECT_VEHICLE)) {
+            Vehicle v = (Vehicle) selectedVehicle;
+            vehicleList.add(v);
+            person.setVehicles(vehicleList);
+        }
 
-    private void addVehicleOnSpinner(List<Vehicle> vehicles) {
-        vehicleSpinner = findViewById(R.id.spinnerVehicles);
+        InputValidator inVal = new InputValidator(this.view);
 
-        Vehicle dummyVehicle = new Vehicle();
-        dummyVehicle.setVehicleType("Select");
-        dummyVehicle.setRegistrationNumber("vehicle");
-        vehicles.add(0, dummyVehicle);
+        if(inVal.isPersonInputValid()) {
+            person.setFirstName(firstName.getText().toString());
+            person.setLastName(lastName.getText().toString());
+            person.setEmail(email.getText().toString());
+            person.setPhone(phone.getText().toString());
+            person.setCompanyName(company.getText().toString());
 
-        ArrayAdapter<Vehicle> adapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_item, vehicles);
-        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        vehicleSpinner.setAdapter(adapter);
+            Log.d("ADD", "Person created");
+
+            savePerson(person);
+        }
     }
 
     private void savePerson(Person person) {
 
-        List<Vehicle> vehicleList = new ArrayList<>();
-
-        Object selectedVehicle = vehicleSpinner.getSelectedItem();
-
-        if(!selectedVehicle.toString().equals("Select vehicle")) {
-            Vehicle v = (Vehicle) selectedVehicle;
-            vehicleList.add(v);
-        }
-
-        PersonVehicleMapper pvm = new PersonVehicleMapper(person, vehicleList);
-
         apiInterface = ApiClient.getApiClient().create(ApiInterface.class);
 
-        // returns manager list
-        Call<PersonVehicleMapper> call = apiInterface.createPerson(pvm);
-        call.enqueue(new Callback<PersonVehicleMapper>() {
+        Call<Person> call = apiInterface.createPerson(person);
+        call.enqueue(new Callback<Person>() {
             @Override
-            public void onResponse(Call<PersonVehicleMapper> call, Response<PersonVehicleMapper> response) {
+            public void onResponse(Call<Person> call, Response<Person> response) {
                 int statusCode = response.code();
 
                 if(statusCode == 201) {
@@ -124,31 +113,9 @@ public class AddPersonActivity extends AppCompatActivity {
             }
 
             @Override
-            public void onFailure(Call<PersonVehicleMapper> call, Throwable t) {
-                Log.d("MY_ERROR", "something is wrong");
+            public void onFailure(Call<Person> call, Throwable t) {
+                Log.d("MY_ERROR", "something is wrong with person create");
             }
         });
-    }
-
-    public void setPersonFromForm(View view) {
-
-        EditText firstName = findViewById(R.id.inputFirstName);
-        EditText lastName = findViewById(R.id.inputLastName);
-        EditText email = findViewById(R.id.inputEmail);
-        EditText phone = findViewById(R.id.inputPhone);
-        EditText company = findViewById(R.id.inputCompany);
-
-        InputValidator inVal = new InputValidator(getWindow().getDecorView().getRootView());
-
-        if(inVal.isPersonInputValid()) {
-            Person person = new Person();
-            person.setFirstName(firstName.getText().toString());
-            person.setLastName(lastName.getText().toString());
-            person.setEmail(email.getText().toString());
-            person.setPhone(phone.getText().toString());
-            person.setCompanyName(company.getText().toString());
-
-            savePerson(person);
-        }
     }
 }
