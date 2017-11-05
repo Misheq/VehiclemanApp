@@ -32,6 +32,11 @@ public class Constants {
     public static final String FIRST_NAME_REQUIRED = "Please enter first name.";
     public static final String LAST_NAME_REQUIRED = "Please enter last name.";
     public static final String EMAIL_REQUIRED = "Please enter email.";
+    public static final String EMAIL_FORMAT_INVALID = "Please check email format.";
     public static final String VEHICLE_TYPE_REQUIRED = "Please enter vehicle type.";
     public static final String REG_NUM_REQUIRED = "Please enter registration number.";
+    public static final String PASSWORD_TOO_SHORT = "Please enter password of minimum ";
+    public static final String PASSWORD_CHARACTERS = " characters.";
+    public static final String PASSWORD_NOT_MATCH = "Your password does not match.";
+
 }

@@ -1,10 +1,9 @@
 package com.example.mihael.vehiclemanapp.view;
 
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
-import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.Toast;
@@ -13,11 +12,10 @@ import com.example.mihael.vehiclemanapp.R;
 import com.example.mihael.vehiclemanapp.api.ApiClient;
 import com.example.mihael.vehiclemanapp.api.ApiInterface;
 import com.example.mihael.vehiclemanapp.entities.Person;
-import com.example.mihael.vehiclemanapp.entities.PersonVehicleMapper;
 import com.example.mihael.vehiclemanapp.entities.Vehicle;
 import com.example.mihael.vehiclemanapp.helpers.InputValidator;
+import com.example.mihael.vehiclemanapp.helpers.LoginManager;
 import com.example.mihael.vehiclemanapp.helpers.SpinnerLoader;
-import com.example.mihael.vehiclemanapp.interfaces.SpinnerEventListener;
 
 import org.json.JSONObject;
 
@@ -90,7 +88,7 @@ public class AddPersonActivity extends AppCompatActivity {
 
         apiInterface = ApiClient.getApiClient().create(ApiInterface.class);
 
-        Call<Person> call = apiInterface.createPerson(person);
+        Call<Person> call = apiInterface.createPerson(LoginManager.getLogedInManagerToken(), person);
         call.enqueue(new Callback<Person>() {
             @Override
             public void onResponse(Call<Person> call, Response<Person> response) {

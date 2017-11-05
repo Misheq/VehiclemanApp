@@ -16,6 +16,7 @@ import com.example.mihael.vehiclemanapp.adaptors.VehicleRecyclerAdapter;
 import com.example.mihael.vehiclemanapp.api.ApiClient;
 import com.example.mihael.vehiclemanapp.api.ApiInterface;
 import com.example.mihael.vehiclemanapp.entities.Vehicle;
+import com.example.mihael.vehiclemanapp.helpers.LoginManager;
 
 import java.util.List;
 
@@ -59,7 +60,7 @@ public class VehiclesActivity extends AppCompatActivity {
         apiInterface = ApiClient.getApiClient().create(ApiInterface.class);
 
         // returns vehicle list
-        Call<List<Vehicle>> call = apiInterface.getVehicles();
+        Call<List<Vehicle>> call = apiInterface.getVehicles(LoginManager.getLogedInManagerToken());
         call.enqueue(new Callback<List<Vehicle>>() {
             @Override
             public void onResponse(Call<List<Vehicle>> call, Response<List<Vehicle>> response) {
@@ -86,7 +87,7 @@ public class VehiclesActivity extends AppCompatActivity {
 
         final int vehicleId = Integer.parseInt((String) button.getTag());
 
-        Call<Void> call = apiInterface.deleteVehicle(vehicleId);
+        Call<Void> call = apiInterface.deleteVehicle(LoginManager.getLogedInManagerToken(), vehicleId);
         call.enqueue(new Callback<Void>() {
             @Override
             public void onResponse(Call<Void> call, Response<Void> response) {
@@ -149,7 +150,7 @@ public class VehiclesActivity extends AppCompatActivity {
                 } else {
                     try {
                         JSONObject error = new JSONObject(response.errorBody().string());
-                        Toast.makeText(MainActivity.this,
+                        Toast.makeText(ManageActivity.this,
                                 "Status code: " + statusCode + "\n"
                                         + error.getString("error"), Toast.LENGTH_LONG).show();
                     } catch (Exception e) {

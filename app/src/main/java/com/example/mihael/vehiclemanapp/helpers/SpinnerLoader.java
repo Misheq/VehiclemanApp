@@ -29,10 +29,6 @@ import static com.example.mihael.vehiclemanapp.helpers.Constants.VEHICLE;
  * It also filters the objects to show only available vehicles and unassigned persons
  */
 
-    // TODO: only show persons without vehicles on personsSpinner and the currently assigned person
-    // TODO: only show vehicles without persons on vehiclesSpinner and the currently assigned vehicle
-    // TODO: check on backend if want to add vehicle that is assigned already to someone else (as double check)
-
 public class SpinnerLoader {
 
     private ApiInterface apiInterface;
@@ -59,7 +55,7 @@ public class SpinnerLoader {
         apiInterface = ApiClient.getApiClient().create(ApiInterface.class);
 
         // returns persons list
-        Call<List<Person>> call = apiInterface.getPersons();
+        Call<List<Person>> call = apiInterface.getPersons(LoginManager.getLogedInManagerToken()); // added auth
         call.enqueue(new Callback<List<Person>>() {
             @Override
             public void onResponse(Call<List<Person>> call, Response<List<Person>> response) {
@@ -110,7 +106,7 @@ public class SpinnerLoader {
         // returns vehicle list
         // should only return vehicles with no person and current person
 
-        Call<List<Vehicle>> call = apiInterface.getVehicles();
+        Call<List<Vehicle>> call = apiInterface.getVehicles(LoginManager.getLogedInManagerToken());
         call.enqueue(new Callback<List<Vehicle>>() {
             @Override
             public void onResponse(Call<List<Vehicle>> call, Response<List<Vehicle>> response) {

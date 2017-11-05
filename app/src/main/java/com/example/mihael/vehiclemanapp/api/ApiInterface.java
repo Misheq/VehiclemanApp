@@ -1,15 +1,15 @@
 package com.example.mihael.vehiclemanapp.api;
 
-import com.example.mihael.vehiclemanapp.entities.Manager;
 import com.example.mihael.vehiclemanapp.entities.Person;
-import com.example.mihael.vehiclemanapp.entities.PersonVehicleMapper;
 import com.example.mihael.vehiclemanapp.entities.Vehicle;
+
 import java.util.List;
 
 import retrofit2.Call;
 import retrofit2.http.Body;
 import retrofit2.http.DELETE;
 import retrofit2.http.GET;
+import retrofit2.http.Header;
 import retrofit2.http.POST;
 import retrofit2.http.PUT;
 import retrofit2.http.Path;
@@ -32,34 +32,42 @@ public interface ApiInterface {
     /*
     @GET("managers")
     Call<List<Manager>> getManagers();
-
-    @GET("managers/{id}")
-    Call<Manager> getManagerById(@Path("id") int id);
     */
+
+    // @GET("managers/{id}/persons")
+    // Call<List<Person>> getPersonsForManager(@Header("Authorization") String authHeader, @Path("id") int id);
 
     ///////// vehicle endpoints //////////
     @GET(VEHICLES)
-    Call<List<Vehicle>> getVehicles();
+    Call<List<Vehicle>> getVehicles(@Header("Authorization") String authHeader);
 
     @POST(VEHICLES)
-    Call<Vehicle> createVehicle(@Body Vehicle vehicle);
+    Call<Vehicle> createVehicle(@Header("Authorization") String authHeader, @Body Vehicle vehicle);
 
     @PUT(VEHICLES + SEPARATOR + ID_PARAM)
-    Call<Vehicle> updateVehicle(@Path(ID) int id, @Body Vehicle vehicle);
+    Call<Vehicle> updateVehicle(@Header("Authorization") String authHeader, @Path(ID) int id, @Body Vehicle vehicle);
 
     @DELETE(VEHICLES + SEPARATOR + ID_PARAM)
-    Call<Void> deleteVehicle(@Path(ID) int id);
+    Call<Void> deleteVehicle(@Header("Authorization") String authHeader, @Path(ID) int id);
 
     ////////// person endpoints //////////
+
+    //@GET(PERSONS)
+    //Call<List<Person>> getPersons();
+
     @GET(PERSONS)
-    Call<List<Person>> getPersons();
+    Call<List<Person>> getPersons(@Header("Authorization") String authHeader);
 
     @POST(PERSONS)
-    Call<Person> createPerson(@Body Person person);
+    Call<Person> createPerson(@Header("Authorization") String authHeader, @Body Person person);
 
     @PUT(PERSONS + SEPARATOR + ID_PARAM)
-    Call<Person> updatePerson(@Path(ID) int id, @Body Person person);
+    Call<Person> updatePerson(@Header("Authorization") String authHeader, @Path(ID) int id, @Body Person person);
 
     @DELETE(PERSONS + SEPARATOR + ID_PARAM)
-    Call<Void> deletePerson(@Path(ID) int id);
+    Call<Void> deletePerson(@Header("Authorization") String authHeader, @Path(ID) int id);
+
+    //////////// authorization /////////////
+    @GET("auth/login")
+    Call<Void> login(@Header("Authorization") String authHeader);
 }

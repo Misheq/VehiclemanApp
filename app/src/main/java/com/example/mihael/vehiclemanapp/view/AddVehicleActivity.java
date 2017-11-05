@@ -1,10 +1,9 @@
 package com.example.mihael.vehiclemanapp.view;
 
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
-import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.Toast;
@@ -13,15 +12,12 @@ import com.example.mihael.vehiclemanapp.R;
 import com.example.mihael.vehiclemanapp.api.ApiClient;
 import com.example.mihael.vehiclemanapp.api.ApiInterface;
 import com.example.mihael.vehiclemanapp.entities.Person;
-import com.example.mihael.vehiclemanapp.entities.PersonVehicleMapper;
 import com.example.mihael.vehiclemanapp.entities.Vehicle;
 import com.example.mihael.vehiclemanapp.helpers.InputValidator;
+import com.example.mihael.vehiclemanapp.helpers.LoginManager;
 import com.example.mihael.vehiclemanapp.helpers.SpinnerLoader;
 
 import org.json.JSONObject;
-
-import java.util.ArrayList;
-import java.util.List;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -81,7 +77,7 @@ public class AddVehicleActivity extends AppCompatActivity {
 
         apiInterface = ApiClient.getApiClient().create(ApiInterface.class);
 
-        Call<Vehicle> call = apiInterface.createVehicle(vehicle);
+        Call<Vehicle> call = apiInterface.createVehicle(LoginManager.getLogedInManagerToken(), vehicle);
         call.enqueue(new Callback<Vehicle>() {
             @Override
             public void onResponse(Call<Vehicle> call, Response<Vehicle> response) {

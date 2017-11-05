@@ -15,6 +15,7 @@ import com.example.mihael.vehiclemanapp.api.ApiInterface;
 import com.example.mihael.vehiclemanapp.entities.Person;
 import com.example.mihael.vehiclemanapp.entities.Vehicle;
 import com.example.mihael.vehiclemanapp.helpers.InputValidator;
+import com.example.mihael.vehiclemanapp.helpers.LoginManager;
 import com.example.mihael.vehiclemanapp.helpers.SpinnerLoader;
 import com.example.mihael.vehiclemanapp.interfaces.SpinnerEventListener;
 
@@ -150,7 +151,7 @@ public class EditPersonActivity extends AppCompatActivity {
 
         ApiInterface apiInterface = ApiClient.getApiClient().create(ApiInterface.class);
 
-        Call<Person> call = apiInterface.updatePerson(person.getPersonId(), person);
+        Call<Person> call = apiInterface.updatePerson(LoginManager.getLogedInManagerToken(), person.getPersonId(), person);
         call.enqueue(new Callback<Person>() {
             @Override
             public void onResponse(Call<Person> call, Response<Person> response) {

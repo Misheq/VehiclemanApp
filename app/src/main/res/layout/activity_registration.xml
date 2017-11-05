@@ -4,11 +4,11 @@
     android:layout_height="match_parent">
 
     <TextView
-        android:id="@+id/titleAdd"
+        android:id="@+id/titleRegister"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentTop="true"
-        android:text="Add"
+        android:text="Register"
         android:textSize="40dp"
         android:layout_marginTop="25dp"
         android:layout_centerHorizontal="true"
@@ -16,8 +16,8 @@
         />
 
     <TextView
-        android:id="@+id/navSave"
-        android:text="Save"
+        android:id="@+id/navConfirm"
+        android:text="confirm"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textAllCaps="false"
@@ -26,7 +26,7 @@
         android:layout_alignParentTop="true"
         android:layout_marginTop="20dp"
         android:layout_marginRight="20dp"
-        android:onClick="setPersonFromForm"
+        android:onClick="setManagerFromForm"
         />
 
     <EditText
@@ -35,7 +35,7 @@
         android:layout_height="40dp"
         android:layout_marginTop="20dp"
         android:layout_marginLeft="20dp"
-        android:layout_below="@id/titleAdd"
+        android:layout_below="@id/titleRegister"
         android:hint="First name"
         android:inputType="textCapSentences"
         android:layout_alignParentStart="true" />
@@ -52,23 +52,12 @@
         android:layout_alignParentStart="true" />
 
     <EditText
-        android:id="@+id/inputEmail"
-        android:layout_width="300dp"
-        android:layout_height="40dp"
-        android:layout_marginTop="20dp"
-        android:layout_marginLeft="20dp"
-        android:layout_below="@id/inputLastName"
-        android:hint="Email"
-        android:inputType="textEmailAddress"
-        android:layout_alignParentStart="true" />
-
-    <EditText
         android:id="@+id/inputPhone"
         android:layout_width="300dp"
         android:layout_height="40dp"
         android:layout_marginTop="20dp"
         android:layout_marginLeft="20dp"
-        android:layout_below="@id/inputEmail"
+        android:layout_below="@id/inputLastName"
         android:hint="Phone"
         android:inputType="phone"
         android:layout_alignParentStart="true" />
@@ -83,14 +72,37 @@
         android:hint="Company"
         android:layout_alignParentStart="true" />
 
-    <Spinner
-        android:id="@+id/spinnerVehicles"
+    <EditText
+        android:id="@+id/inputEmail"
         android:layout_width="300dp"
         android:layout_height="40dp"
         android:layout_marginTop="20dp"
         android:layout_marginLeft="20dp"
         android:layout_below="@id/inputCompany"
-        android:layout_alignParentStart="true"
-        />
+        android:hint="Email"
+        android:inputType="textEmailAddress"
+        android:layout_alignParentStart="true" />
+
+    <EditText
+        android:id="@+id/inputPassword"
+        android:layout_width="300dp"
+        android:layout_height="40dp"
+        android:layout_marginTop="20dp"
+        android:layout_marginLeft="20dp"
+        android:layout_below="@id/inputEmail"
+        android:hint="Password"
+        android:inputType="textPassword"
+        android:layout_alignParentStart="true" />
+
+    <EditText
+        android:id="@+id/inputConfirmPassword"
+        android:layout_width="300dp"
+        android:layout_height="40dp"
+        android:layout_marginTop="20dp"
+        android:layout_marginLeft="20dp"
+        android:layout_below="@id/inputPassword"
+        android:hint="Confirm password"
+        android:inputType="textPassword"
+        android:layout_alignParentStart="true" />
 
 </RelativeLayout>

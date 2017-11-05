@@ -6,17 +6,18 @@ import android.os.Bundle;
 import android.view.View;
 
 import com.example.mihael.vehiclemanapp.R;
+import com.example.mihael.vehiclemanapp.helpers.LoginManager;
 
 /**
  * Main activity responsible for navigating between screens
  */
 
-public class MainActivity extends AppCompatActivity {
+public class ManageActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.manage);
+        setContentView(R.layout.activity_manage);
     }
 
     public void startVehicleActivity(View view) {
@@ -27,5 +28,12 @@ public class MainActivity extends AppCompatActivity {
     public void startPersonActivity(View view) {
         Intent intent = new Intent(this, PersonsActivity.class);
         startActivity(intent);
+    }
+
+    public void logout(View view) {
+        LoginManager.setLogedInManagerToken("");
+        Intent intent = new Intent(this, LoginActivity.class);
+        startActivity(intent);
+        // TODO: back button should not let in!
     }
 }

@@ -56,7 +56,8 @@
             android:layout_height="65dp"
             android:textSize="18sp"
             android:textAllCaps="false"
-            android:text="Logout" />
+            android:text="Logout"
+            android:onClick="logout"/>
 
     </LinearLayout>
 </RelativeLayout>

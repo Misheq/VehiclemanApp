@@ -1,9 +1,8 @@
 package com.example.mihael.vehiclemanapp.view;
 
-import android.content.Context;
 import android.content.Intent;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -17,7 +16,7 @@ import com.example.mihael.vehiclemanapp.adaptors.PersonRecyclerAdapter;
 import com.example.mihael.vehiclemanapp.api.ApiClient;
 import com.example.mihael.vehiclemanapp.api.ApiInterface;
 import com.example.mihael.vehiclemanapp.entities.Person;
-import com.example.mihael.vehiclemanapp.interfaces.ItemDeleteListener;
+import com.example.mihael.vehiclemanapp.helpers.LoginManager;
 
 import java.util.List;
 
@@ -57,7 +56,7 @@ public class PersonsActivity extends AppCompatActivity {
         apiInterface = ApiClient.getApiClient().create(ApiInterface.class);
 
         // returns manager list
-        Call<List<Person>> call = apiInterface.getPersons();
+        Call<List<Person>> call = apiInterface.getPersons(LoginManager.getLogedInManagerToken()); // added auth token
         call.enqueue(new Callback<List<Person>>() {
             @Override
             public void onResponse(Call<List<Person>> call, Response<List<Person>> response) {
@@ -90,7 +89,7 @@ public class PersonsActivity extends AppCompatActivity {
 
         int personId = Integer.parseInt((String) button.getTag());
 
-        Call<Void> call = apiInterface.deletePerson(personId);
+        Call<Void> call = apiInterface.deletePerson(LoginManager.getLogedInManagerToken(), personId);
         call.enqueue(new Callback<Void>() {
             @Override
             public void onResponse(Call<Void> call, Response<Void> response) {
