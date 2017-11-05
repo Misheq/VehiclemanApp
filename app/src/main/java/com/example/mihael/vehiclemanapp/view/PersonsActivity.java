@@ -56,7 +56,7 @@ public class PersonsActivity extends AppCompatActivity {
         apiInterface = ApiClient.getApiClient().create(ApiInterface.class);
 
         // returns manager list
-        Call<List<Person>> call = apiInterface.getPersons(LoginManager.getLogedInManagerToken()); // added auth token
+        Call<List<Person>> call = apiInterface.getPersonsForManager(LoginManager.getLogedInManagerToken(), LoginManager.getManagerId()); // was getPersons
         call.enqueue(new Callback<List<Person>>() {
             @Override
             public void onResponse(Call<List<Person>> call, Response<List<Person>> response) {

@@ -60,7 +60,7 @@ public class VehiclesActivity extends AppCompatActivity {
         apiInterface = ApiClient.getApiClient().create(ApiInterface.class);
 
         // returns vehicle list
-        Call<List<Vehicle>> call = apiInterface.getVehicles(LoginManager.getLogedInManagerToken());
+        Call<List<Vehicle>> call = apiInterface.getVehiclesForManager(LoginManager.getLogedInManagerToken(), LoginManager.getManagerId());
         call.enqueue(new Callback<List<Vehicle>>() {
             @Override
             public void onResponse(Call<List<Vehicle>> call, Response<List<Vehicle>> response) {

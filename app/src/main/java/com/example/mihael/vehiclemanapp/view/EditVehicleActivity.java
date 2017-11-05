@@ -122,6 +122,7 @@ public class EditVehicleActivity extends AppCompatActivity {
         if(inVal.isVehicleInputValid()) {
             vehicle.setVehicleType(type.getText().toString());
             vehicle.setRegistrationNumber(registration.getText().toString());
+            vehicle.setManagerId(LoginManager.getManagerId());
 
             Log.d("UPDATE", "Vehicle updated");
 

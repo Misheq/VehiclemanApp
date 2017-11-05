@@ -77,6 +77,7 @@ public class AddPersonActivity extends AppCompatActivity {
             person.setEmail(email.getText().toString());
             person.setPhone(phone.getText().toString());
             person.setCompanyName(company.getText().toString());
+            person.setManagerId(LoginManager.getManagerId());
 
             Log.d("ADD", "Person created");
 

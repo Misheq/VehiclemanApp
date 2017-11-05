@@ -11,6 +11,8 @@ import android.widget.Toast;
 import com.example.mihael.vehiclemanapp.R;
 import com.example.mihael.vehiclemanapp.api.ApiClient;
 import com.example.mihael.vehiclemanapp.api.ApiInterface;
+import com.example.mihael.vehiclemanapp.entities.Manager;
+import com.example.mihael.vehiclemanapp.helpers.InputValidator;
 import com.example.mihael.vehiclemanapp.helpers.LoginManager;
 
 import retrofit2.Call;
@@ -19,10 +21,13 @@ import retrofit2.Response;
 
 public class LoginActivity extends AppCompatActivity {
 
+    View view;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
+        view = getWindow().getDecorView().getRootView();
     }
 
     public void setLoginDataFromForm(View view) {
@@ -33,12 +38,21 @@ public class LoginActivity extends AppCompatActivity {
         String email = inputEmail.getText().toString();
         String password = inputPassword.getText().toString();
 
-        String base = email + ":" + password;
-        String auth = "Basic " + Base64.encodeToString(base.getBytes(), Base64.NO_WRAP);
+        InputValidator inVal = new InputValidator(this.view);
 
-        LoginManager.setLogedInManagerToken(auth);
-        loginWithManager();
-        //loginWithManager(auth);
+        if(inVal.isLoginValid()) {
+            String base = email + ":" + password;
+            String auth = "Basic " + Base64.encodeToString(base.getBytes(), Base64.NO_WRAP);
+
+            LoginManager.setLogedInManagerToken(auth);
+            // TODO: save hash to user preferences, user can stay loged in if it is not empty, and empty shared preferences when user clicks on logout in manage screen
+            loginWithManager(email);
+        }
+    }
+
+    public void startRegisterActivity(View view) {
+        Intent intent = new Intent(this, RegistrationActivity.class);
+        startActivity(intent);
     }
 
     private void startManageActivity() {
@@ -46,17 +60,20 @@ public class LoginActivity extends AppCompatActivity {
         startActivity(intent);
     }
 
-    private void loginWithManager() {
+    private void loginWithManager(String email) {
 
         ApiInterface apiInterface = ApiClient.getApiClient().create(ApiInterface.class);
 
-        Call<Void> call = apiInterface.login(LoginManager.getLogedInManagerToken());
-        call.enqueue(new Callback<Void>() {
+        Call<Manager> call = apiInterface.login(LoginManager.getLogedInManagerToken(), email);
+        call.enqueue(new Callback<Manager>() {
             @Override
-            public void onResponse(Call<Void> call, Response<Void> response) {
+            public void onResponse(Call<Manager> call, Response<Manager> response) {
 
                 if(response.code() == 200) {
                     Toast.makeText(LoginActivity.this, "Login was successful\nCode: " + response.code() , Toast.LENGTH_SHORT).show();
+                    Manager manager = response.body();
+                    // save or pass to activity
+                    LoginManager.setManagerId(manager.getManagerId());
                     startManageActivity();
 
                 } else {
@@ -65,7 +82,7 @@ public class LoginActivity extends AppCompatActivity {
             }
 
             @Override
-            public void onFailure(Call<Void> call, Throwable t) {
+            public void onFailure(Call<Manager> call, Throwable t) {
                 Toast.makeText(LoginActivity.this, "Login error", Toast.LENGTH_SHORT).show();
             }
         });

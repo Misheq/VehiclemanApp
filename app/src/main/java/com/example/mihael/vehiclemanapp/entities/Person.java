@@ -19,6 +19,7 @@ public class Person implements Serializable {
     private String companyName = "";
     private String phone = "";
     private List<Vehicle> vehicles;
+    private int managerId;
 
     public Person() {
         vehicles = new ArrayList<>();
@@ -78,6 +79,14 @@ public class Person implements Serializable {
 
     public void setPhone(String phone) {
         this.phone = phone;
+    }
+
+    public int getManagerId() {
+        return managerId;
+    }
+
+    public void setManagerId(int managerId) {
+        this.managerId = managerId;
     }
 
     @Override

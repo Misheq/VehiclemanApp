@@ -8,11 +8,17 @@ public class Constants {
 
     // api constants
     public static final String MANAGERS = "managers";
+    public static final String AUTHORIZATION = "Authorization";
     public static final String PERSONS = "persons";
     public static final String VEHICLES = "vehicles";
     public static final String SEPARATOR = "/";
     public static final String ID = "id";
     public static final String ID_PARAM = "{id}";
+    public static final String EMAIL = "email";
+    public static final String EMAIL_PARAM = "{email}";
+    public static final String AUTH = "auth";
+    public static final String LOGIN = "login";
+    public static final String REGISTER = "register";
 
     // server constants
     public static final String DOMAIN = "192.168.0.104";

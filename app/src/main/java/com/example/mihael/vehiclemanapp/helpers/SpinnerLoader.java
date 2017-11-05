@@ -55,7 +55,7 @@ public class SpinnerLoader {
         apiInterface = ApiClient.getApiClient().create(ApiInterface.class);
 
         // returns persons list
-        Call<List<Person>> call = apiInterface.getPersons(LoginManager.getLogedInManagerToken()); // added auth
+        Call<List<Person>> call = apiInterface.getPersonsForManager(LoginManager.getLogedInManagerToken(), LoginManager.getManagerId()); // added auth
         call.enqueue(new Callback<List<Person>>() {
             @Override
             public void onResponse(Call<List<Person>> call, Response<List<Person>> response) {
@@ -106,7 +106,7 @@ public class SpinnerLoader {
         // returns vehicle list
         // should only return vehicles with no person and current person
 
-        Call<List<Vehicle>> call = apiInterface.getVehicles(LoginManager.getLogedInManagerToken());
+        Call<List<Vehicle>> call = apiInterface.getVehiclesForManager(LoginManager.getLogedInManagerToken(), LoginManager.getManagerId());
         call.enqueue(new Callback<List<Vehicle>>() {
             @Override
             public void onResponse(Call<List<Vehicle>> call, Response<List<Vehicle>> response) {

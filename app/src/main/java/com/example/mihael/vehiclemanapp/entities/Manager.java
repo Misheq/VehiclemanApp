@@ -13,6 +13,7 @@ public class Manager {
     private String email;
     private String phone;
     private String companyName;
+    private String password;
 
     public Manager() {
 
@@ -64,5 +65,13 @@ public class Manager {
 
     public void setCompanyName(String companyName) {
         this.companyName = companyName;
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
     }
 }

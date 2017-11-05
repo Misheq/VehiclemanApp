@@ -34,6 +34,5 @@ public class ManageActivity extends AppCompatActivity {
         LoginManager.setLogedInManagerToken("");
         Intent intent = new Intent(this, LoginActivity.class);
         startActivity(intent);
-        // TODO: back button should not let in!
     }
 }
