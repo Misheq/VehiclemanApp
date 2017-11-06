@@ -21,19 +21,37 @@ import retrofit2.Response;
 
 public class LoginActivity extends AppCompatActivity {
 
-    View view;
+    private View view;
+    private EditText inputEmail;
+    private EditText inputPassword;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
         view = getWindow().getDecorView().getRootView();
+
+        Intent intent = getIntent();
+
+        final Manager manager = (Manager) intent.getSerializableExtra("manager");
+
+        if(manager != null) {
+            setFormFromManager(manager);
+        }
+    }
+
+    private void setFormFromManager(Manager manager) {
+        inputEmail = findViewById(R.id.inputEmail);
+        inputPassword = findViewById(R.id.inputPassword);
+
+        inputEmail.setText(manager.getEmail());
+        inputPassword.setText(manager.getPassword());
     }
 
     public void setLoginDataFromForm(View view) {
 
-        EditText inputEmail = findViewById(R.id.inputEmail);
-        EditText inputPassword = findViewById(R.id.inputPassword);
+        inputEmail = findViewById(R.id.inputEmail);
+        inputPassword = findViewById(R.id.inputPassword);
 
         String email = inputEmail.getText().toString();
         String password = inputPassword.getText().toString();

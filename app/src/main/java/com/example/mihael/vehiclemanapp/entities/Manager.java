@@ -1,11 +1,13 @@
 package com.example.mihael.vehiclemanapp.entities;
 
+import java.io.Serializable;
+
 /**
  * Manager model representation
  * This is the user of the app
  */
 
-public class Manager {
+public class Manager implements Serializable {
 
     private int managerId;
     private String firstName;

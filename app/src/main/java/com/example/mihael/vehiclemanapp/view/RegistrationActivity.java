@@ -65,13 +65,16 @@ public class RegistrationActivity extends AppCompatActivity {
         }
     }
 
-    private void startManageActivity() {
-        Intent intent = new Intent(getApplicationContext(), ManageActivity.class);
+    private void startLoginActivity(Manager manager) {
+        Intent intent = new Intent(getApplicationContext(), LoginActivity.class);
+        intent.putExtra("manager", manager);
         startActivity(intent);
     }
     // TODO: after registration user can not read persons and vehicles (401 forbidden)
 
     private void registerManager(Manager manager) {
+
+        final String password = manager.getPassword();
 
         ApiInterface apiInterface = ApiClient.getApiClient().create(ApiInterface.class);
 
@@ -87,7 +90,11 @@ public class RegistrationActivity extends AppCompatActivity {
 
                     Manager manager = response.body();
                     LoginManager.setManagerId(manager.getManagerId());
-                    startManageActivity();
+
+                    // set password back to plain text to be able to login since i dont go to manage activity from this screen
+                    // workaround
+                    manager.setPassword(password);
+                    startLoginActivity(manager);
 
                 } else {
                     try {
