@@ -48,6 +48,9 @@ public class AddVehicleActivity extends AppCompatActivity {
     public void setVehicleFromForm(View view) {
         EditText type = findViewById(R.id.inputType);
         EditText registration = findViewById(R.id.inputRegistration);
+        EditText color = findViewById(R.id.inputColor);
+        EditText description = findViewById(R.id.inputDescription);
+       // DatePicker servicingDate = findViewById(R.id.inputServicingDate);
         Spinner personsSpinner = findViewById(R.id.spinnerPersons);
 
         Object selectedPerson = personsSpinner.getSelectedItem();
@@ -69,6 +72,9 @@ public class AddVehicleActivity extends AppCompatActivity {
             vehicle.setVehicleType(type.getText().toString());
             vehicle.setRegistrationNumber(registration.getText().toString());
             vehicle.setManagerId(LoginManager.getManagerId());
+            vehicle.setColor(color.getText().toString());
+            vehicle.setDescription(description.getText().toString());
+            //vehicle.setServicingDate(servicingDate.toString());
 
             saveVehicle(vehicle);
         }

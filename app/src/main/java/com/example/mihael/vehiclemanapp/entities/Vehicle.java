@@ -16,6 +16,9 @@ public class Vehicle implements Serializable {
     private String assigneeId;
     private Person person;
     private int managerId;
+    private String color;
+    private String description;
+    private String servicingDate;
 
     public Vehicle() {
 
@@ -59,6 +62,30 @@ public class Vehicle implements Serializable {
 
     public void setAssigneeId(String assigneeId) {
         this.assigneeId = assigneeId;
+    }
+
+    public String getColor() {
+        return color;
+    }
+
+    public void setColor(String color) {
+        this.color = color;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
+    public String getServicingDate() {
+        return servicingDate;
+    }
+
+    public void setServicingDate(String servicingDate) {
+        this.servicingDate = servicingDate;
     }
 
     public Person getPerson() {

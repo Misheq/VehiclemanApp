@@ -1,8 +1,8 @@
 package com.example.mihael.vehiclemanapp.view;
 
 import android.content.Intent;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
@@ -41,6 +41,9 @@ public class EditVehicleActivity extends AppCompatActivity {
     private SpinnerLoader spinnerLoader;
     private EditText type;
     private EditText registration;
+    private EditText color;
+    private EditText description;
+    //private DatePicker servicingDate;
 
     private int passedVehicleId;
 
@@ -73,9 +76,14 @@ public class EditVehicleActivity extends AppCompatActivity {
         type = findViewById(R.id.inputType);
         registration = findViewById(R.id.inputRegistration);
         spinnerWithPersons = spinnerLoader.getPersonsSpinner();
+        color = findViewById(R.id.inputColor);
+        description = findViewById(R.id.inputDescription);
+        //servicingDate = findViewById(R.id.inputServicingDate);
 
         type.setText(vehicle.getVehicleType());
         registration.setText(vehicle.getRegistrationNumber());
+        color.setText(vehicle.getColor());
+        description.setText(vehicle.getDescription());
 
         int personPosition = 0;
 
@@ -107,6 +115,9 @@ public class EditVehicleActivity extends AppCompatActivity {
         type = findViewById(R.id.inputType);
         registration = findViewById(R.id.inputRegistration);
         spinnerWithPersons = findViewById(R.id.spinnerPersons);
+        color = findViewById(R.id.inputColor);
+        description = findViewById(R.id.inputDescription);
+        //servicingDate = findViewById(R.id.inputServicingDate);
 
         Object selectedPerson = spinnerWithPersons.getSelectedItem();
 
@@ -123,6 +134,9 @@ public class EditVehicleActivity extends AppCompatActivity {
             vehicle.setVehicleType(type.getText().toString());
             vehicle.setRegistrationNumber(registration.getText().toString());
             vehicle.setManagerId(LoginManager.getManagerId());
+            vehicle.setColor(color.getText().toString());
+            vehicle.setDescription(description.getText().toString());
+            //vehicle.setServicingDate(servicingDate.toString());
 
             Log.d("UPDATE", "Vehicle updated");
 
