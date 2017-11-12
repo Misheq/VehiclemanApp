@@ -1,5 +1,8 @@
 package com.example.mihael.vehiclemanapp.view;
 
+import android.app.AlertDialog;
+import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
@@ -35,6 +38,7 @@ public class PersonsActivity extends AppCompatActivity {
     private PersonRecyclerAdapter personRecyclerAdapter;
     private List<Person> persons;
     private ApiInterface apiInterface;
+    private final Context context = this;
 
 
     @Override
@@ -83,11 +87,39 @@ public class PersonsActivity extends AppCompatActivity {
         startActivity(intent);
     }
 
-    public void deletePersonById(View view) {
+    public void alertForDelete(final View view) {
+        AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(
+                context);
 
-        Button button = view.findViewById(R.id.buttonDelete);
+        // set title
+        alertDialogBuilder.setTitle("Delete confirmation");
 
-        int personId = Integer.parseInt((String) button.getTag());
+        // set dialog message
+        alertDialogBuilder
+                .setMessage("Are you sure you want to delete this element?")
+                .setCancelable(false)
+                .setPositiveButton("Yes",new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog,int id) {
+                        Button button = view.findViewById(R.id.buttonDelete);
+                        int personId = Integer.parseInt((String) button.getTag());
+
+                        deletePersonById(personId);
+                    }
+                })
+                .setNegativeButton("No",new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int id) {
+                        dialog.cancel();
+                    }
+                });
+
+        // create alert dialog
+        AlertDialog alertDialog = alertDialogBuilder.create();
+
+        // show it
+        alertDialog.show();
+    }
+
+    private void deletePersonById(int personId) {
 
         Call<Void> call = apiInterface.deletePerson(LoginManager.getLogedInManagerToken(), personId);
         call.enqueue(new Callback<Void>() {

@@ -48,7 +48,7 @@
         android:layout_height="45dp"
         android:text="@string/button_delete"
         android:textAllCaps="false"
-        android:onClick="deletePersonById"
+        android:onClick="alertForDelete"
         />
 
 </LinearLayout>
