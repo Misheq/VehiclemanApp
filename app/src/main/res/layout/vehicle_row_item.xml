@@ -11,25 +11,12 @@
         android:layout_width="0dp"
         android:layout_weight="1"
         android:layout_height="match_parent"
-        android:text="id"
+        android:text="@string/hint_type"
         android:textAlignment="center"
-        android:textSize="14dp"
+        android:textSize="14sp"
         android:textStyle="bold"
         android:gravity="center_vertical"
-        android:layout_marginLeft="10dp"
-        android:id="@+id/id"
-        />
-
-    <TextView
-        android:layout_width="0dp"
-        android:layout_weight="1"
-        android:layout_height="match_parent"
-        android:text="type"
-        android:textAlignment="center"
-        android:textSize="14dp"
-        android:textStyle="bold"
-        android:gravity="center_vertical"
-        android:layout_marginLeft="10dp"
+        android:layout_marginStart="10dp"
         android:id="@+id/type"
         />
 
@@ -37,12 +24,12 @@
         android:layout_width="0dp"
         android:layout_weight="1"
         android:layout_height="match_parent"
-        android:text="registration"
+        android:text="@string/hint_plate_number"
         android:textAlignment="center"
-        android:textSize="14dp"
+        android:textSize="14sp"
         android:textStyle="bold"
         android:gravity="center_vertical"
-        android:layout_marginLeft="10dp"
+        android:layout_marginStart="10dp"
         android:id="@+id/reg"
         />
 
@@ -51,7 +38,7 @@
         android:layout_width="0dp"
         android:layout_weight="1"
         android:layout_height="45dp"
-        android:text="delete"
+        android:text="@string/button_delete"
         android:textAllCaps="false"
         android:onClick="deleteVehicleById"
         />

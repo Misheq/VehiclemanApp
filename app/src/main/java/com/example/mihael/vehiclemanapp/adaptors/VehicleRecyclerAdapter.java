@@ -2,13 +2,11 @@ package com.example.mihael.vehiclemanapp.adaptors;
 
 import android.content.Intent;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.example.mihael.vehiclemanapp.R;
 import com.example.mihael.vehiclemanapp.entities.Vehicle;
@@ -39,7 +37,6 @@ public class VehicleRecyclerAdapter extends RecyclerView.Adapter<VehicleRecycler
 
     @Override
     public void onBindViewHolder(MyViewHolder holder, int position) {
-        holder.id.setText(String.valueOf(vehicles.get(position).getVehicleId()));
         holder.type.setText(vehicles.get(position).getVehicleType());
         holder.reg.setText(vehicles.get(position).getRegistrationNumber());
         holder.deleteButton.setTag(String.valueOf(vehicles.get(position).getVehicleId()));
@@ -51,12 +48,11 @@ public class VehicleRecyclerAdapter extends RecyclerView.Adapter<VehicleRecycler
     }
 
     public class MyViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener{
-        TextView id, type, reg;
+        TextView type, reg;
         Button deleteButton;
 
-        public MyViewHolder(View itemView) {
+        MyViewHolder(View itemView) {
             super(itemView);
-            id = itemView.findViewById(R.id.id);
             type = itemView.findViewById(R.id.type);
             reg = itemView.findViewById(R.id.reg);
             deleteButton = itemView.findViewById(R.id.buttonDelete);

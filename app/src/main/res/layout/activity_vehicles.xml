@@ -8,8 +8,8 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentTop="true"
-        android:text="Vehicles"
-        android:textSize="40dp"
+        android:text="@string/title_vehicles"
+        android:textSize="40sp"
         android:layout_marginTop="25dp"
         android:layout_centerHorizontal="true"
         android:textAlignment="center"
@@ -17,31 +17,21 @@
 
     <TextView
         android:id="@+id/navAddVehicle"
-        android:text="Add +"
+        android:text="@string/button_new"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textAllCaps="false"
         android:textSize="20sp"
-        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true"
         android:layout_alignParentTop="true"
         android:layout_marginTop="20dp"
-        android:layout_marginRight="20dp"
+        android:layout_marginEnd="20dp"
         android:onClick="startAddVehicleActivity"
         />
 
-    <SearchView
-        android:id="@+id/searchVehicle"
-        android:layout_width="300dp"
-        android:layout_height="40dp"
-        android:layout_centerHorizontal="true"
-        android:layout_below="@id/titleVehicles"
-        android:layout_marginTop="30dp"
-        android:background="#dddddd"
-        ></SearchView>
-
     <android.support.v7.widget.RecyclerView
         android:id="@+id/recyclerView"
-        android:layout_below="@id/searchVehicle"
+        android:layout_below="@+id/titleVehicles"
         android:layout_marginTop="20dp"
         android:layout_width="match_parent"
         android:layout_height="match_parent"

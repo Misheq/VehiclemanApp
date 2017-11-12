@@ -8,8 +8,8 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentTop="true"
-        android:text="Manage"
-        android:textSize="40dp"
+        android:text="@string/title_manage"
+        android:textSize="40sp"
         android:layout_marginTop="25dp"
         android:layout_centerHorizontal="true"
         android:textAlignment="center"
@@ -19,7 +19,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        android:layout_below="@id/titleManage"
+        android:layout_below="@+id/titleManage"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="80dp"
         >
@@ -30,7 +30,7 @@
             android:layout_height="65dp"
             android:textSize="18sp"
             android:textAllCaps="false"
-            android:text="Profile" />
+            android:text="@string/button_profile" />
 
         <Button
             android:layout_marginBottom="5dp"
@@ -39,7 +39,7 @@
             android:textSize="18sp"
             android:textAllCaps="false"
             android:onClick="startPersonActivity"
-            android:text="Persons" />
+            android:text="@string/button_persons" />
 
         <Button
             android:layout_marginTop="5dp"
@@ -48,7 +48,7 @@
             android:textSize="18sp"
             android:textAllCaps="false"
             android:onClick="startVehicleActivity"
-            android:text="Vehicles" />
+            android:text="@string/button_vehicles" />
 
         <Button
             android:layout_marginTop="5dp"
@@ -56,7 +56,7 @@
             android:layout_height="65dp"
             android:textSize="18sp"
             android:textAllCaps="false"
-            android:text="Logout"
+            android:text="@string/button_logout"
             android:onClick="logout"/>
 
     </LinearLayout>

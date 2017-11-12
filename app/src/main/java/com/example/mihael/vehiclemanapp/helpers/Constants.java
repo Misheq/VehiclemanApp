@@ -20,10 +20,11 @@ public class Constants {
     public static final String LOGIN = "login";
     public static final String REGISTER = "register";
 
-    // server constants
+    // server constants (local)
     public static final String DOMAIN = "192.168.0.104";
     public static final String PORT = ":3334";
-    public static final String BASE_URL = "http://" + DOMAIN + PORT + "/vehicleman/api/";
+    public static final String LOCAL_URL = "http://" + DOMAIN + PORT + "/vehicleman/api/";
+    public static final String SERVICE_URL = "https://vehiclemani333373trial.hanatrial.ondemand.com/vehicleman/api/";
 
     // spinner constants
     public static final String SELECT_VEHICLE = "Select vehicle";

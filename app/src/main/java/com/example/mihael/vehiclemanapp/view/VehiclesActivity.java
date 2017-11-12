@@ -109,32 +109,7 @@ public class VehiclesActivity extends AppCompatActivity {
     }
 }
 
- /*
-        recyclerView = findViewById(R.id.recyclerView);
-        layoutManager = new LinearLayoutManager(this);
-        recyclerView.setLayoutManager(layoutManager);
-        recyclerView.setHasFixedSize(true);
-
-        apiInterface = ApiClient.getApiClient().create(ApiInterface.class);
-
-        // returns manager list
-        Call<List<Manager>> call = apiInterface.getManagers();
-        call.enqueue(new Callback<List<Manager>>() {
-            @Override
-            public void onResponse(Call<List<Manager>> call, Response<List<Manager>> response) {
-                int statusCode = response.code();
-                managers = response.body();
-                managerRecyclerAdapter = new ManagerRecyclerAdapter(managers);
-                recyclerView.setAdapter(managerRecyclerAdapter);
-            }
-
-            @Override
-            public void onFailure(Call<List<Manager>> call, Throwable t) {
-                Log.d("MYTAG","something is wrong");
-            }
-        });
-
-
+    /*
         // returns manager by id
         Call<Manager> call = apiInterface.getManagerById(1);
         call.enqueue(new Callback<Manager>() {
@@ -145,8 +120,6 @@ public class VehiclesActivity extends AppCompatActivity {
                     manager = response.body();
                     managers = new ArrayList<Manager>();
                     managers.add(manager);
-                    managerRecyclerAdapter = new ManagerRecyclerAdapter(managers);
-                    recyclerView.setAdapter(managerRecyclerAdapter);
                 } else {
                     try {
                         JSONObject error = new JSONObject(response.errorBody().string());

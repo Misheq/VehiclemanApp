@@ -3,7 +3,7 @@ package com.example.mihael.vehiclemanapp.api;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
-import static com.example.mihael.vehiclemanapp.helpers.Constants.BASE_URL;
+import static com.example.mihael.vehiclemanapp.helpers.Constants.SERVICE_URL;
 
 /**
  * Retrofit api client for handling api calls
@@ -12,13 +12,13 @@ import static com.example.mihael.vehiclemanapp.helpers.Constants.BASE_URL;
 
 public class ApiClient {
 
-    public static Retrofit retrofit = null;
+    private static Retrofit retrofit = null;
 
     public static Retrofit getApiClient() {
 
         if(retrofit == null) {
             retrofit = new Retrofit.Builder()
-                    .baseUrl(BASE_URL)
+                    .baseUrl(SERVICE_URL)
                     .addConverterFactory(GsonConverterFactory.create())
                     .build();
         }
