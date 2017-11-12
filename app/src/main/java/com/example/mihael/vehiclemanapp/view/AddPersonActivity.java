@@ -113,6 +113,7 @@ public class AddPersonActivity extends AppCompatActivity {
 
             @Override
             public void onFailure(Call<Person> call, Throwable t) {
+                Toast.makeText(AddPersonActivity.this, "Something went wrong", Toast.LENGTH_LONG).show();
                 Log.d("MY_ERROR", "something is wrong with person create");
             }
         });

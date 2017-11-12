@@ -93,7 +93,7 @@ public class VehiclesActivity extends AppCompatActivity {
             public void onResponse(Call<Void> call, Response<Void> response) {
                 int statusCode = response.code();
                 if(statusCode == 204) {
-                    Toast.makeText(VehiclesActivity.this, "Vehicle deleted successfully. Id: " + vehicleId , Toast.LENGTH_SHORT).show();
+                    Toast.makeText(VehiclesActivity.this, "Vehicle deleted successfully.", Toast.LENGTH_SHORT).show();
                     loadVehicleList();
                 } else {
                     Toast.makeText(VehiclesActivity.this, "Delete failed", Toast.LENGTH_SHORT).show();
@@ -102,7 +102,7 @@ public class VehiclesActivity extends AppCompatActivity {
 
             @Override
             public void onFailure(Call<Void> call, Throwable t) {
-                Toast.makeText(VehiclesActivity.this, "Delete failed on failure", Toast.LENGTH_SHORT).show();
+                Toast.makeText(VehiclesActivity.this, "Delete went wrong", Toast.LENGTH_LONG).show();
                 Log.d("MY_TAG", "Delete went wrong");
             }
         });

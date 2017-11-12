@@ -104,6 +104,7 @@ public class PersonsActivity extends AppCompatActivity {
 
             @Override
             public void onFailure(Call<Void> call, Throwable t) {
+                Toast.makeText(PersonsActivity.this, "Delete went wrong", Toast.LENGTH_SHORT).show();
                 Log.d("MY_TAG", "Delete went wrong");
             }
         });

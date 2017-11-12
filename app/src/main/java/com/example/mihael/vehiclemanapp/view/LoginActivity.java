@@ -101,7 +101,7 @@ public class LoginActivity extends AppCompatActivity {
 
             @Override
             public void onFailure(Call<Manager> call, Throwable t) {
-                Toast.makeText(LoginActivity.this, "Login error", Toast.LENGTH_SHORT).show();
+                Toast.makeText(LoginActivity.this, "Something went wrong", Toast.LENGTH_LONG).show();
             }
         });
     }

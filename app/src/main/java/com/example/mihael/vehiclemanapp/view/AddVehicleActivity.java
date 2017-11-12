@@ -108,6 +108,7 @@ public class AddVehicleActivity extends AppCompatActivity {
 
             @Override
             public void onFailure(Call<Vehicle> call, Throwable t) {
+                Toast.makeText(AddVehicleActivity.this, "Something went wrong", Toast.LENGTH_LONG).show();
                 Log.d("MY_ERROR", "something is wrong with vehicle create");
             }
         });

@@ -111,6 +111,7 @@ public class RegistrationActivity extends AppCompatActivity {
 
             @Override
             public void onFailure(Call<Manager> call, Throwable t) {
+                Toast.makeText(RegistrationActivity.this, "Something went wrong", Toast.LENGTH_LONG).show();
                 Log.d("MY_ERROR", "something is wrong with manager registration");
             }
         });
