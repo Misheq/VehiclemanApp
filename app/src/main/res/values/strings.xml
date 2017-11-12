@@ -11,6 +11,7 @@
     <string name="title_manage">Manage</string>
     <string name="title_login">Login</string>
     <string name="title_edit">Edit</string>
+    <string name="title_profile">Profile</string>
 
     <!-- ui buttons -->
     <string name="button_new">New</string>

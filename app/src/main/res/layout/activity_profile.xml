@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <TextView
+        android:id="@+id/titleEdit"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:text="@string/title_profile"
+        android:textSize="40sp"
+        android:layout_marginTop="25dp"
+        android:layout_centerHorizontal="true"
+        android:textAlignment="center"
+        />
+
+    <TextView
+        android:id="@+id/navSave"
+        android:text="@string/button_save"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAllCaps="false"
+        android:textSize="20sp"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentTop="true"
+        android:layout_marginTop="20dp"
+        android:layout_marginEnd="20dp"
+        android:onClick="setManagerFromForm"
+        />
+
+    <EditText
+        android:id="@+id/inputFirstName"
+        android:layout_width="300dp"
+        android:layout_height="40dp"
+        android:layout_marginTop="20dp"
+        android:layout_below="@id/titleEdit"
+        android:hint="@string/hint_first_name"
+        android:inputType="textPersonName"
+        android:layout_centerHorizontal="true"
+        />
+
+    <EditText
+        android:id="@+id/inputLastName"
+        android:layout_width="300dp"
+        android:layout_height="40dp"
+        android:layout_marginTop="20dp"
+        android:layout_below="@id/inputFirstName"
+        android:hint="@string/hint_last_name"
+        android:inputType="textPersonName"
+        android:layout_centerHorizontal="true"
+        />
+
+    <EditText
+        android:id="@+id/inputEmail"
+        android:layout_width="300dp"
+        android:layout_height="40dp"
+        android:layout_marginTop="20dp"
+        android:layout_below="@id/inputLastName"
+        android:hint="@string/hint_email"
+        android:inputType="textEmailAddress"
+        android:layout_centerHorizontal="true"
+        />
+
+    <EditText
+        android:id="@+id/inputPhone"
+        android:layout_width="300dp"
+        android:layout_height="40dp"
+        android:layout_marginTop="20dp"
+        android:layout_below="@id/inputEmail"
+        android:hint="@string/hint_phone"
+        android:inputType="phone"
+        android:layout_centerHorizontal="true"
+        />
+
+    <EditText
+        android:id="@+id/inputCompany"
+        android:layout_width="300dp"
+        android:layout_height="40dp"
+        android:layout_marginTop="20dp"
+        android:layout_below="@id/inputPhone"
+        android:hint="@string/hint_company"
+        android:layout_centerHorizontal="true"
+        />
+
+</RelativeLayout>

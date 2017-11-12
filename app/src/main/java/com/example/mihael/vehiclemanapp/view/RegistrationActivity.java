@@ -89,7 +89,7 @@ public class RegistrationActivity extends AppCompatActivity {
                     Toast.makeText(RegistrationActivity.this, "Manager registered", Toast.LENGTH_LONG).show();
 
                     Manager manager = response.body();
-                    LoginManager.setManagerId(manager.getManagerId());
+                    LoginManager.setManager(manager);
 
                     // set password back to plain text to be able to login since i dont go to manage activity from this screen
                     // workaround

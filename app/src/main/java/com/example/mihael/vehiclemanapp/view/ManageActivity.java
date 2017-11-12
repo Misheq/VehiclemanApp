@@ -30,6 +30,11 @@ public class ManageActivity extends AppCompatActivity {
         startActivity(intent);
     }
 
+    public void startProfileActivity(View view) {
+        Intent intent = new Intent(this, ProfileActivity.class);
+        startActivity(intent);
+    }
+
     public void logout(View view) {
         LoginManager.setLogedInManagerToken("");
         Intent intent = new Intent(this, LoginActivity.class);

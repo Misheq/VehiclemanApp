@@ -91,7 +91,7 @@ public class LoginActivity extends AppCompatActivity {
                     Toast.makeText(LoginActivity.this, "Login was successful\nCode: " + response.code() , Toast.LENGTH_SHORT).show();
                     Manager manager = response.body();
                     // save or pass to activity
-                    LoginManager.setManagerId(manager.getManagerId());
+                    LoginManager.setManager(manager);
                     startManageActivity();
 
                 } else {

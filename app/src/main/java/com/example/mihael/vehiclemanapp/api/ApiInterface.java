@@ -39,16 +39,17 @@ public interface ApiInterface {
     ////////// manager endpoints /////////
     //////////////////////////////////////
 
-    /*
-    @GET("managers")
-    Call<List<Manager>> getManagers();
-    */
-
     @GET(MANAGERS + SEPARATOR + ID_PARAM + SEPARATOR + PERSONS)
     Call<List<Person>> getPersonsForManager(@Header(AUTHORIZATION) String authHeader, @Path(ID) int id);
 
     @GET(MANAGERS + SEPARATOR + ID_PARAM + SEPARATOR + VEHICLES)
     Call<List<Vehicle>> getVehiclesForManager(@Header(AUTHORIZATION) String authHeader, @Path(ID) int id);
+
+    @GET(MANAGERS + SEPARATOR + ID_PARAM)
+    Call<Manager> getManagerById(@Header(AUTHORIZATION) String authHeader, @Path(ID) int id);
+
+    @PUT(MANAGERS + SEPARATOR + ID_PARAM)
+    Call<Manager> updateManager(@Header(AUTHORIZATION) String authHeader, @Path(ID) int id, @Body Manager manager);
 
     //////////////////////////////////////
     ///////// vehicle endpoints //////////

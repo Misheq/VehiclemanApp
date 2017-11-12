@@ -1,13 +1,14 @@
 package com.example.mihael.vehiclemanapp.helpers;
 
+import com.example.mihael.vehiclemanapp.entities.Manager;
+
 public final class LoginManager {
 
     private static String logedInManagerToken;
-    private static int managerId;
+    private static Manager manager;
 
     private LoginManager() {
         logedInManagerToken = "";
-        managerId = -1;
     }
 
     public static String getLogedInManagerToken() {
@@ -19,10 +20,14 @@ public final class LoginManager {
     }
 
     public static int getManagerId() {
-        return managerId;
+        return LoginManager.manager.getManagerId();
     }
 
-    public static void setManagerId(int managerId) {
-        LoginManager.managerId = managerId;
+    public static Manager getManager() {
+        return manager;
+    }
+
+    public static void setManager(Manager manager) {
+        LoginManager.manager = manager;
     }
 }

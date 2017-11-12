@@ -30,7 +30,8 @@
             android:layout_height="65dp"
             android:textSize="18sp"
             android:textAllCaps="false"
-            android:text="@string/button_profile" />
+            android:text="@string/button_profile"
+            android:onClick="startProfileActivity"/>
 
         <Button
             android:layout_marginBottom="5dp"
