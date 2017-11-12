@@ -37,6 +37,12 @@ public class AddPersonActivity extends AppCompatActivity {
     private ApiInterface apiInterface;
     private View view;
     private SpinnerLoader spinnerLoader;
+    EditText firstName;
+    EditText lastName;
+    EditText email;
+    EditText phone;
+    EditText company;
+    Spinner spinnerWithVehicles;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -49,37 +55,11 @@ public class AddPersonActivity extends AppCompatActivity {
     }
 
     public void setPersonFromForm(View view) {
-
-        EditText firstName = findViewById(R.id.inputFirstName);
-        EditText lastName = findViewById(R.id.inputLastName);
-        EditText email = findViewById(R.id.inputEmail);
-        EditText phone = findViewById(R.id.inputPhone);
-        EditText company = findViewById(R.id.inputCompany);
-        Spinner vehiclesSpinner = findViewById(R.id.spinnerVehicles);
-
-
-        Object selectedVehicle = vehiclesSpinner.getSelectedItem();
-        List<Vehicle> vehicleList = new ArrayList<>();
-
-        Person person = new Person();
-
-        if(!selectedVehicle.toString().equals(SELECT_VEHICLE)) {
-            Vehicle v = (Vehicle) selectedVehicle;
-            vehicleList.add(v);
-            person.setVehicles(vehicleList);
-        }
-
         InputValidator inVal = new InputValidator(this.view);
 
         if(inVal.isPersonInputValid()) {
-            person.setFirstName(firstName.getText().toString());
-            person.setLastName(lastName.getText().toString());
-            person.setEmail(email.getText().toString());
-            person.setPhone(phone.getText().toString());
-            person.setCompanyName(company.getText().toString());
-            person.setManagerId(LoginManager.getManagerId());
-
-            Log.d("ADD", "Person created");
+            Person person = createPersonFromUi();
+            person = setVehicleForPerson(person);
 
             savePerson(person);
         }
@@ -117,5 +97,46 @@ public class AddPersonActivity extends AppCompatActivity {
                 Log.d("MY_ERROR", "something is wrong with person create");
             }
         });
+    }
+
+    /////////////////// helpers ////////////////////
+
+    private void getUiElements() {
+        firstName = findViewById(R.id.inputFirstName);
+        lastName = findViewById(R.id.inputLastName);
+        email = findViewById(R.id.inputEmail);
+        phone = findViewById(R.id.inputPhone);
+        company = findViewById(R.id.inputCompany);
+        spinnerWithVehicles = findViewById(R.id.spinnerVehicles);
+    }
+
+    private Person createPersonFromUi() {
+        getUiElements();
+
+        Person person = new Person();
+
+        person.setFirstName(firstName.getText().toString());
+        person.setLastName(lastName.getText().toString());
+        person.setEmail(email.getText().toString());
+        person.setPhone(phone.getText().toString());
+        person.setCompanyName(company.getText().toString());
+        person.setManagerId(LoginManager.getManagerId());
+
+        return person;
+    }
+
+    private Person setVehicleForPerson(Person person) {
+        Object selectedVehicle = spinnerWithVehicles.getSelectedItem();
+        List<Vehicle> vehList = new ArrayList<>();
+
+        if(!selectedVehicle.toString().equals(SELECT_VEHICLE)) {
+            Vehicle vehicle = (Vehicle) selectedVehicle;
+            vehList.add(vehicle);
+            person.setVehicles(vehList);
+        } else {
+            person.setVehicles(vehList);
+        }
+
+        return person;
     }
 }

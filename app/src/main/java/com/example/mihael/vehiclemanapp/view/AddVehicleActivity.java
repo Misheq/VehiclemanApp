@@ -34,6 +34,12 @@ public class AddVehicleActivity extends AppCompatActivity {
     private ApiInterface apiInterface;
     private View view;
     private SpinnerLoader spinnerLoader;
+    EditText type;
+    EditText registration;
+    EditText color;
+    EditText description;
+    // DatePicker servicingDate;
+    Spinner spinnerWithPersons;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -46,35 +52,11 @@ public class AddVehicleActivity extends AppCompatActivity {
     }
 
     public void setVehicleFromForm(View view) {
-        EditText type = findViewById(R.id.inputType);
-        EditText registration = findViewById(R.id.inputRegistration);
-        EditText color = findViewById(R.id.inputColor);
-        EditText description = findViewById(R.id.inputDescription);
-       // DatePicker servicingDate = findViewById(R.id.inputServicingDate);
-        Spinner personsSpinner = findViewById(R.id.spinnerPersons);
-
-        Object selectedPerson = personsSpinner.getSelectedItem();
-        Person person;
-
-        Vehicle vehicle = new Vehicle();
-
-        if(!selectedPerson.toString().equals(SELECT_PERSON)) {
-            person = (Person) selectedPerson;
-            vehicle.setPerson(person);
-            vehicle.setAssigneeId(String.valueOf(person.getPersonId()));
-        } else {
-            person = null;
-        }
-
         InputValidator inVal = new InputValidator(this.view);
 
         if(inVal.isVehicleInputValid()){
-            vehicle.setVehicleType(type.getText().toString());
-            vehicle.setRegistrationNumber(registration.getText().toString());
-            vehicle.setManagerId(LoginManager.getManagerId());
-            vehicle.setColor(color.getText().toString());
-            vehicle.setDescription(description.getText().toString());
-            //vehicle.setServicingDate(servicingDate.toString());
+            Vehicle vehicle = createVehicleFromUi();
+            vehicle = setPersonForVehicle(vehicle);
 
             saveVehicle(vehicle);
         }
@@ -112,5 +94,45 @@ public class AddVehicleActivity extends AppCompatActivity {
                 Log.d("MY_ERROR", "something is wrong with vehicle create");
             }
         });
+    }
+
+    ////////////// helpers //////////////
+
+    private void getUiElements() {
+        type = findViewById(R.id.inputType);
+        registration = findViewById(R.id.inputRegistration);
+        color = findViewById(R.id.inputColor);
+        description = findViewById(R.id.inputDescription);
+        // servicingDate = findViewById(R.id.inputServicingDate);
+        spinnerWithPersons = findViewById(R.id.spinnerPersons);
+    }
+
+    private Vehicle createVehicleFromUi() {
+        getUiElements();
+
+        Vehicle vehicle = new Vehicle();
+
+        vehicle.setVehicleType(type.getText().toString());
+        vehicle.setRegistrationNumber(registration.getText().toString());
+        vehicle.setManagerId(LoginManager.getManagerId());
+        vehicle.setColor(color.getText().toString());
+        vehicle.setDescription(description.getText().toString());
+        //vehicle.setServicingDate(servicingDate.toString());
+
+        return vehicle;
+    }
+
+    private Vehicle setPersonForVehicle(Vehicle vehicle) {
+        Object selectedPerson = spinnerWithPersons.getSelectedItem();
+
+        if(!selectedPerson.toString().equals(SELECT_PERSON)) {
+            Person person = (Person) selectedPerson;
+            vehicle.setAssigneeId(String.valueOf(person.getPersonId()));
+            vehicle.setPerson(person);
+        } else {
+            vehicle.setAssigneeId("");
+        }
+
+        return vehicle;
     }
 }

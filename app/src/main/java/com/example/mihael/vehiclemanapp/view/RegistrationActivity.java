@@ -24,7 +24,13 @@ import retrofit2.Response;
 
 public class RegistrationActivity extends AppCompatActivity {
 
-    View view;
+    private View view;
+    private EditText firstName;
+    private EditText lastName;
+    private EditText phone;
+    private EditText company;
+    private EditText email;
+    private EditText password;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -34,31 +40,13 @@ public class RegistrationActivity extends AppCompatActivity {
     }
 
     public void setManagerFromForm(View view) {
-        Manager manager = new Manager();
-
-        EditText firstName = findViewById(R.id.inputFirstName);
-        EditText lastName = findViewById(R.id.inputLastName);
-        EditText phone = findViewById(R.id.inputPhone);
-        EditText company = findViewById(R.id.inputCompany);
-        EditText email = findViewById(R.id.inputEmail);
-        EditText password = findViewById(R.id.inputPassword);
-
         InputValidator inVal = new InputValidator(this.view);
 
         // manager and person input is identical (for the required fields)
         if(inVal.isPersonInputValid() && inVal.isRegistrationPasswordValid()) {
-            manager.setFirstName(firstName.getText().toString());
-            manager.setLastName(lastName.getText().toString());
-            manager.setPhone(phone.getText().toString());
-            manager.setCompanyName(company.getText().toString());
-            manager.setEmail(email.getText().toString());
-            manager.setPassword(password.getText().toString());
+            Manager manager = createManagerFromUi();
 
-            Log.d("CREATE", "Manager created");
-
-            String base = email + ":" + password;
-            String auth = "Basic " + Base64.encodeToString(base.getBytes(), Base64.NO_WRAP);
-            LoginManager.setLogedInManagerToken(auth);
+            saveManagerToke();
 
             // will call update to server
             registerManager(manager);
@@ -70,7 +58,6 @@ public class RegistrationActivity extends AppCompatActivity {
         intent.putExtra("manager", manager);
         startActivity(intent);
     }
-    // TODO: after registration user can not read persons and vehicles (401 forbidden)
 
     private void registerManager(Manager manager) {
 
@@ -92,7 +79,7 @@ public class RegistrationActivity extends AppCompatActivity {
                     LoginManager.setManager(manager);
 
                     // set password back to plain text to be able to login since i dont go to manage activity from this screen
-                    // workaround
+                    // workaround!!
                     manager.setPassword(password);
                     startLoginActivity(manager);
 
@@ -116,5 +103,37 @@ public class RegistrationActivity extends AppCompatActivity {
             }
         });
 
+    }
+
+    //////////// helpers /////////////
+
+    private void getUiElements() {
+        firstName = findViewById(R.id.inputFirstName);
+        lastName = findViewById(R.id.inputLastName);
+        phone = findViewById(R.id.inputPhone);
+        company = findViewById(R.id.inputCompany);
+        email = findViewById(R.id.inputEmail);
+        password = findViewById(R.id.inputPassword);
+    }
+
+    private Manager createManagerFromUi() {
+        getUiElements();
+
+        Manager manager = new Manager();
+
+        manager.setFirstName(firstName.getText().toString());
+        manager.setLastName(lastName.getText().toString());
+        manager.setPhone(phone.getText().toString());
+        manager.setCompanyName(company.getText().toString());
+        manager.setEmail(email.getText().toString());
+        manager.setPassword(password.getText().toString());
+
+        return manager;
+    }
+
+    private void saveManagerToke() {
+        String base = email.getText().toString() + ":" + password.getText().toString();
+        String auth = "Basic " + Base64.encodeToString(base.getBytes(), Base64.NO_WRAP);
+        LoginManager.setLogedInManagerToken(auth);
     }
 }

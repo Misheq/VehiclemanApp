@@ -46,7 +46,6 @@ public class EditPersonActivity extends AppCompatActivity {
     private EditText phone;
     private EditText company;
 
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -73,75 +72,18 @@ public class EditPersonActivity extends AppCompatActivity {
         });
     }
 
-    private void setFieldsFromPerson(Person p) {
-        firstName = findViewById(R.id.inputFirstName);
-        lastName = findViewById(R.id.inputLastName);
-        email = findViewById(R.id.inputEmail);
-        phone = findViewById(R.id.inputPhone);
-        company = findViewById(R.id.inputCompany);
-
-        spinnerWithVehicles = spinnerLoader.getVehiclesSpinner();
-
-        firstName.setText(p.getFirstName());
-        lastName.setText(p.getLastName());
-        email.setText(p.getEmail());
-
-        if(!p.getPhone().equals("")) {
-            phone.setText(p.getPhone());
-        }
-
-        if(!p.getCompanyName().equals("")) {
-            company.setText(p.getCompanyName());
-        }
-
-        int vehiclePosition = 0;
-
-        if(!p.getVehicles().isEmpty()) {
-            List<Vehicle> vehicleList = spinnerLoader.getVehicles();
-            for(int i = 1; i < vehicleList.size(); i++) {
-                if(vehicleList.get(i).getVehicleId() == p.getVehicles().get(0).getVehicleId()) {
-                    vehiclePosition = i;
-                    break;
-                }
-            }
-            spinnerWithVehicles.setSelection(vehiclePosition);
-        }
+    private void setFieldsFromPerson(Person person) {
+        setUiFromPerson(person);
+        setSpinnerVehicle(person);
     }
 
     public void setPersonFromForm(View view) {
 
-        Person person = new Person();
-        person.setPersonId(passedPersonId);
-
-        firstName = findViewById(R.id.inputFirstName);
-        lastName = findViewById(R.id.inputLastName);
-        email = findViewById(R.id.inputEmail);
-        phone = findViewById(R.id.inputPhone);
-        company = findViewById(R.id.inputCompany);
-        spinnerWithVehicles = findViewById(R.id.spinnerVehicles);
-
-        Object selectedVehicle = spinnerWithVehicles.getSelectedItem();
-        List<Vehicle> vehList = new ArrayList<>();
-
-        if(!selectedVehicle.toString().equals(SELECT_VEHICLE)) {
-            Vehicle vehicle = (Vehicle) selectedVehicle;
-            vehList.add(vehicle);
-            person.setVehicles(vehList);
-        } else {
-            person.setVehicles(vehList);
-        }
-
         InputValidator inVal = new InputValidator(this.view);
 
         if(inVal.isPersonInputValid()) {
-            person.setFirstName(firstName.getText().toString());
-            person.setLastName(lastName.getText().toString());
-            person.setEmail(email.getText().toString());
-            person.setPhone(phone.getText().toString());
-            person.setCompanyName(company.getText().toString());
-            person.setManagerId(LoginManager.getManagerId());
-
-            Log.d("UPDATE", "Person updated");
+            Person person = createPersonFromUi();
+            person = setVehicleForPerson(person);
 
             // will call update to server
             editPerson(person);
@@ -180,5 +122,70 @@ public class EditPersonActivity extends AppCompatActivity {
                 Log.d("MY_ERROR", "something is wrong with person update");
             }
         });
+    }
+
+    private void getUiElements() {
+        firstName = findViewById(R.id.inputFirstName);
+        lastName = findViewById(R.id.inputLastName);
+        email = findViewById(R.id.inputEmail);
+        phone = findViewById(R.id.inputPhone);
+        company = findViewById(R.id.inputCompany);
+    }
+
+    private Person createPersonFromUi() {
+        getUiElements();
+
+        Person person = new Person();
+
+        person.setPersonId(passedPersonId);
+        person.setFirstName(firstName.getText().toString());
+        person.setLastName(lastName.getText().toString());
+        person.setEmail(email.getText().toString());
+        person.setPhone(phone.getText().toString());
+        person.setCompanyName(company.getText().toString());
+        person.setManagerId(LoginManager.getManagerId());
+
+        return person;
+    }
+
+    private Person setVehicleForPerson(Person person) {
+        Object selectedVehicle = spinnerWithVehicles.getSelectedItem();
+        List<Vehicle> vehList = new ArrayList<>();
+
+        if(!selectedVehicle.toString().equals(SELECT_VEHICLE)) {
+            Vehicle vehicle = (Vehicle) selectedVehicle;
+            vehList.add(vehicle);
+            person.setVehicles(vehList);
+        } else {
+            person.setVehicles(vehList);
+        }
+
+        return person;
+    }
+
+    private void setUiFromPerson(Person person) {
+        getUiElements();
+
+        spinnerWithVehicles = spinnerLoader.getVehiclesSpinner();
+        firstName.setText(person.getFirstName());
+        lastName.setText(person.getLastName());
+        email.setText(person.getEmail());
+        phone.setText(person.getPhone());
+        company.setText(person.getCompanyName());
+    }
+
+    private void setSpinnerVehicle(Person person) {
+        int vehiclePosition = 0;
+
+        if(!person.getVehicles().isEmpty()) {
+            List<Vehicle> vehicleList = spinnerLoader.getVehicles();
+            for(int i = 1; i < vehicleList.size(); i++) {
+                if(vehicleList.get(i).getVehicleId() == person.getVehicles().get(0).getVehicleId()) {
+                    vehiclePosition = i;
+                    break;
+                }
+            }
+            spinnerWithVehicles.setSelection(vehiclePosition);
+        }
     }
 }

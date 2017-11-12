@@ -157,33 +157,3 @@ public class VehiclesActivity extends AppCompatActivity {
         });
     }
 }
-
-    /*
-        // returns manager by id
-        Call<Manager> call = apiInterface.getManagerById(1);
-        call.enqueue(new Callback<Manager>() {
-            @Override
-            public void onResponse(Call<Manager> call, Response<Manager> response) {
-                int statusCode = response.code();
-                if(statusCode == 200) {
-                    manager = response.body();
-                    managers = new ArrayList<Manager>();
-                    managers.add(manager);
-                } else {
-                    try {
-                        JSONObject error = new JSONObject(response.errorBody().string());
-                        Toast.makeText(ManageActivity.this,
-                                "Status code: " + statusCode + "\n"
-                                        + error.getString("error"), Toast.LENGTH_LONG).show();
-                    } catch (Exception e) {
-                        e.printStackTrace();
-                    }
-                }
-            }
-
-            @Override
-            public void onFailure(Call<Manager> call, Throwable t) {
-                Log.d("MYTAG","something is wrong");
-            }
-        });
-    */

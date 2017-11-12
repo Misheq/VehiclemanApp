@@ -73,31 +73,8 @@ public class EditVehicleActivity extends AppCompatActivity {
     }
 
     private void setFieldsFromVehicle(Vehicle vehicle) {
-        type = findViewById(R.id.inputType);
-        registration = findViewById(R.id.inputRegistration);
-        spinnerWithPersons = spinnerLoader.getPersonsSpinner();
-        color = findViewById(R.id.inputColor);
-        description = findViewById(R.id.inputDescription);
-        //servicingDate = findViewById(R.id.inputServicingDate);
-
-        type.setText(vehicle.getVehicleType());
-        registration.setText(vehicle.getRegistrationNumber());
-        color.setText(vehicle.getColor());
-        description.setText(vehicle.getDescription());
-
-        int personPosition = 0;
-
-        if(!(vehicle.getAssigneeId().equals(""))) {
-
-            List<Person> personList = spinnerLoader.getPersons();
-            for(int i = 0; i < personList.size(); i++) {
-                if (personList.get(i).getPersonId() == Integer.parseInt(vehicle.getAssigneeId())) {
-                    personPosition = i;
-                    break;
-                }
-            }
-            spinnerWithPersons.setSelection(personPosition);
-        }
+        setUiTextFromVehicle(vehicle);
+        setSpinnerPerson(vehicle);
     }
 
     /**
@@ -108,37 +85,11 @@ public class EditVehicleActivity extends AppCompatActivity {
      * @param view
      */
     public void setVehicleFromForm(View view) {
-
-        Vehicle vehicle = new Vehicle();
-        vehicle.setVehicleId(passedVehicleId);
-
-        type = findViewById(R.id.inputType);
-        registration = findViewById(R.id.inputRegistration);
-        spinnerWithPersons = findViewById(R.id.spinnerPersons);
-        color = findViewById(R.id.inputColor);
-        description = findViewById(R.id.inputDescription);
-        //servicingDate = findViewById(R.id.inputServicingDate);
-
-        Object selectedPerson = spinnerWithPersons.getSelectedItem();
-
-        if(!selectedPerson.toString().equals(SELECT_PERSON)) {
-            Person person = (Person) selectedPerson;
-            vehicle.setAssigneeId(String.valueOf(person.getPersonId()));
-            vehicle.setPerson(person);
-        } else {
-            vehicle.setAssigneeId("");
-        }
-
         InputValidator inVal = new InputValidator(this.view);
         if(inVal.isVehicleInputValid()) {
-            vehicle.setVehicleType(type.getText().toString());
-            vehicle.setRegistrationNumber(registration.getText().toString());
-            vehicle.setManagerId(LoginManager.getManagerId());
-            vehicle.setColor(color.getText().toString());
-            vehicle.setDescription(description.getText().toString());
-            //vehicle.setServicingDate(servicingDate.toString());
 
-            Log.d("UPDATE", "Vehicle updated");
+            Vehicle vehicle = createVehicleFromUi();
+            vehicle = setPersonForVehicle(vehicle);
 
             // will call update to server
             editVehicle(vehicle);
@@ -178,4 +129,71 @@ public class EditVehicleActivity extends AppCompatActivity {
             }
         });
     }
+
+    ////////////// helpers /////////////////
+
+    private void getUiElements() {
+        type = findViewById(R.id.inputType);
+        registration = findViewById(R.id.inputRegistration);
+        spinnerWithPersons = findViewById(R.id.spinnerPersons);
+        color = findViewById(R.id.inputColor);
+        description = findViewById(R.id.inputDescription);
+        //servicingDate = findViewById(R.id.inputServicingDate);
+    }
+
+    private void setUiTextFromVehicle(Vehicle vehicle) {
+        getUiElements();
+
+        type.setText(vehicle.getVehicleType());
+        registration.setText(vehicle.getRegistrationNumber());
+        color.setText(vehicle.getColor());
+        description.setText(vehicle.getDescription());
+    }
+
+    private void setSpinnerPerson(Vehicle vehicle) {
+        int personPosition = 0;
+
+        if(!(vehicle.getAssigneeId().equals(""))) {
+
+            List<Person> personList = spinnerLoader.getPersons();
+            for(int i = 0; i < personList.size(); i++) {
+                if (personList.get(i).getPersonId() == Integer.parseInt(vehicle.getAssigneeId())) {
+                    personPosition = i;
+                    break;
+                }
+            }
+            spinnerWithPersons.setSelection(personPosition);
+        }
+    }
+
+    private Vehicle setPersonForVehicle(Vehicle vehicle) {
+        Object selectedPerson = spinnerWithPersons.getSelectedItem();
+
+        if(!selectedPerson.toString().equals(SELECT_PERSON)) {
+            Person person = (Person) selectedPerson;
+            vehicle.setAssigneeId(String.valueOf(person.getPersonId()));
+            vehicle.setPerson(person);
+        } else {
+            vehicle.setAssigneeId("");
+        }
+
+        return vehicle;
+    }
+
+    private Vehicle createVehicleFromUi() {
+        getUiElements();
+
+        Vehicle vehicle = new Vehicle();
+
+        vehicle.setVehicleId(passedVehicleId);
+        vehicle.setVehicleType(type.getText().toString());
+        vehicle.setRegistrationNumber(registration.getText().toString());
+        vehicle.setManagerId(LoginManager.getManagerId());
+        vehicle.setColor(color.getText().toString());
+        vehicle.setDescription(description.getText().toString());
+        //vehicle.setServicingDate(servicingDate.toString());
+
+        return vehicle;
+    }
+
 }
