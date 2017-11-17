@@ -1,12 +1,15 @@
 package com.example.mihael.vehiclemanapp.view;
 
+import android.app.DatePickerDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
+import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.Spinner;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.mihael.vehiclemanapp.R;
@@ -14,6 +17,7 @@ import com.example.mihael.vehiclemanapp.api.ApiClient;
 import com.example.mihael.vehiclemanapp.api.ApiInterface;
 import com.example.mihael.vehiclemanapp.entities.Person;
 import com.example.mihael.vehiclemanapp.entities.Vehicle;
+import com.example.mihael.vehiclemanapp.helpers.DatePickerFragment;
 import com.example.mihael.vehiclemanapp.helpers.InputValidator;
 import com.example.mihael.vehiclemanapp.helpers.LoginManager;
 import com.example.mihael.vehiclemanapp.helpers.SpinnerLoader;
@@ -21,6 +25,9 @@ import com.example.mihael.vehiclemanapp.interfaces.SpinnerEventListener;
 
 import org.json.JSONObject;
 
+import java.text.DateFormat;
+import java.util.Calendar;
+import java.util.GregorianCalendar;
 import java.util.List;
 
 import retrofit2.Call;
@@ -28,13 +35,15 @@ import retrofit2.Callback;
 import retrofit2.Response;
 
 import static com.example.mihael.vehiclemanapp.helpers.Constants.SELECT_PERSON;
+import static com.example.mihael.vehiclemanapp.helpers.Constants.SERVICING_DATE;
+import static com.example.mihael.vehiclemanapp.helpers.Constants.TAP_TO_SET_SERVICING_DATE;
 import static com.example.mihael.vehiclemanapp.helpers.Constants.VEHICLE;
 
 /**
  * Activity which is responsible for editing existing vehicles
  */
 
-public class EditVehicleActivity extends AppCompatActivity {
+public class EditVehicleActivity extends AppCompatActivity implements DatePickerDialog.OnDateSetListener {
 
     private Spinner spinnerWithPersons;
     private View view;
@@ -43,7 +52,7 @@ public class EditVehicleActivity extends AppCompatActivity {
     private EditText registration;
     private EditText color;
     private EditText description;
-    //private DatePicker servicingDate;
+    private TextView serviceDate;
 
     private int passedVehicleId;
 
@@ -138,7 +147,7 @@ public class EditVehicleActivity extends AppCompatActivity {
         spinnerWithPersons = findViewById(R.id.spinnerPersons);
         color = findViewById(R.id.inputColor);
         description = findViewById(R.id.inputDescription);
-        //servicingDate = findViewById(R.id.inputServicingDate);
+        serviceDate = findViewById(R.id.inputServiceDate);
     }
 
     private void setUiTextFromVehicle(Vehicle vehicle) {
@@ -148,6 +157,10 @@ public class EditVehicleActivity extends AppCompatActivity {
         registration.setText(vehicle.getRegistrationNumber());
         color.setText(vehicle.getColor());
         description.setText(vehicle.getDescription());
+
+        if(vehicle.getServicingDate() != null && !vehicle.getServicingDate().equals("")) {
+            serviceDate.setText(SERVICING_DATE + vehicle.getServicingDate());
+        }
     }
 
     private void setSpinnerPerson(Vehicle vehicle) {
@@ -191,9 +204,35 @@ public class EditVehicleActivity extends AppCompatActivity {
         vehicle.setManagerId(LoginManager.getManagerId());
         vehicle.setColor(color.getText().toString());
         vehicle.setDescription(description.getText().toString());
-        //vehicle.setServicingDate(servicingDate.toString());
+
+        if(!serviceDate.getText().toString().equals(TAP_TO_SET_SERVICING_DATE)) {
+            // time should not be in past
+            vehicle.setServicingDate(serviceDate.getText().toString().replace(SERVICING_DATE, ""));
+        } else {
+            vehicle.setServicingDate("");
+        }
 
         return vehicle;
+    }
+
+
+    // Date picker logic
+    public void datePicker(View view) {
+        DatePickerFragment fragment = new DatePickerFragment();
+        fragment.show(getSupportFragmentManager(), "dialog");
+    }
+
+    private void setDate(final Calendar calendar) {
+        final DateFormat dateFormat = DateFormat.getDateInstance(DateFormat.SHORT);
+
+        ((TextView) findViewById(R.id.inputServiceDate))
+                .setText(SERVICING_DATE + dateFormat.format(calendar.getTime()));
+    }
+
+    @Override
+    public void onDateSet(DatePicker view, int year, int month, int day) {
+        Calendar cal = new GregorianCalendar(year, month, day);
+        setDate(cal);
     }
 
 }

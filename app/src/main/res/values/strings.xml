@@ -38,6 +38,8 @@
     <string name="hint_plate_number">Plate number</string>
     <string name="hint_color">Color</string>
     <string name="hint_description">Add description</string>
+    <string name="hint_tap_to_set_servicing_date">" Tap to set servicing date"</string>
+
 
 
 </resources>
