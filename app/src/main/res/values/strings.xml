@@ -4,7 +4,8 @@
     <string name="title_activity_login">Sign in</string>
 
     <!-- ui titles -->
-    <string name="title_add_new">Add new</string>
+    <string name="title_new_person">New person</string>
+    <string name="title_new_vehicle">New vehicle</string>
     <string name="title_register">Register</string>
     <string name="title_vehicles">Vehicles</string>
     <string name="title_persons">Persons</string>

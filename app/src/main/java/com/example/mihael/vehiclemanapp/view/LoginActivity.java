@@ -88,14 +88,15 @@ public class LoginActivity extends AppCompatActivity {
             public void onResponse(Call<Manager> call, Response<Manager> response) {
 
                 if(response.code() == 200) {
-                    Toast.makeText(LoginActivity.this, "Login was successful\nCode: " + response.code() , Toast.LENGTH_SHORT).show();
                     Manager manager = response.body();
                     // save or pass to activity
                     LoginManager.setManager(manager);
                     startManageActivity();
 
+                } else if(response.code() >=300 && response.code() < 500) {
+                    Toast.makeText(LoginActivity.this, "Incorrect email or password.", Toast.LENGTH_SHORT).show();
                 } else {
-                    Toast.makeText(LoginActivity.this, "Login failed\nCode: " + response.code(), Toast.LENGTH_SHORT).show();
+                    Toast.makeText(LoginActivity.this, "Server error.", Toast.LENGTH_LONG).show();
                 }
             }
 
