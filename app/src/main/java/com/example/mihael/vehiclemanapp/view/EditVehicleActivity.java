@@ -95,7 +95,7 @@ public class EditVehicleActivity extends AppCompatActivity implements DatePicker
      * send update request for the vehicle
      *
      */
-    public void setVehicleFromForm() {
+    private void setVehicleFromForm() {
         InputValidator inVal = new InputValidator(this.view);
         if(inVal.isVehicleInputValid()) {
 

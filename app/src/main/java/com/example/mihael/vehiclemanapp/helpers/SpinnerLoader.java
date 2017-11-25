@@ -36,8 +36,8 @@ public class SpinnerLoader {
     private List<Vehicle> vehicles = new ArrayList<>();
     private Spinner personsSpinner;
     private Spinner vehiclesSpinner;
-    private View view;
-    private int currentId;
+    private final View view;
+    private final int currentId;
 
     private SpinnerEventListener spinnerEventListener;
 
@@ -131,7 +131,7 @@ public class SpinnerLoader {
         });
     }
 
-    public void addVehiclesToSpinner(List<Vehicle> vehicles) {
+    private void addVehiclesToSpinner(List<Vehicle> vehicles) {
         vehiclesSpinner = view.findViewById(R.id.spinnerVehicles);
 
         Vehicle dummyVehicle = new Vehicle();

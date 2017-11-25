@@ -14,6 +14,7 @@ import com.example.mihael.vehiclemanapp.R;
 import com.example.mihael.vehiclemanapp.api.ApiClient;
 import com.example.mihael.vehiclemanapp.api.ApiInterface;
 import com.example.mihael.vehiclemanapp.entities.Manager;
+import com.example.mihael.vehiclemanapp.helpers.Constants;
 import com.example.mihael.vehiclemanapp.helpers.InputValidator;
 import com.example.mihael.vehiclemanapp.helpers.LoginManager;
 
@@ -50,7 +51,7 @@ public class LoginActivity extends AppCompatActivity {
         inputPassword.setText(manager.getPassword());
     }
 
-    public void setLoginDataFromForm() {
+    private void setLoginDataFromForm() {
 
         inputEmail = findViewById(R.id.inputEmail);
         inputPassword = findViewById(R.id.inputPassword);
@@ -123,7 +124,7 @@ public class LoginActivity extends AppCompatActivity {
         getMenuInflater().inflate(R.menu.menu, menu);
 
         MenuItem item = menu.findItem(R.id.action_item);
-        item.setTitle("Sign-in");
+        item.setTitle(Constants.SIGN_IN);
 
         return true;
     }

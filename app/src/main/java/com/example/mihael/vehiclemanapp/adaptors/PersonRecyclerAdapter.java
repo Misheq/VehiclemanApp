@@ -23,7 +23,7 @@ import static com.example.mihael.vehiclemanapp.helpers.Constants.PERSON;
 
 public class PersonRecyclerAdapter extends RecyclerView.Adapter<PersonRecyclerAdapter.MyViewHolder>{
 
-    private List<Person> persons;
+    private final List<Person> persons;
 
     public PersonRecyclerAdapter(List<Person> persons) {
         this.persons = persons;
@@ -53,8 +53,10 @@ public class PersonRecyclerAdapter extends RecyclerView.Adapter<PersonRecyclerAd
     }
 
     public class MyViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
-        TextView firstName, lastName, email; // id, phone, company;
-        Button deleteButton;
+        final TextView firstName;
+        final TextView lastName;
+        final TextView email; // id, phone, company;
+        final Button deleteButton;
 
         public MyViewHolder(View itemView) {
             super(itemView);
@@ -71,7 +73,6 @@ public class PersonRecyclerAdapter extends RecyclerView.Adapter<PersonRecyclerAd
 
         /**
          * Get person p and start other activity with p
-         * @param view
          */
         @Override
         public void onClick(View view) {

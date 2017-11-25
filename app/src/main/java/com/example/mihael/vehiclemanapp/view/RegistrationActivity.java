@@ -42,7 +42,7 @@ public class RegistrationActivity extends AppCompatActivity {
         view = getWindow().getDecorView().getRootView();
     }
 
-    public void setManagerFromForm() {
+    private void setManagerFromForm() {
         InputValidator inVal = new InputValidator(this.view);
 
         boolean personInputOk = inVal.isPersonInputValid();

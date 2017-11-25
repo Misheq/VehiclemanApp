@@ -22,7 +22,7 @@ import static com.example.mihael.vehiclemanapp.helpers.Constants.VEHICLE_TYPE_RE
 
 public class InputValidator {
 
-    private View view;
+    private final View view;
     private final int minLength = 6;
 
     public InputValidator(View view) {
@@ -52,7 +52,7 @@ public class InputValidator {
         return isValid;
     }
 
-    public boolean isPasswordValid() {
+    private boolean isPasswordValid() {
         EditText password = view.findViewById(R.id.inputPassword);
 
         boolean isValid = true;
@@ -65,7 +65,7 @@ public class InputValidator {
         return isValid;
     }
 
-    public boolean isEmailValid() {
+    private boolean isEmailValid() {
         EditText email = view.findViewById(R.id.inputEmail);
 
         boolean isValid = true;

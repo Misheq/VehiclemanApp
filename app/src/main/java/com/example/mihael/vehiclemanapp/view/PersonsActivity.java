@@ -52,7 +52,7 @@ public class PersonsActivity extends AppCompatActivity {
         loadPersonList();
     }
 
-    public void loadPersonList() {
+    private void loadPersonList() {
 
         recyclerView = findViewById(R.id.recyclerView);
         layoutManager = new LinearLayoutManager(this);
@@ -85,7 +85,7 @@ public class PersonsActivity extends AppCompatActivity {
         });
     }
 
-    public void startAddPersonActivity() {
+    private void startAddPersonActivity() {
         Intent intent = new Intent(this, AddPersonActivity.class);
         startActivity(intent);
     }

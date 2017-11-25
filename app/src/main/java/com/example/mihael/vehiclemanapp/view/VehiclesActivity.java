@@ -54,7 +54,7 @@ public class VehiclesActivity extends AppCompatActivity {
     /**
      * starts the add vehicle activity
      */
-    public void startAddVehicleActivity() {
+    private void startAddVehicleActivity() {
         Intent intent = new Intent(this, AddVehicleActivity.class);
         startActivity(intent);
     }
@@ -63,7 +63,7 @@ public class VehiclesActivity extends AppCompatActivity {
      * api call which gets all the vehicles which the given manager
      * has access to.
      */
-    public void loadVehicleList() {
+    private void loadVehicleList() {
 
         recyclerView = findViewById(R.id.recyclerView);
         layoutManager = new LinearLayoutManager(this);
@@ -98,7 +98,6 @@ public class VehiclesActivity extends AppCompatActivity {
 
     /**
      * opens dialog alert, prevents deletion by accident
-     * @param view
      */
     public void alertForDelete(final View view) {
         AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(
@@ -134,7 +133,6 @@ public class VehiclesActivity extends AppCompatActivity {
 
     /**
      * api call which deletes the given vehicle
-     * @param vehicleId
      */
     private void deleteVehicleById(int vehicleId) {
 

@@ -23,7 +23,7 @@ import static com.example.mihael.vehiclemanapp.helpers.Constants.VEHICLE;
 
 public class VehicleRecyclerAdapter extends RecyclerView.Adapter<VehicleRecyclerAdapter.MyViewHolder> {
 
-    private List<Vehicle> vehicles;
+    private final List<Vehicle> vehicles;
 
     public VehicleRecyclerAdapter(List<Vehicle> vehicles) {
         this.vehicles = vehicles;
@@ -48,8 +48,9 @@ public class VehicleRecyclerAdapter extends RecyclerView.Adapter<VehicleRecycler
     }
 
     public class MyViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener{
-        TextView type, reg;
-        Button deleteButton;
+        final TextView type;
+        final TextView reg;
+        final Button deleteButton;
 
         MyViewHolder(View itemView) {
             super(itemView);

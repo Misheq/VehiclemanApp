@@ -84,7 +84,7 @@ public class ProfileActivity extends AppCompatActivity {
         setUiTextsFromManager(manager);
     }
 
-    public void setManagerFromForm() {
+    private void setManagerFromForm() {
         getUiElements();
 
         InputValidator inVal = new InputValidator(this.view);

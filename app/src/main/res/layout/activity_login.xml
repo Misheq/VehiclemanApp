@@ -38,7 +38,6 @@
         />
 
     <Button
-        android:id="@+id/inputRegister"
         android:layout_width="300dp"
         android:layout_height="50dp"
         android:layout_marginTop="40dp"

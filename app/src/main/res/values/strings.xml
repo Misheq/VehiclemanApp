@@ -1,7 +1,5 @@
 <resources>
     <string name="app_name">Vehicle Manager</string>
-    <string name="title_activity_update_person">Update employee</string>
-    <string name="title_activity_login">Sign-in</string>
 
     <!-- ui titles -->
     <string name="title_new_employee">New employee</string>
@@ -16,15 +14,10 @@
     <string name="title_profile">Profile</string>
 
     <!-- ui buttons -->
-    <string name="button_new">New</string>
-    <string name="button_save">Save</string>
-    <string name="button_edit">Edit</string>
-    <string name="button_submit">Submit</string>
     <string name="button_profile">Profile</string>
     <string name="button_persons">Employees</string>
     <string name="button_vehicles">Vehicles</string>
     <string name="button_logout">Logout</string>
-    <string name="button_sign_in">Sign-in</string>
     <string name="button_create_account">Create account</string>
     <string name="button_delete">Delete</string>
 

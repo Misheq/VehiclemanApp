@@ -21,9 +21,9 @@ public class Constants {
     public static final String REGISTER = "register";
 
     // server constants (local)
-    public static final String DOMAIN = "192.168.0.104";
-    public static final String PORT = ":3334";
-    public static final String LOCAL_URL = "http://" + DOMAIN + PORT + "/vehicleman/api/";
+    // public static final String DOMAIN = "192.168.0.104";
+    // public static final String PORT = ":3334";
+    // public static final String LOCAL_URL = "http://" + DOMAIN + PORT + "/vehicleman/api/";
     public static final String SERVICE_URL = "https://vehiclemani333373trial.hanatrial.ondemand.com/vehicleman/api/";
 
     // spinner constants
@@ -40,7 +40,6 @@ public class Constants {
     // required fields
     public static final String FIRST_NAME_REQUIRED = "Please enter first name.";
     public static final String LAST_NAME_REQUIRED = "Please enter last name.";
-    public static final String EMAIL_REQUIRED = "Please enter email.";
     public static final String EMAIL_FORMAT_INVALID = "Please check email format.";
     public static final String VEHICLE_TYPE_REQUIRED = "Please enter vehicle type.";
     public static final String REG_NUM_REQUIRED = "Please enter registration number.";
@@ -53,5 +52,4 @@ public class Constants {
     public static final String SUBMIT = "Submit";
     public static final String SAVE = "Save";
     public static final String NEW = "New";
-    public static final String EDIT = "Edit";
 }

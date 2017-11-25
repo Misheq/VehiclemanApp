@@ -4,6 +4,6 @@
         android:id="@+id/action_item"
         android:orderInCategory="1"
         app:showAsAction="ifRoom"
-        android:title="Placeholder"
+        android:title=""
         />
 </menu>

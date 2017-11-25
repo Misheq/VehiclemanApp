@@ -47,12 +47,12 @@ public class AddVehicleActivity extends AppCompatActivity implements DatePickerD
     private ApiInterface apiInterface;
     private View view;
     private SpinnerLoader spinnerLoader;
-    EditText type;
-    EditText registration;
-    EditText color;
-    EditText description;
-    TextView serviceDate;
-    Spinner spinnerWithPersons;
+    private EditText type;
+    private EditText registration;
+    private EditText color;
+    private EditText description;
+    private TextView serviceDate;
+    private Spinner spinnerWithPersons;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -64,7 +64,7 @@ public class AddVehicleActivity extends AppCompatActivity implements DatePickerD
         spinnerLoader.loadPersonsSpinnerForVehicle();
     }
 
-    public void setVehicleFromForm() {
+    private void setVehicleFromForm() {
         InputValidator inVal = new InputValidator(this.view);
 
         if(inVal.isVehicleInputValid()){
@@ -153,7 +153,7 @@ public class AddVehicleActivity extends AppCompatActivity implements DatePickerD
         return vehicle;
     }
 
-    // datepicker logic
+    // date picker logic
     public void datePicker(View view) {
         DatePickerFragment fragment = new DatePickerFragment();
         fragment.show(getSupportFragmentManager(), "dialog");

@@ -55,9 +55,6 @@ public interface ApiInterface {
     ///////// vehicle endpoints //////////
     //////////////////////////////////////
 
-    @GET(VEHICLES)
-    Call<List<Vehicle>> getVehicles(@Header(AUTHORIZATION) String authHeader);
-
     @POST(VEHICLES)
     Call<Vehicle> createVehicle(@Header(AUTHORIZATION) String authHeader, @Body Vehicle vehicle);
 
@@ -70,12 +67,6 @@ public interface ApiInterface {
     //////////////////////////////////////
     ////////// person endpoints //////////
     //////////////////////////////////////
-
-    //@GET(PERSONS)
-    //Call<List<Person>> getPersons();
-
-    @GET(PERSONS)
-    Call<List<Person>> getPersons(@Header(AUTHORIZATION) String authHeader);
 
     @POST(PERSONS)
     Call<Person> createPerson(@Header(AUTHORIZATION) String authHeader, @Body Person person);

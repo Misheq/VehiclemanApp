@@ -40,12 +40,12 @@ public class AddPersonActivity extends AppCompatActivity {
     private ApiInterface apiInterface;
     private View view;
     private SpinnerLoader spinnerLoader;
-    EditText firstName;
-    EditText lastName;
-    EditText email;
-    EditText phone;
-    EditText company;
-    Spinner spinnerWithVehicles;
+    private EditText firstName;
+    private EditText lastName;
+    private EditText email;
+    private EditText phone;
+    private EditText company;
+    private Spinner spinnerWithVehicles;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -57,7 +57,7 @@ public class AddPersonActivity extends AppCompatActivity {
         spinnerLoader.loadVehiclesSpinnerForPerson();
     }
 
-    public void setPersonFromForm() {
+    private void setPersonFromForm() {
         InputValidator inVal = new InputValidator(this.view);
 
         if(inVal.isPersonInputValid()) {

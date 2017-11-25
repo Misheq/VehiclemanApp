@@ -80,7 +80,7 @@ public class EditPersonActivity extends AppCompatActivity {
         setSpinnerVehicle(person);
     }
 
-    public void setPersonFromForm() {
+    private void setPersonFromForm() {
 
         InputValidator inVal = new InputValidator(this.view);
 
