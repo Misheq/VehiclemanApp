@@ -4,14 +4,15 @@
     <string name="title_activity_login">Sign in</string>
 
     <!-- ui titles -->
-    <string name="title_new_person">New person</string>
+    <string name="title_new_employee">New employee</string>
     <string name="title_new_vehicle">New vehicle</string>
     <string name="title_register">Register</string>
     <string name="title_vehicles">Vehicles</string>
-    <string name="title_persons">Persons</string>
+    <string name="title_employees">Employees</string>
     <string name="title_manage">Manage</string>
     <string name="title_login">Login</string>
-    <string name="title_edit">Edit</string>
+    <string name="title_edit_person">Edit person</string>
+    <string name="title_edit_vehicle">Edit vehicle</string>
     <string name="title_profile">Profile</string>
 
     <!-- ui buttons -->
@@ -23,7 +24,7 @@
     <string name="button_persons">Persons</string>
     <string name="button_vehicles">Vehicles</string>
     <string name="button_logout">Logout</string>
-    <string name="button_sign_in">Sign in</string>
+    <string name="button_sign_in">Sign-in</string>
     <string name="button_create_account">Create account</string>
     <string name="button_delete">Delete</string>
 
