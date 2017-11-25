@@ -10,6 +10,8 @@ import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.Toast;
@@ -19,6 +21,7 @@ import com.example.mihael.vehiclemanapp.adaptors.PersonRecyclerAdapter;
 import com.example.mihael.vehiclemanapp.api.ApiClient;
 import com.example.mihael.vehiclemanapp.api.ApiInterface;
 import com.example.mihael.vehiclemanapp.entities.Person;
+import com.example.mihael.vehiclemanapp.helpers.Constants;
 import com.example.mihael.vehiclemanapp.helpers.LoginManager;
 
 import java.util.List;
@@ -82,7 +85,7 @@ public class PersonsActivity extends AppCompatActivity {
         });
     }
 
-    public void startAddPersonActivity(View view) {
+    public void startAddPersonActivity() {
         Intent intent = new Intent(this, AddPersonActivity.class);
         startActivity(intent);
     }
@@ -140,6 +143,28 @@ public class PersonsActivity extends AppCompatActivity {
                 Log.d("MY_TAG", "Delete went wrong");
             }
         });
+    }
+
+    // MENU HELPER
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.menu, menu);
+
+        MenuItem item = menu.findItem(R.id.action_item);
+        item.setTitle(Constants.NEW);
+
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        int itemThatWasClickedId = item.getItemId();
+        if (itemThatWasClickedId == R.id.action_item) {
+            startAddPersonActivity();
+            return true;
+        }
+        return super.onOptionsItemSelected(item);
     }
 
 }

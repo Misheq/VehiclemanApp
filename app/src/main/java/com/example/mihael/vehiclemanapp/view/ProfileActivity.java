@@ -3,6 +3,8 @@ package com.example.mihael.vehiclemanapp.view;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.Toast;
@@ -11,6 +13,7 @@ import com.example.mihael.vehiclemanapp.R;
 import com.example.mihael.vehiclemanapp.api.ApiClient;
 import com.example.mihael.vehiclemanapp.api.ApiInterface;
 import com.example.mihael.vehiclemanapp.entities.Manager;
+import com.example.mihael.vehiclemanapp.helpers.Constants;
 import com.example.mihael.vehiclemanapp.helpers.InputValidator;
 import com.example.mihael.vehiclemanapp.helpers.LoginManager;
 
@@ -81,7 +84,7 @@ public class ProfileActivity extends AppCompatActivity {
         setUiTextsFromManager(manager);
     }
 
-    public void setManagerFromForm(View view) {
+    public void setManagerFromForm() {
         getUiElements();
 
         InputValidator inVal = new InputValidator(this.view);
@@ -159,5 +162,27 @@ public class ProfileActivity extends AppCompatActivity {
         manager.setCompanyName(company.getText().toString());
 
         return manager;
+    }
+
+    // MENU HELPER
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.menu, menu);
+
+        MenuItem item = menu.findItem(R.id.action_item);
+        item.setTitle(Constants.SAVE);
+
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        int itemThatWasClickedId = item.getItemId();
+        if (itemThatWasClickedId == R.id.action_item) {
+            setManagerFromForm();
+            return true;
+        }
+        return super.onOptionsItemSelected(item);
     }
 }

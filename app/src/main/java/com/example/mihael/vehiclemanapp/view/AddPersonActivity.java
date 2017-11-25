@@ -3,6 +3,8 @@ package com.example.mihael.vehiclemanapp.view;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.Spinner;
@@ -13,6 +15,7 @@ import com.example.mihael.vehiclemanapp.api.ApiClient;
 import com.example.mihael.vehiclemanapp.api.ApiInterface;
 import com.example.mihael.vehiclemanapp.entities.Person;
 import com.example.mihael.vehiclemanapp.entities.Vehicle;
+import com.example.mihael.vehiclemanapp.helpers.Constants;
 import com.example.mihael.vehiclemanapp.helpers.InputValidator;
 import com.example.mihael.vehiclemanapp.helpers.LoginManager;
 import com.example.mihael.vehiclemanapp.helpers.SpinnerLoader;
@@ -54,7 +57,7 @@ public class AddPersonActivity extends AppCompatActivity {
         spinnerLoader.loadVehiclesSpinnerForPerson();
     }
 
-    public void setPersonFromForm(View view) {
+    public void setPersonFromForm() {
         InputValidator inVal = new InputValidator(this.view);
 
         if(inVal.isPersonInputValid()) {
@@ -138,5 +141,27 @@ public class AddPersonActivity extends AppCompatActivity {
         }
 
         return person;
+    }
+
+    // MENU HELPER
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.menu, menu);
+
+        MenuItem item = menu.findItem(R.id.action_item);
+        item.setTitle(Constants.SAVE);
+
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        int itemThatWasClickedId = item.getItemId();
+        if (itemThatWasClickedId == R.id.action_item) {
+            setPersonFromForm();
+            return true;
+        }
+        return super.onOptionsItemSelected(item);
     }
 }

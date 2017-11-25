@@ -4,6 +4,8 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Base64;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.Toast;
@@ -48,7 +50,7 @@ public class LoginActivity extends AppCompatActivity {
         inputPassword.setText(manager.getPassword());
     }
 
-    public void setLoginDataFromForm(View view) {
+    public void setLoginDataFromForm() {
 
         inputEmail = findViewById(R.id.inputEmail);
         inputPassword = findViewById(R.id.inputPassword);
@@ -113,4 +115,26 @@ public class LoginActivity extends AppCompatActivity {
      */
     @Override
     public void onBackPressed() { }
+
+    // MENU HELPER
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.menu, menu);
+
+        MenuItem item = menu.findItem(R.id.action_item);
+        item.setTitle("Sign-in");
+
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        int itemThatWasClickedId = item.getItemId();
+        if (itemThatWasClickedId == R.id.action_item) {
+            setLoginDataFromForm();
+            return true;
+        }
+        return super.onOptionsItemSelected(item);
+    }
 }

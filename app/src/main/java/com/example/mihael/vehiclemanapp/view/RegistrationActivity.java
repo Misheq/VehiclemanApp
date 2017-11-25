@@ -5,6 +5,8 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Base64;
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.Toast;
@@ -13,6 +15,7 @@ import com.example.mihael.vehiclemanapp.R;
 import com.example.mihael.vehiclemanapp.api.ApiClient;
 import com.example.mihael.vehiclemanapp.api.ApiInterface;
 import com.example.mihael.vehiclemanapp.entities.Manager;
+import com.example.mihael.vehiclemanapp.helpers.Constants;
 import com.example.mihael.vehiclemanapp.helpers.InputValidator;
 import com.example.mihael.vehiclemanapp.helpers.LoginManager;
 
@@ -39,11 +42,13 @@ public class RegistrationActivity extends AppCompatActivity {
         view = getWindow().getDecorView().getRootView();
     }
 
-    public void setManagerFromForm(View view) {
+    public void setManagerFromForm() {
         InputValidator inVal = new InputValidator(this.view);
 
-        // manager and person input is identical (for the required fields)
-        if(inVal.isPersonInputValid() && inVal.isRegistrationPasswordValid()) {
+        boolean personInputOk = inVal.isPersonInputValid();
+        boolean regPasswordOk = inVal.isRegistrationPasswordValid();
+
+        if(personInputOk && regPasswordOk) {
             Manager manager = createManagerFromUi();
 
             saveManagerToke();
@@ -135,5 +140,27 @@ public class RegistrationActivity extends AppCompatActivity {
         String base = email.getText().toString() + ":" + password.getText().toString();
         String auth = "Basic " + Base64.encodeToString(base.getBytes(), Base64.NO_WRAP);
         LoginManager.setLogedInManagerToken(auth);
+    }
+
+    // MENU HELPER
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.menu, menu);
+
+        MenuItem item = menu.findItem(R.id.action_item);
+        item.setTitle(Constants.SUBMIT);
+
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        int itemThatWasClickedId = item.getItemId();
+        if (itemThatWasClickedId == R.id.action_item) {
+            setManagerFromForm();
+            return true;
+        }
+        return super.onOptionsItemSelected(item);
     }
 }

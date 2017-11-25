@@ -48,4 +48,10 @@ public class Constants {
     public static final String PASSWORD_CHARACTERS = " characters.";
     public static final String PASSWORD_NOT_MATCH = "Your password does not match.";
 
+    // titles and names
+    public static final String SIGN_IN = "Sign-in";
+    public static final String SUBMIT = "Submit";
+    public static final String SAVE = "Save";
+    public static final String NEW = "New";
+    public static final String EDIT = "Edit";
 }
