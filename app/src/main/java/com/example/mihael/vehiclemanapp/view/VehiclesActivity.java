@@ -14,6 +14,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ProgressBar;
 import android.widget.Toast;
 
 import com.example.mihael.vehiclemanapp.R;
@@ -42,6 +43,7 @@ public class VehiclesActivity extends AppCompatActivity {
     private List<Vehicle> vehicles;
     private ApiInterface apiInterface;
     private final Context context = this;
+    private ProgressBar mLoadingIndicator;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -65,6 +67,9 @@ public class VehiclesActivity extends AppCompatActivity {
      */
     private void loadVehicleList() {
 
+        mLoadingIndicator = findViewById(R.id.pb_loading_indicator);
+        mLoadingIndicator.setVisibility(View.VISIBLE);
+
         recyclerView = findViewById(R.id.recyclerView);
         layoutManager = new LinearLayoutManager(this);
         recyclerView.setItemAnimator(new DefaultItemAnimator());
@@ -79,7 +84,9 @@ public class VehiclesActivity extends AppCompatActivity {
             @Override
             public void onResponse(Call<List<Vehicle>> call, Response<List<Vehicle>> response) {
                 int statusCode = response.code();
-                if(statusCode == 200) {
+                mLoadingIndicator.setVisibility(View.INVISIBLE);
+
+                if (statusCode == 200) {
                     vehicles = response.body();
                     vehicleRecyclerAdapter = new VehicleRecyclerAdapter(vehicles);
                     recyclerView.setAdapter(vehicleRecyclerAdapter);
@@ -90,8 +97,9 @@ public class VehiclesActivity extends AppCompatActivity {
 
             @Override
             public void onFailure(Call<List<Vehicle>> call, Throwable t) {
-                Toast.makeText(VehiclesActivity.this, "Loading vehicles failed.\nPlease check internet connection." , Toast.LENGTH_SHORT).show();
-                Log.d("MYTAG","something is wrong");
+                mLoadingIndicator.setVisibility(View.INVISIBLE);
+                Toast.makeText(VehiclesActivity.this, "Loading vehicles failed.\nPlease check internet connection.", Toast.LENGTH_SHORT).show();
+                Log.d("MYTAG", "something is wrong");
             }
         });
     }
@@ -110,15 +118,15 @@ public class VehiclesActivity extends AppCompatActivity {
         alertDialogBuilder
                 .setMessage("Are you sure you want to delete this element?")
                 .setCancelable(false)
-                .setPositiveButton("Yes",new DialogInterface.OnClickListener() {
-                    public void onClick(DialogInterface dialog,int id) {
+                .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int id) {
                         Button button = view.findViewById(R.id.buttonDelete);
                         final int vehicleId = Integer.parseInt((String) button.getTag());
 
                         deleteVehicleById(vehicleId);
                     }
                 })
-                .setNegativeButton("No",new DialogInterface.OnClickListener() {
+                .setNegativeButton("No", new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int id) {
                         dialog.cancel();
                     }
@@ -141,7 +149,7 @@ public class VehiclesActivity extends AppCompatActivity {
             @Override
             public void onResponse(Call<Void> call, Response<Void> response) {
                 int statusCode = response.code();
-                if(statusCode == 204) {
+                if (statusCode == 204) {
                     Toast.makeText(VehiclesActivity.this, "Vehicle deleted successfully.", Toast.LENGTH_SHORT).show();
                     loadVehicleList();
                 } else {

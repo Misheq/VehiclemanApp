@@ -9,6 +9,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.EditText;
+import android.widget.ProgressBar;
 import android.widget.Toast;
 
 import com.example.mihael.vehiclemanapp.R;
@@ -34,6 +35,7 @@ public class RegistrationActivity extends AppCompatActivity {
     private EditText company;
     private EditText email;
     private EditText password;
+    private ProgressBar mLoadingIndicator;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -48,7 +50,7 @@ public class RegistrationActivity extends AppCompatActivity {
         boolean personInputOk = inVal.isPersonInputValid();
         boolean regPasswordOk = inVal.isRegistrationPasswordValid();
 
-        if(personInputOk && regPasswordOk) {
+        if (personInputOk && regPasswordOk) {
             Manager manager = createManagerFromUi();
 
             saveManagerToke();
@@ -66,6 +68,7 @@ public class RegistrationActivity extends AppCompatActivity {
 
     private void registerManager(Manager manager) {
 
+        mLoadingIndicator.setVisibility(View.VISIBLE);
         final String password = manager.getPassword();
 
         ApiInterface apiInterface = ApiClient.getApiClient().create(ApiInterface.class);
@@ -75,8 +78,10 @@ public class RegistrationActivity extends AppCompatActivity {
             @Override
             public void onResponse(Call<Manager> call, Response<Manager> response) {
                 int statusCode = response.code();
+                mLoadingIndicator.setVisibility(View.INVISIBLE);
 
-                if(statusCode == 201) {
+                if (statusCode == 201) {
+
                     Log.d("STATUS_CODE", "status:" + statusCode + "\nManager registered");
                     Toast.makeText(RegistrationActivity.this, "Manager registered", Toast.LENGTH_LONG).show();
 
@@ -103,6 +108,7 @@ public class RegistrationActivity extends AppCompatActivity {
 
             @Override
             public void onFailure(Call<Manager> call, Throwable t) {
+                mLoadingIndicator.setVisibility(View.INVISIBLE);
                 Toast.makeText(RegistrationActivity.this, "Something went wrong", Toast.LENGTH_LONG).show();
                 Log.d("MY_ERROR", "something is wrong with manager registration");
             }
@@ -119,6 +125,7 @@ public class RegistrationActivity extends AppCompatActivity {
         company = findViewById(R.id.inputCompany);
         email = findViewById(R.id.inputEmail);
         password = findViewById(R.id.inputPassword);
+        mLoadingIndicator = findViewById(R.id.pb_loading_indicator);
     }
 
     private Manager createManagerFromUi() {

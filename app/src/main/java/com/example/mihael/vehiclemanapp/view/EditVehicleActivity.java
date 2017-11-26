@@ -10,6 +10,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.DatePicker;
 import android.widget.EditText;
+import android.widget.ProgressBar;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -56,6 +57,7 @@ public class EditVehicleActivity extends AppCompatActivity implements DatePicker
     private EditText color;
     private EditText description;
     private TextView serviceDate;
+    private ProgressBar mLoadingIndicator;
 
     private int passedVehicleId;
 
@@ -64,12 +66,15 @@ public class EditVehicleActivity extends AppCompatActivity implements DatePicker
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_edit_vehicle);
 
+        mLoadingIndicator = findViewById(R.id.pb_loading_indicator);
+        mLoadingIndicator.setVisibility(View.VISIBLE);
+
         Intent intent = getIntent();
         final Vehicle vehicle = (Vehicle) intent.getSerializableExtra(VEHICLE);
         passedVehicleId = vehicle.getVehicleId();
 
         int currentPersonId = -1;
-        if(!vehicle.getAssigneeId().equals("")) {
+        if (!vehicle.getAssigneeId().equals("")) {
             currentPersonId = Integer.parseInt(vehicle.getAssigneeId());
         }
 
@@ -93,11 +98,10 @@ public class EditVehicleActivity extends AppCompatActivity implements DatePicker
      * on save button clicked:
      * create the vehicle object and
      * send update request for the vehicle
-     *
      */
     private void setVehicleFromForm() {
         InputValidator inVal = new InputValidator(this.view);
-        if(inVal.isVehicleInputValid()) {
+        if (inVal.isVehicleInputValid()) {
 
             Vehicle vehicle = createVehicleFromUi();
             vehicle = setPersonForVehicle(vehicle);
@@ -108,16 +112,18 @@ public class EditVehicleActivity extends AppCompatActivity implements DatePicker
     }
 
     private void editVehicle(Vehicle vehicle) {
+        mLoadingIndicator.setVisibility(View.VISIBLE);
 
         ApiInterface apiInterface = ApiClient.getApiClient().create(ApiInterface.class);
 
-        Call<Vehicle> call = apiInterface.updateVehicle(LoginManager.getLogedInManagerToken(),vehicle.getVehicleId(), vehicle);
+        Call<Vehicle> call = apiInterface.updateVehicle(LoginManager.getLogedInManagerToken(), vehicle.getVehicleId(), vehicle);
         call.enqueue(new Callback<Vehicle>() {
             @Override
             public void onResponse(Call<Vehicle> call, Response<Vehicle> response) {
                 int statusCode = response.code();
+                mLoadingIndicator.setVisibility(View.INVISIBLE);
 
-                if(statusCode == 200) {
+                if (statusCode == 200) {
                     Log.d("STATUS_CODE", "status:" + statusCode + "\nVehicle updated successfully!");
                     Toast.makeText(EditVehicleActivity.this, "Vehicle updated", Toast.LENGTH_LONG).show();
                 } else {
@@ -135,6 +141,7 @@ public class EditVehicleActivity extends AppCompatActivity implements DatePicker
 
             @Override
             public void onFailure(Call<Vehicle> call, Throwable t) {
+                mLoadingIndicator.setVisibility(View.VISIBLE);
                 Toast.makeText(EditVehicleActivity.this, "Something went wrong", Toast.LENGTH_LONG).show();
                 Log.d("MY_ERROR", "something is wrong with vehicle update");
             }
@@ -160,18 +167,20 @@ public class EditVehicleActivity extends AppCompatActivity implements DatePicker
         color.setText(vehicle.getColor());
         description.setText(vehicle.getDescription());
 
-        if(vehicle.getServicingDate() != null && !vehicle.getServicingDate().equals("")) {
+        if (vehicle.getServicingDate() != null && !vehicle.getServicingDate().equals("")) {
             serviceDate.setText(SERVICING_DATE + vehicle.getServicingDate());
         }
+
+        mLoadingIndicator.setVisibility(View.INVISIBLE);
     }
 
     private void setSpinnerPerson(Vehicle vehicle) {
         int personPosition = 0;
 
-        if(!(vehicle.getAssigneeId().equals(""))) {
+        if (!(vehicle.getAssigneeId().equals(""))) {
 
             List<Person> personList = spinnerLoader.getPersons();
-            for(int i = 0; i < personList.size(); i++) {
+            for (int i = 0; i < personList.size(); i++) {
                 if (personList.get(i).getPersonId() == Integer.parseInt(vehicle.getAssigneeId())) {
                     personPosition = i;
                     break;
@@ -184,7 +193,7 @@ public class EditVehicleActivity extends AppCompatActivity implements DatePicker
     private Vehicle setPersonForVehicle(Vehicle vehicle) {
         Object selectedPerson = spinnerWithPersons.getSelectedItem();
 
-        if(!selectedPerson.toString().equals(SELECT_PERSON)) {
+        if (!selectedPerson.toString().equals(SELECT_PERSON)) {
             Person person = (Person) selectedPerson;
             vehicle.setAssigneeId(String.valueOf(person.getPersonId()));
             vehicle.setPerson(person);
@@ -207,7 +216,7 @@ public class EditVehicleActivity extends AppCompatActivity implements DatePicker
         vehicle.setColor(color.getText().toString());
         vehicle.setDescription(description.getText().toString());
 
-        if(!serviceDate.getText().toString().equals(TAP_TO_SET_SERVICING_DATE)) {
+        if (!serviceDate.getText().toString().equals(TAP_TO_SET_SERVICING_DATE)) {
             // time should not be in past
             vehicle.setServicingDate(serviceDate.getText().toString().replace(SERVICING_DATE, ""));
         } else {
@@ -237,16 +246,16 @@ public class EditVehicleActivity extends AppCompatActivity implements DatePicker
         setDate(cal);
     }
 
-        // MENU HELPER
+    // MENU HELPER
 
-        @Override
-        public boolean onCreateOptionsMenu(Menu menu) {
-            getMenuInflater().inflate(R.menu.menu, menu);
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.menu, menu);
 
-            MenuItem item = menu.findItem(R.id.action_item);
-            item.setTitle(Constants.SAVE);
+        MenuItem item = menu.findItem(R.id.action_item);
+        item.setTitle(Constants.SAVE);
 
-            return true;
+        return true;
     }
 
     @Override

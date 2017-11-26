@@ -4,7 +4,7 @@
     android:layout_height="match_parent">
 
     <TextView
-        android:id="@+id/titleEditPerson"
+        android:id="@+id/titleEditEmployee"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentTop="true"
@@ -20,7 +20,7 @@
         android:layout_width="300dp"
         android:layout_height="40dp"
         android:layout_marginTop="20dp"
-        android:layout_below="@id/titleEditPerson"
+        android:layout_below="@id/titleEditEmployee"
         android:hint="@string/hint_first_name"
         android:inputType="textPersonName"
         android:layout_centerHorizontal="true"
@@ -77,5 +77,14 @@
         android:layout_below="@id/inputCompany"
         android:layout_centerHorizontal="true"
         />
+
+    <ProgressBar
+        android:id="@+id/pb_loading_indicator"
+        android:layout_width="42dp"
+        android:layout_height="42dp"
+        android:layout_alignParentEnd="true"
+        android:layout_marginEnd="10dp"
+        android:layout_marginTop="10dp"
+        android:visibility="invisible" />
 
 </RelativeLayout>
