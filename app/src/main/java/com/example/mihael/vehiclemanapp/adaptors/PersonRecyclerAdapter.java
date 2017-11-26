@@ -14,7 +14,7 @@ import com.example.mihael.vehiclemanapp.view.EditPersonActivity;
 
 import java.util.List;
 
-import static com.example.mihael.vehiclemanapp.helpers.Constants.PERSON;
+import static com.example.mihael.vehiclemanapp.helpers.Constants.EMPLOYEE;
 
 /**
  * Person recycler adapter handles recycler view
@@ -78,7 +78,7 @@ public class PersonRecyclerAdapter extends RecyclerView.Adapter<PersonRecyclerAd
         public void onClick(View view) {
             Person p = persons.get(getLayoutPosition());
             Intent intent = new Intent(view.getContext(), EditPersonActivity.class);
-            intent.putExtra(PERSON, p);
+            intent.putExtra(EMPLOYEE, p);
             view.getContext().startActivity(intent);
         }
     }

@@ -38,7 +38,7 @@ import retrofit2.Callback;
 import retrofit2.Response;
 
 import static com.example.mihael.vehiclemanapp.helpers.Constants.CONNECTION_FAILED;
-import static com.example.mihael.vehiclemanapp.helpers.Constants.SELECT_PERSON;
+import static com.example.mihael.vehiclemanapp.helpers.Constants.SELECT_EMPLOYEE;
 import static com.example.mihael.vehiclemanapp.helpers.Constants.SERVICING_DATE;
 import static com.example.mihael.vehiclemanapp.helpers.Constants.TAP_TO_SET_SERVICING_DATE;
 import static com.example.mihael.vehiclemanapp.helpers.Constants.UPDATE_VEHICLE_SUCCESSFUL;
@@ -190,7 +190,7 @@ public class EditVehicleActivity extends AppCompatActivity implements DatePicker
     private Vehicle setPersonForVehicle(Vehicle vehicle) {
         Object selectedPerson = spinnerWithPersons.getSelectedItem();
 
-        if (!selectedPerson.toString().equals(SELECT_PERSON)) {
+        if (!selectedPerson.toString().equals(SELECT_EMPLOYEE)) {
             Person person = (Person) selectedPerson;
             vehicle.setAssigneeId(String.valueOf(person.getPersonId()));
             vehicle.setPerson(person);

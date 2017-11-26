@@ -18,7 +18,7 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-import static com.example.mihael.vehiclemanapp.helpers.Constants.PERSON;
+import static com.example.mihael.vehiclemanapp.helpers.Constants.EMPLOYEE;
 import static com.example.mihael.vehiclemanapp.helpers.Constants.SELECT;
 import static com.example.mihael.vehiclemanapp.helpers.Constants.VEHICLE;
 
@@ -83,7 +83,7 @@ public class SpinnerLoader {
 
         Person dummyPerson = new Person();
         dummyPerson.setFirstName(SELECT);
-        dummyPerson.setLastName(PERSON);
+        dummyPerson.setLastName(EMPLOYEE);
 
         persons = setAvailablePersons(persons);
         persons.add(0, dummyPerson);

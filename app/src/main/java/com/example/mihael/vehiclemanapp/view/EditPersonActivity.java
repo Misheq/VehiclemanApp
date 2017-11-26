@@ -32,6 +32,7 @@ import retrofit2.Callback;
 import retrofit2.Response;
 
 import static com.example.mihael.vehiclemanapp.helpers.Constants.CONNECTION_FAILED;
+import static com.example.mihael.vehiclemanapp.helpers.Constants.EMPLOYEE;
 import static com.example.mihael.vehiclemanapp.helpers.Constants.SELECT_VEHICLE;
 import static com.example.mihael.vehiclemanapp.helpers.Constants.UPDATE_PERSON_SUCCESSFUL;
 
@@ -62,7 +63,7 @@ public class EditPersonActivity extends AppCompatActivity {
 
         Intent intent = getIntent();
 
-        final Person person = (Person) intent.getSerializableExtra("person");
+        final Person person = (Person) intent.getSerializableExtra(EMPLOYEE);
         passedPersonId = person.getPersonId();
 
         int currentVehicleId = -1;

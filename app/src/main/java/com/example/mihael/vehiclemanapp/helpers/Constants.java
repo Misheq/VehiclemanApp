@@ -28,9 +28,9 @@ public class Constants {
 
     // spinner constants
     public static final String SELECT_VEHICLE = "Select vehicle";
-    public static final String SELECT_PERSON = "Select person";
+    public static final String SELECT_EMPLOYEE = "Select employee";
     public static final String SELECT = "Select";
-    public static final String PERSON = "person";
+    public static final String EMPLOYEE = "employee";
     public static final String VEHICLE = "vehicle";
 
     // messages
