@@ -4,7 +4,6 @@ import android.app.DatePickerDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -38,9 +37,11 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
+import static com.example.mihael.vehiclemanapp.helpers.Constants.CONNECTION_FAILED;
 import static com.example.mihael.vehiclemanapp.helpers.Constants.SELECT_PERSON;
 import static com.example.mihael.vehiclemanapp.helpers.Constants.SERVICING_DATE;
 import static com.example.mihael.vehiclemanapp.helpers.Constants.TAP_TO_SET_SERVICING_DATE;
+import static com.example.mihael.vehiclemanapp.helpers.Constants.UPDATE_VEHICLE_SUCCESSFUL;
 import static com.example.mihael.vehiclemanapp.helpers.Constants.VEHICLE;
 
 /**
@@ -102,7 +103,6 @@ public class EditVehicleActivity extends AppCompatActivity implements DatePicker
     private void setVehicleFromForm() {
         InputValidator inVal = new InputValidator(this.view);
         if (inVal.isVehicleInputValid()) {
-
             Vehicle vehicle = createVehicleFromUi();
             vehicle = setPersonForVehicle(vehicle);
 
@@ -124,11 +124,9 @@ public class EditVehicleActivity extends AppCompatActivity implements DatePicker
                 mLoadingIndicator.setVisibility(View.INVISIBLE);
 
                 if (statusCode == 200) {
-                    Log.d("STATUS_CODE", "status:" + statusCode + "\nVehicle updated successfully!");
-                    Toast.makeText(EditVehicleActivity.this, "Vehicle updated", Toast.LENGTH_LONG).show();
+                    Toast.makeText(EditVehicleActivity.this, UPDATE_VEHICLE_SUCCESSFUL, Toast.LENGTH_LONG).show();
                 } else {
                     try {
-                        Log.d("STATUS_CODE", "status:" + statusCode + "\nVehicle not updated!");
                         JSONObject error = new JSONObject(response.errorBody().string());
                         Toast.makeText(EditVehicleActivity.this,
                                 "Status code: " + statusCode + "\n"
@@ -142,8 +140,7 @@ public class EditVehicleActivity extends AppCompatActivity implements DatePicker
             @Override
             public void onFailure(Call<Vehicle> call, Throwable t) {
                 mLoadingIndicator.setVisibility(View.VISIBLE);
-                Toast.makeText(EditVehicleActivity.this, "Something went wrong", Toast.LENGTH_LONG).show();
-                Log.d("MY_ERROR", "something is wrong with vehicle update");
+                Toast.makeText(EditVehicleActivity.this, CONNECTION_FAILED, Toast.LENGTH_LONG).show();
             }
         });
     }
@@ -217,7 +214,6 @@ public class EditVehicleActivity extends AppCompatActivity implements DatePicker
         vehicle.setDescription(description.getText().toString());
 
         if (!serviceDate.getText().toString().equals(TAP_TO_SET_SERVICING_DATE)) {
-            // time should not be in past
             vehicle.setServicingDate(serviceDate.getText().toString().replace(SERVICING_DATE, ""));
         } else {
             vehicle.setServicingDate("");

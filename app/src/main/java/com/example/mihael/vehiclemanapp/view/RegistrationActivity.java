@@ -4,7 +4,6 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Base64;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -25,6 +24,9 @@ import org.json.JSONObject;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
+
+import static com.example.mihael.vehiclemanapp.helpers.Constants.CONNECTION_FAILED;
+import static com.example.mihael.vehiclemanapp.helpers.Constants.MANAGER_REGISTERED;
 
 public class RegistrationActivity extends AppCompatActivity {
 
@@ -81,25 +83,20 @@ public class RegistrationActivity extends AppCompatActivity {
                 mLoadingIndicator.setVisibility(View.INVISIBLE);
 
                 if (statusCode == 201) {
-
-                    Log.d("STATUS_CODE", "status:" + statusCode + "\nManager registered");
-                    Toast.makeText(RegistrationActivity.this, "Manager registered", Toast.LENGTH_LONG).show();
+                    Toast.makeText(RegistrationActivity.this, MANAGER_REGISTERED, Toast.LENGTH_LONG).show();
 
                     Manager manager = response.body();
                     LoginManager.setManager(manager);
 
-                    // set password back to plain text to be able to login since i dont go to manage activity from this screen
-                    // workaround!!
                     manager.setPassword(password);
                     startLoginActivity(manager);
 
                 } else {
                     try {
-                        Log.d("STATUS_CODE", "status:" + statusCode + "\nManager registration failed");
                         JSONObject error = new JSONObject(response.errorBody().string());
                         Toast.makeText(RegistrationActivity.this,
-                                "Status code: " + statusCode + "\n"
-                                        + error.getString("error"), Toast.LENGTH_LONG).show();
+                                "Status code: " + statusCode + "\n" + error.getString("error"),
+                                Toast.LENGTH_LONG).show();
                     } catch (Exception e) {
                         e.printStackTrace();
                     }
@@ -109,8 +106,7 @@ public class RegistrationActivity extends AppCompatActivity {
             @Override
             public void onFailure(Call<Manager> call, Throwable t) {
                 mLoadingIndicator.setVisibility(View.INVISIBLE);
-                Toast.makeText(RegistrationActivity.this, "Something went wrong", Toast.LENGTH_LONG).show();
-                Log.d("MY_ERROR", "something is wrong with manager registration");
+                Toast.makeText(RegistrationActivity.this, CONNECTION_FAILED, Toast.LENGTH_LONG).show();
             }
         });
 

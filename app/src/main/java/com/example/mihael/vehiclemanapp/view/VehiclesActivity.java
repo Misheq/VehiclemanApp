@@ -9,7 +9,6 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -25,11 +24,20 @@ import com.example.mihael.vehiclemanapp.entities.Vehicle;
 import com.example.mihael.vehiclemanapp.helpers.Constants;
 import com.example.mihael.vehiclemanapp.helpers.LoginManager;
 
+import org.json.JSONObject;
+
 import java.util.List;
 
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
+
+import static com.example.mihael.vehiclemanapp.helpers.Constants.CONNECTION_FAILED;
+import static com.example.mihael.vehiclemanapp.helpers.Constants.DELETE_VEHICLE_SUCCESSFUL;
+import static com.example.mihael.vehiclemanapp.helpers.Constants.DIALOG_BOX_MESSAGE;
+import static com.example.mihael.vehiclemanapp.helpers.Constants.DIALOG_BOX_NO;
+import static com.example.mihael.vehiclemanapp.helpers.Constants.DIALOG_BOX_TITLE;
+import static com.example.mihael.vehiclemanapp.helpers.Constants.DIALOG_BOX_YES;
 
 /**
  * Activity responsible for listing existing vehicles from database
@@ -91,15 +99,21 @@ public class VehiclesActivity extends AppCompatActivity {
                     vehicleRecyclerAdapter = new VehicleRecyclerAdapter(vehicles);
                     recyclerView.setAdapter(vehicleRecyclerAdapter);
                 } else {
-                    Toast.makeText(VehiclesActivity.this, "Loading vehicles failed. Status: " + statusCode, Toast.LENGTH_SHORT).show();
+                    try {
+                        JSONObject error = new JSONObject(response.errorBody().string());
+                        Toast.makeText(VehiclesActivity.this,
+                                "Status code: " + statusCode + "\n"
+                                        + error.getString("error"), Toast.LENGTH_LONG).show();
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
                 }
             }
 
             @Override
             public void onFailure(Call<List<Vehicle>> call, Throwable t) {
                 mLoadingIndicator.setVisibility(View.INVISIBLE);
-                Toast.makeText(VehiclesActivity.this, "Loading vehicles failed.\nPlease check internet connection.", Toast.LENGTH_SHORT).show();
-                Log.d("MYTAG", "something is wrong");
+                Toast.makeText(VehiclesActivity.this, CONNECTION_FAILED, Toast.LENGTH_SHORT).show();
             }
         });
     }
@@ -112,13 +126,13 @@ public class VehiclesActivity extends AppCompatActivity {
                 context);
 
         // set title
-        alertDialogBuilder.setTitle("Delete confirmation");
+        alertDialogBuilder.setTitle(DIALOG_BOX_TITLE);
 
         // set dialog message
         alertDialogBuilder
-                .setMessage("Are you sure you want to delete this element?")
+                .setMessage(DIALOG_BOX_MESSAGE)
                 .setCancelable(false)
-                .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+                .setPositiveButton(DIALOG_BOX_YES, new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int id) {
                         Button button = view.findViewById(R.id.buttonDelete);
                         final int vehicleId = Integer.parseInt((String) button.getTag());
@@ -126,7 +140,7 @@ public class VehiclesActivity extends AppCompatActivity {
                         deleteVehicleById(vehicleId);
                     }
                 })
-                .setNegativeButton("No", new DialogInterface.OnClickListener() {
+                .setNegativeButton(DIALOG_BOX_NO, new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int id) {
                         dialog.cancel();
                     }
@@ -150,17 +164,23 @@ public class VehiclesActivity extends AppCompatActivity {
             public void onResponse(Call<Void> call, Response<Void> response) {
                 int statusCode = response.code();
                 if (statusCode == 204) {
-                    Toast.makeText(VehiclesActivity.this, "Vehicle deleted successfully.", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(VehiclesActivity.this, DELETE_VEHICLE_SUCCESSFUL, Toast.LENGTH_SHORT).show();
                     loadVehicleList();
                 } else {
-                    Toast.makeText(VehiclesActivity.this, "Delete failed", Toast.LENGTH_SHORT).show();
+                    try {
+                        JSONObject error = new JSONObject(response.errorBody().string());
+                        Toast.makeText(VehiclesActivity.this,
+                                "Status code: " + statusCode + "\n"
+                                        + error.getString("error"), Toast.LENGTH_LONG).show();
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
                 }
             }
 
             @Override
             public void onFailure(Call<Void> call, Throwable t) {
-                Toast.makeText(VehiclesActivity.this, "Delete went wrong", Toast.LENGTH_LONG).show();
-                Log.d("MY_TAG", "Delete went wrong");
+                Toast.makeText(VehiclesActivity.this, CONNECTION_FAILED, Toast.LENGTH_LONG).show();
             }
         });
     }

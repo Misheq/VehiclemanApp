@@ -2,7 +2,6 @@ package com.example.mihael.vehiclemanapp.view;
 
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -30,6 +29,8 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
+import static com.example.mihael.vehiclemanapp.helpers.Constants.CREATE_PERSON_SUCCESSFUL;
+import static com.example.mihael.vehiclemanapp.helpers.Constants.CREATE_VEHICLE_SUCCESSFUL;
 import static com.example.mihael.vehiclemanapp.helpers.Constants.SELECT_VEHICLE;
 
 /**
@@ -61,7 +62,7 @@ public class AddPersonActivity extends AppCompatActivity {
     private void setPersonFromForm() {
         InputValidator inVal = new InputValidator(this.view);
 
-        if(inVal.isPersonInputValid()) {
+        if (inVal.isPersonInputValid()) {
             Person person = createPersonFromUi();
             person = setVehicleForPerson(person);
 
@@ -81,12 +82,10 @@ public class AddPersonActivity extends AppCompatActivity {
                 int statusCode = response.code();
                 mLoadingIndicator.setVisibility(View.INVISIBLE);
 
-                if(statusCode == 201) {
-                    Log.d("STATUS_CODE", "status:" + statusCode + "\nEmployee created successfully!");
-                    Toast.makeText(AddPersonActivity.this, "Employee created", Toast.LENGTH_LONG).show();
+                if (statusCode == 201) {
+                    Toast.makeText(AddPersonActivity.this, CREATE_PERSON_SUCCESSFUL, Toast.LENGTH_LONG).show();
                 } else {
                     try {
-                        Log.d("STATUS_CODE", "status:" + statusCode + "\nEmployee not created!");
                         JSONObject error = new JSONObject(response.errorBody().string());
                         Toast.makeText(AddPersonActivity.this,
                                 "Status code: " + statusCode + "\n"
@@ -100,8 +99,7 @@ public class AddPersonActivity extends AppCompatActivity {
             @Override
             public void onFailure(Call<Person> call, Throwable t) {
                 mLoadingIndicator.setVisibility(View.INVISIBLE);
-                Toast.makeText(AddPersonActivity.this, "Something went wrong", Toast.LENGTH_LONG).show();
-                Log.d("MY_ERROR", "something is wrong with person create");
+                Toast.makeText(AddPersonActivity.this, CREATE_VEHICLE_SUCCESSFUL, Toast.LENGTH_LONG).show();
             }
         });
     }
@@ -137,7 +135,7 @@ public class AddPersonActivity extends AppCompatActivity {
         Object selectedVehicle = spinnerWithVehicles.getSelectedItem();
         List<Vehicle> vehList = new ArrayList<>();
 
-        if(!selectedVehicle.toString().equals(SELECT_VEHICLE)) {
+        if (!selectedVehicle.toString().equals(SELECT_VEHICLE)) {
             Vehicle vehicle = (Vehicle) selectedVehicle;
             vehList.add(vehicle);
             person.setVehicles(vehList);

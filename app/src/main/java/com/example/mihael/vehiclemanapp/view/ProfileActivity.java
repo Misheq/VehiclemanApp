@@ -2,7 +2,6 @@ package com.example.mihael.vehiclemanapp.view;
 
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -23,6 +22,9 @@ import org.json.JSONObject;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
+
+import static com.example.mihael.vehiclemanapp.helpers.Constants.CONNECTION_FAILED;
+import static com.example.mihael.vehiclemanapp.helpers.Constants.MANAGER_UPDATED;
 
 public class ProfileActivity extends AppCompatActivity {
 
@@ -57,18 +59,14 @@ public class ProfileActivity extends AppCompatActivity {
                 mLoadingIndicator.setVisibility(View.INVISIBLE);
 
                 if (statusCode == 200) {
-                    Log.d("STATUS_CODE", "status:" + statusCode + "\nManager updated successfully!");
                     Manager manager = response.body();
                     LoginManager.setManager(manager);
                     setFieldsFromManager(manager);
 
                 } else {
                     try {
-                        Log.d("STATUS_CODE", "status:" + statusCode + "\nGet manager failed");
                         JSONObject error = new JSONObject(response.errorBody().string());
-                        Toast.makeText(ProfileActivity.this,
-                                "Status code: " + statusCode + "\n"
-                                        + error.getString("error"), Toast.LENGTH_LONG).show();
+                        Toast.makeText(ProfileActivity.this, "Status code: " + statusCode + "\n" + error.getString("error"), Toast.LENGTH_LONG).show();
                     } catch (Exception e) {
                         e.printStackTrace();
                     }
@@ -78,15 +76,12 @@ public class ProfileActivity extends AppCompatActivity {
             @Override
             public void onFailure(Call<Manager> call, Throwable t) {
                 mLoadingIndicator.setVisibility(View.INVISIBLE);
-                Toast.makeText(ProfileActivity.this, "Something went wrong whit get manager by id", Toast.LENGTH_LONG).show();
-                Log.d("MY_ERROR", "something is wrong with get manager");
+                Toast.makeText(ProfileActivity.this, CONNECTION_FAILED, Toast.LENGTH_LONG).show();
             }
         });
     }
 
     private void setFieldsFromManager(Manager manager) {
-        // TODO: change password, nice to have ( add a field for old password, and 2 for the new, if everything is ok, then send, if empty, then it should not update password)
-
         getUiElements();
         setUiTextsFromManager(manager);
     }
@@ -96,12 +91,8 @@ public class ProfileActivity extends AppCompatActivity {
 
         if (inVal.isPersonInputValid()) {
             Manager manager = createManagerFromUiTexts();
-
-            // how to handle password?
             manager.setManagerId(LoginManager.getManager().getManagerId());
-            //manager.setPassword(LoginManager.getManager().getPassword());
 
-            // will call update to server
             editManager(manager);
         }
     }
@@ -118,11 +109,9 @@ public class ProfileActivity extends AppCompatActivity {
                 mLoadingIndicator.setVisibility(View.INVISIBLE);
 
                 if (statusCode == 200) {
-                    Log.d("STATUS_CODE", "status:" + statusCode + "\nManager updated successfully!");
-                    Toast.makeText(ProfileActivity.this, "Manager updated", Toast.LENGTH_LONG).show();
+                    Toast.makeText(ProfileActivity.this, MANAGER_UPDATED, Toast.LENGTH_LONG).show();
                 } else {
                     try {
-                        Log.d("STATUS_CODE", "status:" + statusCode + "\nManager not updated!");
                         JSONObject error = new JSONObject(response.errorBody().string());
                         Toast.makeText(ProfileActivity.this,
                                 "Status code: " + statusCode + "\n"
@@ -136,8 +125,7 @@ public class ProfileActivity extends AppCompatActivity {
             @Override
             public void onFailure(Call<Manager> call, Throwable t) {
                 mLoadingIndicator.setVisibility(View.INVISIBLE);
-                Toast.makeText(ProfileActivity.this, "Something went wrong", Toast.LENGTH_LONG).show();
-                Log.d("MY_ERROR", "something is wrong with person update");
+                Toast.makeText(ProfileActivity.this, CONNECTION_FAILED, Toast.LENGTH_LONG).show();
             }
         });
     }

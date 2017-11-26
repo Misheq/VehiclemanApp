@@ -19,9 +19,13 @@ import com.example.mihael.vehiclemanapp.helpers.Constants;
 import com.example.mihael.vehiclemanapp.helpers.InputValidator;
 import com.example.mihael.vehiclemanapp.helpers.LoginManager;
 
+import org.json.JSONObject;
+
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
+
+import static com.example.mihael.vehiclemanapp.helpers.Constants.CONNECTION_FAILED;
 
 public class LoginActivity extends AppCompatActivity {
 
@@ -40,7 +44,7 @@ public class LoginActivity extends AppCompatActivity {
 
         final Manager manager = (Manager) intent.getSerializableExtra("manager");
 
-        if(manager != null) {
+        if (manager != null) {
             setFormFromManager(manager);
         }
     }
@@ -64,12 +68,11 @@ public class LoginActivity extends AppCompatActivity {
 
         InputValidator inVal = new InputValidator(this.view);
 
-        if(inVal.isLoginValid()) {
+        if (inVal.isLoginValid()) {
             String base = email + ":" + password;
             String auth = "Basic " + Base64.encodeToString(base.getBytes(), Base64.NO_WRAP);
 
             LoginManager.setLogedInManagerToken(auth);
-            // TODO: save hash to user preferences, user can stay loged in if it is not empty, and empty shared preferences when user clicks on logout in manage screen
             loginWithManager(email);
         }
     }
@@ -93,23 +96,29 @@ public class LoginActivity extends AppCompatActivity {
         call.enqueue(new Callback<Manager>() {
             @Override
             public void onResponse(Call<Manager> call, Response<Manager> response) {
+                int statusCode = response.code();
                 mLoadingIndicator.setVisibility(View.INVISIBLE);
-                if(response.code() == 200) {
+                if (response.code() == 200) {
                     Manager manager = response.body();
                     LoginManager.setManager(manager);
                     startManageActivity();
 
-                } else if(response.code() >=300 && response.code() < 500) {
-                    Toast.makeText(LoginActivity.this, "Incorrect email or password.", Toast.LENGTH_SHORT).show();
                 } else {
-                    Toast.makeText(LoginActivity.this, "Server error.", Toast.LENGTH_LONG).show();
+                    try {
+                        JSONObject error = new JSONObject(response.errorBody().string());
+                        Toast.makeText(LoginActivity.this,
+                                "Status code: " + statusCode + "\n"
+                                        + error.getString("error"), Toast.LENGTH_LONG).show();
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
                 }
             }
 
             @Override
             public void onFailure(Call<Manager> call, Throwable t) {
                 mLoadingIndicator.setVisibility(View.INVISIBLE);
-                Toast.makeText(LoginActivity.this, "Something went wrong", Toast.LENGTH_LONG).show();
+                Toast.makeText(LoginActivity.this, CONNECTION_FAILED, Toast.LENGTH_LONG).show();
             }
         });
     }
@@ -119,7 +128,8 @@ public class LoginActivity extends AppCompatActivity {
      * without authorization
      */
     @Override
-    public void onBackPressed() { }
+    public void onBackPressed() {
+    }
 
     // MENU HELPER
 

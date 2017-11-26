@@ -100,20 +100,5 @@ public class Vehicle implements Serializable {
     public String toString() {
         return vehicleType + " " + registrationNumber;
     }
-
-    // String brand;
-    // String model;
-    // String company;
-    // Date dateOfLastCheck;
-    // Date dateOfNextCheck;
-    // Date dateOfAquirement;
-    // Date registrationDate;
-    // Date registrationExpirationDate;
-    // int totalDistance;
-    // int height;
-    // int width;
-    // int length;
-    // int weight;
-    // List<BufferedImage> pictures;
 }
 

@@ -3,7 +3,6 @@ package com.example.mihael.vehiclemanapp.view;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -32,7 +31,9 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
+import static com.example.mihael.vehiclemanapp.helpers.Constants.CONNECTION_FAILED;
 import static com.example.mihael.vehiclemanapp.helpers.Constants.SELECT_VEHICLE;
+import static com.example.mihael.vehiclemanapp.helpers.Constants.UPDATE_PERSON_SUCCESSFUL;
 
 /**
  * Activity which is responsible for editing existing persons
@@ -65,7 +66,7 @@ public class EditPersonActivity extends AppCompatActivity {
         passedPersonId = person.getPersonId();
 
         int currentVehicleId = -1;
-        if(person.getVehicles().size() != 0) {
+        if (person.getVehicles().size() != 0) {
             currentVehicleId = person.getVehicles().get(0).getVehicleId();
         }
 
@@ -89,7 +90,7 @@ public class EditPersonActivity extends AppCompatActivity {
 
         InputValidator inVal = new InputValidator(this.view);
 
-        if(inVal.isPersonInputValid()) {
+        if (inVal.isPersonInputValid()) {
             Person person = createPersonFromUi();
             person = setVehicleForPerson(person);
 
@@ -109,12 +110,10 @@ public class EditPersonActivity extends AppCompatActivity {
                 int statusCode = response.code();
                 mLoadingIndicator.setVisibility(View.INVISIBLE);
 
-                if(statusCode == 200) {
-                    Log.d("STATUS_CODE", "status:" + statusCode + "\nPerson updated successfully!");
-                    Toast.makeText(EditPersonActivity.this, "Person updated", Toast.LENGTH_LONG).show();
+                if (statusCode == 200) {
+                    Toast.makeText(EditPersonActivity.this, UPDATE_PERSON_SUCCESSFUL, Toast.LENGTH_LONG).show();
                 } else {
                     try {
-                        Log.d("STATUS_CODE", "status:" + statusCode + "\nPerson not updated!");
                         JSONObject error = new JSONObject(response.errorBody().string());
                         Toast.makeText(EditPersonActivity.this,
                                 "Status code: " + statusCode + "\n"
@@ -128,8 +127,7 @@ public class EditPersonActivity extends AppCompatActivity {
             @Override
             public void onFailure(Call<Person> call, Throwable t) {
                 mLoadingIndicator.setVisibility(View.INVISIBLE);
-                Toast.makeText(EditPersonActivity.this, "Something went wrong", Toast.LENGTH_LONG).show();
-                Log.d("MY_ERROR", "something is wrong with person update");
+                Toast.makeText(EditPersonActivity.this, CONNECTION_FAILED, Toast.LENGTH_LONG).show();
             }
         });
     }
@@ -162,7 +160,7 @@ public class EditPersonActivity extends AppCompatActivity {
         Object selectedVehicle = spinnerWithVehicles.getSelectedItem();
         List<Vehicle> vehList = new ArrayList<>();
 
-        if(!selectedVehicle.toString().equals(SELECT_VEHICLE)) {
+        if (!selectedVehicle.toString().equals(SELECT_VEHICLE)) {
             Vehicle vehicle = (Vehicle) selectedVehicle;
             vehList.add(vehicle);
             person.setVehicles(vehList);
@@ -189,10 +187,10 @@ public class EditPersonActivity extends AppCompatActivity {
     private void setSpinnerVehicle(Person person) {
         int vehiclePosition = 0;
 
-        if(!person.getVehicles().isEmpty()) {
+        if (!person.getVehicles().isEmpty()) {
             List<Vehicle> vehicleList = spinnerLoader.getVehicles();
-            for(int i = 1; i < vehicleList.size(); i++) {
-                if(vehicleList.get(i).getVehicleId() == person.getVehicles().get(0).getVehicleId()) {
+            for (int i = 1; i < vehicleList.size(); i++) {
+                if (vehicleList.get(i).getVehicleId() == person.getVehicles().get(0).getVehicleId()) {
                     vehiclePosition = i;
                     break;
                 }

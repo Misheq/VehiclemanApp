@@ -1,5 +1,6 @@
 package com.example.mihael.vehiclemanapp.helpers;
 
+import android.util.Patterns;
 import android.view.View;
 import android.widget.EditText;
 
@@ -35,16 +36,16 @@ public class InputValidator {
 
         boolean isValid = true;
 
-        if(confirmPassword.length() < minLength) {
+        if (confirmPassword.length() < minLength) {
             confirmPassword.setError(PASSWORD_TOO_SHORT + minLength + PASSWORD_CHARACTERS);
             isValid = false;
         }
 
-        if(!isPasswordValid()) {
+        if (!isPasswordValid()) {
             isValid = false;
         }
 
-        if(!password.getText().toString().equals(confirmPassword.getText().toString())) {
+        if (!password.getText().toString().equals(confirmPassword.getText().toString())) {
             confirmPassword.setError(PASSWORD_NOT_MATCH);
             isValid = false;
         }
@@ -57,7 +58,7 @@ public class InputValidator {
 
         boolean isValid = true;
 
-        if(password.length() < minLength) {
+        if (password.length() < minLength) {
             password.setError(PASSWORD_TOO_SHORT + minLength + PASSWORD_CHARACTERS);
             isValid = false;
         }
@@ -70,7 +71,7 @@ public class InputValidator {
 
         boolean isValid = true;
 
-        if(email.length() < 6 || !email.getText().toString().contains("@") || !email.getText().toString().contains(".")) {
+        if (email.getText().toString().length() < 6 || !Patterns.EMAIL_ADDRESS.matcher(email.getText().toString()).matches()) {
             email.setError(EMAIL_FORMAT_INVALID);
             isValid = false;
         }
@@ -81,11 +82,11 @@ public class InputValidator {
     public boolean isLoginValid() {
         boolean isValid = true;
 
-        if(!isEmailValid()) {
+        if (!isEmailValid()) {
             isValid = false;
         }
 
-        if(!isPasswordValid()) {
+        if (!isPasswordValid()) {
             isValid = false;
         }
 
@@ -95,26 +96,20 @@ public class InputValidator {
     public boolean isPersonInputValid() {
         EditText firstName = view.findViewById(R.id.inputFirstName);
         EditText lastName = view.findViewById(R.id.inputLastName);
-        EditText email = view.findViewById(R.id.inputEmail);
 
         boolean isValid = true;
 
-        if(firstName.getText().toString().length() == 0) {
+        if (firstName.getText().toString().length() == 0) {
             firstName.setError(FIRST_NAME_REQUIRED);
             isValid = false;
         }
 
-        if(lastName.getText().toString().length() == 0) {
+        if (lastName.getText().toString().length() == 0) {
             lastName.setError(LAST_NAME_REQUIRED);
             isValid = false;
         }
 
         if (!isEmailValid()) {
-            isValid = false;
-        }
-
-        if(!email.getText().toString().contains("@")) {
-            email.setError(EMAIL_FORMAT_INVALID);
             isValid = false;
         }
 
@@ -127,12 +122,12 @@ public class InputValidator {
 
         boolean isInputValid = true;
 
-        if(type.getText().toString().length() == 0) {
+        if (type.getText().toString().length() == 0) {
             type.setError(VEHICLE_TYPE_REQUIRED);
             isInputValid = false;
         }
 
-        if(registration.getText().toString().length() == 0) {
+        if (registration.getText().toString().length() == 0) {
             registration.setError(REG_NUM_REQUIRED);
             isInputValid = false;
         }

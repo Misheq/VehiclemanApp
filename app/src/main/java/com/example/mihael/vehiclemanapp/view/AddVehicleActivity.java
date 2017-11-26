@@ -3,7 +3,6 @@ package com.example.mihael.vehiclemanapp.view;
 import android.app.DatePickerDialog;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -35,6 +34,8 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
+import static com.example.mihael.vehiclemanapp.helpers.Constants.CONNECTION_FAILED;
+import static com.example.mihael.vehiclemanapp.helpers.Constants.CREATE_VEHICLE_SUCCESSFUL;
 import static com.example.mihael.vehiclemanapp.helpers.Constants.SELECT_PERSON;
 import static com.example.mihael.vehiclemanapp.helpers.Constants.SERVICING_DATE;
 import static com.example.mihael.vehiclemanapp.helpers.Constants.TAP_TO_SET_SERVICING_DATE;
@@ -68,7 +69,7 @@ public class AddVehicleActivity extends AppCompatActivity implements DatePickerD
     private void setVehicleFromForm() {
         InputValidator inVal = new InputValidator(this.view);
 
-        if(inVal.isVehicleInputValid()){
+        if (inVal.isVehicleInputValid()) {
             Vehicle vehicle = createVehicleFromUi();
             vehicle = setPersonForVehicle(vehicle);
 
@@ -88,12 +89,10 @@ public class AddVehicleActivity extends AppCompatActivity implements DatePickerD
                 int statusCode = response.code();
                 mLoadingIndicator.setVisibility(View.INVISIBLE);
 
-                if(statusCode == 201) {
-                    Log.d("STATUS_CODE", "status:" + statusCode + "\nVehicle created successfully!");
-                    Toast.makeText(AddVehicleActivity.this, "Vehicle created", Toast.LENGTH_LONG).show();
+                if (statusCode == 201) {
+                    Toast.makeText(AddVehicleActivity.this, CREATE_VEHICLE_SUCCESSFUL, Toast.LENGTH_LONG).show();
                 } else {
                     try {
-                        Log.d("STATUS_CODE", "status:" + statusCode + "\nVehicle not created!");
                         JSONObject error = new JSONObject(response.errorBody().string());
                         Toast.makeText(AddVehicleActivity.this,
                                 "Status code: " + statusCode + "\n"
@@ -107,8 +106,7 @@ public class AddVehicleActivity extends AppCompatActivity implements DatePickerD
             @Override
             public void onFailure(Call<Vehicle> call, Throwable t) {
                 mLoadingIndicator.setVisibility(View.INVISIBLE);
-                Toast.makeText(AddVehicleActivity.this, "Something went wrong", Toast.LENGTH_LONG).show();
-                Log.d("MY_ERROR", "something is wrong with vehicle create");
+                Toast.makeText(AddVehicleActivity.this, CONNECTION_FAILED, Toast.LENGTH_LONG).show();
             }
         });
     }
@@ -136,8 +134,7 @@ public class AddVehicleActivity extends AppCompatActivity implements DatePickerD
         vehicle.setColor(color.getText().toString());
         vehicle.setDescription(description.getText().toString());
 
-        if(!serviceDate.toString().equals(TAP_TO_SET_SERVICING_DATE)) {
-            // time should not be in past
+        if (!serviceDate.toString().equals(TAP_TO_SET_SERVICING_DATE)) {
             vehicle.setServicingDate(serviceDate.getText().toString().replace(SERVICING_DATE, ""));
         }
 
@@ -147,7 +144,7 @@ public class AddVehicleActivity extends AppCompatActivity implements DatePickerD
     private Vehicle setPersonForVehicle(Vehicle vehicle) {
         Object selectedPerson = spinnerWithPersons.getSelectedItem();
 
-        if(!selectedPerson.toString().equals(SELECT_PERSON)) {
+        if (!selectedPerson.toString().equals(SELECT_PERSON)) {
             Person person = (Person) selectedPerson;
             vehicle.setAssigneeId(String.valueOf(person.getPersonId()));
             vehicle.setPerson(person);

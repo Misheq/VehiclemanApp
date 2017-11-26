@@ -16,7 +16,7 @@ public class ApiClient {
 
     public static Retrofit getApiClient() {
 
-        if(retrofit == null) {
+        if (retrofit == null) {
             retrofit = new Retrofit.Builder()
                     .baseUrl(SERVICE_URL)
                     .addConverterFactory(GsonConverterFactory.create())
@@ -25,5 +25,4 @@ public class ApiClient {
 
         return retrofit;
     }
-
 }

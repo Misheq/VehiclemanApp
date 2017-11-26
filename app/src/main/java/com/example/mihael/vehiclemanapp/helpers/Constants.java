@@ -36,6 +36,23 @@ public class Constants {
     // messages
     public static final String TAP_TO_SET_SERVICING_DATE = " Tap to set servicing date";
     public static final String SERVICING_DATE = " Servicing date: ";
+    // public static final String LOADING_VEHICLES_FAILED = "Loading vehicles failed.\nPlease try again.";
+    // public static final String LOADING_PERSONS_FAILED = "Loading employees failed.\nPlease try again.";
+    public static final String MANAGER_REGISTERED = "Manager registered";
+    public static final String MANAGER_UPDATED = "Manager updated";
+    public static final String UPDATE_VEHICLE_SUCCESSFUL = "Vehicle updated";
+    public static final String UPDATE_PERSON_SUCCESSFUL = "Person updated";
+    public static final String CREATE_VEHICLE_SUCCESSFUL = "Vehicle created";
+    public static final String CREATE_PERSON_SUCCESSFUL = "Employee created";
+
+    public static final String DELETE_VEHICLE_SUCCESSFUL = "Vehicle deleted";
+    public static final String DELETE_PERSON_SUCCESSFUL = "Person deleted";
+    //public static final String DELETE_FAILED = "Delete failed.\nPlease try again.";
+    // public static final String WRONG_CREDENTIALS = "Incorrect email or password.\nPlease try again.";
+    // public static final String SERVER_ERROR = "Server error.\nPlease try again later.";
+    public static final String CONNECTION_FAILED = "Connection failed.\nPlease check internet connection.";
+    public static final String DIALOG_BOX_MESSAGE = "Are you sure you want to delete this element?";
+
 
     // required fields
     public static final String FIRST_NAME_REQUIRED = "Please enter first name.";
@@ -52,4 +69,7 @@ public class Constants {
     public static final String SUBMIT = "Submit";
     public static final String SAVE = "Save";
     public static final String NEW = "New";
+    public static final String DIALOG_BOX_TITLE = "Delete confirmation";
+    public static final String DIALOG_BOX_YES = "Yes";
+    public static final String DIALOG_BOX_NO = "No";
 }

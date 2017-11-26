@@ -47,7 +47,7 @@ public class VehicleRecyclerAdapter extends RecyclerView.Adapter<VehicleRecycler
         return vehicles.size();
     }
 
-    public class MyViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener{
+    public class MyViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
         final TextView type;
         final TextView reg;
         final Button deleteButton;
@@ -67,6 +67,5 @@ public class VehicleRecyclerAdapter extends RecyclerView.Adapter<VehicleRecycler
             intent.putExtra(VEHICLE, v);
             view.getContext().startActivity(intent);
         }
-
     }
 }

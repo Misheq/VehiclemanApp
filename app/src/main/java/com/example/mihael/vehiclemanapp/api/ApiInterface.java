@@ -85,5 +85,4 @@ public interface ApiInterface {
 
     @POST(AUTH + SEPARATOR + REGISTER)
     Call<Manager> register(@Body Manager manager);
-
 }

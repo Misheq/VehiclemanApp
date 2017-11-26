@@ -21,7 +21,7 @@ import static com.example.mihael.vehiclemanapp.helpers.Constants.PERSON;
  * for listing person row items
  */
 
-public class PersonRecyclerAdapter extends RecyclerView.Adapter<PersonRecyclerAdapter.MyViewHolder>{
+public class PersonRecyclerAdapter extends RecyclerView.Adapter<PersonRecyclerAdapter.MyViewHolder> {
 
     private final List<Person> persons;
 
@@ -42,9 +42,9 @@ public class PersonRecyclerAdapter extends RecyclerView.Adapter<PersonRecyclerAd
         holder.email.setText(persons.get(position).getEmail());
         holder.deleteButton.setTag(String.valueOf(persons.get(position).getPersonId()));
 
-            //holder.id.setText(String.valueOf(persons.get(position).getPersonId()));
-            //holder.phone.setText(persons.get(position).getPhone());
-            //holder.company.setText(persons.get(position).getCompanyName());
+        //holder.id.setText(String.valueOf(persons.get(position).getPersonId()));
+        //holder.phone.setText(persons.get(position).getPhone());
+        //holder.company.setText(persons.get(position).getCompanyName());
     }
 
     @Override
@@ -60,9 +60,9 @@ public class PersonRecyclerAdapter extends RecyclerView.Adapter<PersonRecyclerAd
 
         public MyViewHolder(View itemView) {
             super(itemView);
-                //id = itemView.findViewById(R.id.id);
-                //phone = itemView.findViewById(R.id.phone);
-                //company = itemView.findViewById(R.id.companyName);
+            //id = itemView.findViewById(R.id.id);
+            //phone = itemView.findViewById(R.id.phone);
+            //company = itemView.findViewById(R.id.companyName);
 
             firstName = itemView.findViewById(R.id.firstName);
             lastName = itemView.findViewById(R.id.lastName);

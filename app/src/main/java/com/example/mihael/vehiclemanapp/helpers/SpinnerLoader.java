@@ -1,6 +1,5 @@
 package com.example.mihael.vehiclemanapp.helpers;
 
-import android.util.Log;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Spinner;
@@ -61,8 +60,7 @@ public class SpinnerLoader {
             public void onResponse(Call<List<Person>> call, Response<List<Person>> response) {
                 int statusCode = response.code();
 
-                if(statusCode == 200) {
-                    Log.d("DEBUG", "Get persons successful");
+                if (statusCode == 200) {
                     persons = response.body();
                     addPersonsToSpinner(persons);
 
@@ -70,14 +68,12 @@ public class SpinnerLoader {
                         spinnerEventListener.onEventOccured();
                     }
 
-                }else {
-                    Log.d("DEBUG", "Get persons not successful, status: " + statusCode);
                 }
             }
 
             @Override
             public void onFailure(Call<List<Person>> call, Throwable t) {
-                Log.d("MYTAG","something is wrong");
+
             }
         });
     }
@@ -111,8 +107,7 @@ public class SpinnerLoader {
             @Override
             public void onResponse(Call<List<Vehicle>> call, Response<List<Vehicle>> response) {
                 int statusCode = response.code();
-                if(statusCode == 200) {
-                    Log.d("DEBUG", "Get vehicles successful");
+                if (statusCode == 200) {
                     vehicles = response.body();
                     addVehiclesToSpinner(vehicles);
 
@@ -120,13 +115,11 @@ public class SpinnerLoader {
                         spinnerEventListener.onEventOccured();
                     }
                 }
-
-                Log.d("DEBUG", "Get vehicles not successful, status: " + statusCode);
             }
 
             @Override
             public void onFailure(Call<List<Vehicle>> call, Throwable t) {
-                Log.d("MYTAG","something is wrong");
+
             }
         });
     }
@@ -153,8 +146,8 @@ public class SpinnerLoader {
 
         List<Person> availablePersons = new ArrayList<>();
 
-        for(int i = 0; i < personList.size(); i++) {
-            if(personList.get(i).getVehicles().size() == 0 || personList.get(i).getPersonId() == currentId) {
+        for (int i = 0; i < personList.size(); i++) {
+            if (personList.get(i).getVehicles().size() == 0 || personList.get(i).getPersonId() == currentId) {
                 availablePersons.add(personList.get(i));
             }
         }
@@ -166,8 +159,8 @@ public class SpinnerLoader {
         // all vehicles whose assigneeId is empty and the currently assigned vehicle
         List<Vehicle> availableVehicles = new ArrayList<>();
 
-        for(int i = 0; i < vehicleList.size(); i++) {
-            if(vehicleList.get(i).getAssigneeId().equals("") || vehicleList.get(i).getVehicleId() == currentId) {
+        for (int i = 0; i < vehicleList.size(); i++) {
+            if (vehicleList.get(i).getAssigneeId().equals("") || vehicleList.get(i).getVehicleId() == currentId) {
                 availableVehicles.add(vehicleList.get(i));
             }
         }
