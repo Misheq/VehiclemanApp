@@ -14,6 +14,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ProgressBar;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.mihael.vehiclemanapp.R;
@@ -52,6 +53,7 @@ public class VehiclesActivity extends AppCompatActivity {
     private ApiInterface apiInterface;
     private final Context context = this;
     private ProgressBar mLoadingIndicator;
+    private TextView mNoVehiclesTextView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -75,6 +77,7 @@ public class VehiclesActivity extends AppCompatActivity {
      */
     private void loadVehicleList() {
 
+        mNoVehiclesTextView = findViewById(R.id.tv_no_vehicles);
         mLoadingIndicator = findViewById(R.id.pb_loading_indicator);
         mLoadingIndicator.setVisibility(View.VISIBLE);
 
@@ -96,6 +99,14 @@ public class VehiclesActivity extends AppCompatActivity {
 
                 if (statusCode == 200) {
                     vehicles = response.body();
+
+                    if(vehicles.size() == 0) {
+                        displayNoVehicleMessage();
+                    } else {
+                        hideNoVehicleMessage();
+                    }
+
+
                     vehicleRecyclerAdapter = new VehicleRecyclerAdapter(vehicles);
                     recyclerView.setAdapter(vehicleRecyclerAdapter);
                 } else {
@@ -183,6 +194,16 @@ public class VehiclesActivity extends AppCompatActivity {
                 Toast.makeText(VehiclesActivity.this, CONNECTION_FAILED, Toast.LENGTH_LONG).show();
             }
         });
+    }
+
+    // helpers
+
+    private void displayNoVehicleMessage() {
+        mNoVehiclesTextView.setVisibility(View.VISIBLE);
+    }
+
+    private void hideNoVehicleMessage() {
+        mNoVehiclesTextView.setVisibility(View.INVISIBLE);
     }
 
     // MENU HELPER

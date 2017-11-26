@@ -14,6 +14,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ProgressBar;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.mihael.vehiclemanapp.R;
@@ -52,6 +53,7 @@ public class PersonsActivity extends AppCompatActivity {
     private ApiInterface apiInterface;
     private final Context context = this;
     private ProgressBar mLoadingIndicator;
+    private TextView mNoEmployeesTextView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -65,6 +67,7 @@ public class PersonsActivity extends AppCompatActivity {
 
         mLoadingIndicator = findViewById(R.id.pb_loading_indicator);
         mLoadingIndicator.setVisibility(View.VISIBLE);
+        mNoEmployeesTextView = findViewById(R.id.tv_no_persons);
 
         recyclerView = findViewById(R.id.recyclerView);
         layoutManager = new LinearLayoutManager(this);
@@ -83,6 +86,12 @@ public class PersonsActivity extends AppCompatActivity {
                 mLoadingIndicator.setVisibility(View.INVISIBLE);
                 if (statusCode == 200) {
                     persons = response.body();
+                    if(persons.size() == 0) {
+                        displayNoPersonMessage();
+                    } else {
+                        hideNoPersonMessage();
+                    }
+
                     personRecyclerAdapter = new PersonRecyclerAdapter(persons);
                     recyclerView.setAdapter(personRecyclerAdapter);
                 } else {
@@ -173,6 +182,16 @@ public class PersonsActivity extends AppCompatActivity {
                 Toast.makeText(PersonsActivity.this, CONNECTION_FAILED, Toast.LENGTH_SHORT).show();
             }
         });
+    }
+
+    // helpers
+
+    private void displayNoPersonMessage() {
+        mNoEmployeesTextView.setVisibility(View.VISIBLE);
+    }
+
+    private void hideNoPersonMessage() {
+        mNoEmployeesTextView.setVisibility(View.INVISIBLE);
     }
 
     // MENU HELPER
