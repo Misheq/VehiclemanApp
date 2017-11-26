@@ -7,6 +7,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.EditText;
+import android.widget.ProgressBar;
 import android.widget.Spinner;
 import android.widget.Toast;
 
@@ -37,7 +38,6 @@ import static com.example.mihael.vehiclemanapp.helpers.Constants.SELECT_VEHICLE;
 
 public class AddPersonActivity extends AppCompatActivity {
 
-    private ApiInterface apiInterface;
     private View view;
     private SpinnerLoader spinnerLoader;
     private EditText firstName;
@@ -46,6 +46,7 @@ public class AddPersonActivity extends AppCompatActivity {
     private EditText phone;
     private EditText company;
     private Spinner spinnerWithVehicles;
+    private ProgressBar mLoadingIndicator;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -70,20 +71,22 @@ public class AddPersonActivity extends AppCompatActivity {
 
     private void savePerson(Person person) {
 
-        apiInterface = ApiClient.getApiClient().create(ApiInterface.class);
+        mLoadingIndicator.setVisibility(View.VISIBLE);
+        ApiInterface apiInterface = ApiClient.getApiClient().create(ApiInterface.class);
 
         Call<Person> call = apiInterface.createPerson(LoginManager.getLogedInManagerToken(), person);
         call.enqueue(new Callback<Person>() {
             @Override
             public void onResponse(Call<Person> call, Response<Person> response) {
                 int statusCode = response.code();
+                mLoadingIndicator.setVisibility(View.INVISIBLE);
 
                 if(statusCode == 201) {
-                    Log.d("STATUS_CODE", "status:" + statusCode + "\nPerson created successfully!");
-                    Toast.makeText(AddPersonActivity.this, "Person created", Toast.LENGTH_LONG).show();
+                    Log.d("STATUS_CODE", "status:" + statusCode + "\nEmployee created successfully!");
+                    Toast.makeText(AddPersonActivity.this, "Employee created", Toast.LENGTH_LONG).show();
                 } else {
                     try {
-                        Log.d("STATUS_CODE", "status:" + statusCode + "\nPerson not created!");
+                        Log.d("STATUS_CODE", "status:" + statusCode + "\nEmployee not created!");
                         JSONObject error = new JSONObject(response.errorBody().string());
                         Toast.makeText(AddPersonActivity.this,
                                 "Status code: " + statusCode + "\n"
@@ -96,6 +99,7 @@ public class AddPersonActivity extends AppCompatActivity {
 
             @Override
             public void onFailure(Call<Person> call, Throwable t) {
+                mLoadingIndicator.setVisibility(View.INVISIBLE);
                 Toast.makeText(AddPersonActivity.this, "Something went wrong", Toast.LENGTH_LONG).show();
                 Log.d("MY_ERROR", "something is wrong with person create");
             }
@@ -111,6 +115,7 @@ public class AddPersonActivity extends AppCompatActivity {
         phone = findViewById(R.id.inputPhone);
         company = findViewById(R.id.inputCompany);
         spinnerWithVehicles = findViewById(R.id.spinnerVehicles);
+        mLoadingIndicator = findViewById(R.id.pb_loading_indicator);
     }
 
     private Person createPersonFromUi() {

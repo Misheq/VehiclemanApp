@@ -1,13 +1,14 @@
 package com.example.mihael.vehiclemanapp.view;
 
 import android.content.Intent;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.EditText;
+import android.widget.ProgressBar;
 import android.widget.Spinner;
 import android.widget.Toast;
 
@@ -48,11 +49,15 @@ public class EditPersonActivity extends AppCompatActivity {
     private EditText email;
     private EditText phone;
     private EditText company;
+    private ProgressBar mLoadingIndicator;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_edit_person);
+
+        mLoadingIndicator = findViewById(R.id.pb_loading_indicator);
+        mLoadingIndicator.setVisibility(View.VISIBLE);
 
         Intent intent = getIntent();
 
@@ -94,7 +99,7 @@ public class EditPersonActivity extends AppCompatActivity {
     }
 
     private void editPerson(Person person) {
-
+        mLoadingIndicator.setVisibility(View.VISIBLE);
         ApiInterface apiInterface = ApiClient.getApiClient().create(ApiInterface.class);
 
         Call<Person> call = apiInterface.updatePerson(LoginManager.getLogedInManagerToken(), person.getPersonId(), person);
@@ -102,6 +107,7 @@ public class EditPersonActivity extends AppCompatActivity {
             @Override
             public void onResponse(Call<Person> call, Response<Person> response) {
                 int statusCode = response.code();
+                mLoadingIndicator.setVisibility(View.INVISIBLE);
 
                 if(statusCode == 200) {
                     Log.d("STATUS_CODE", "status:" + statusCode + "\nPerson updated successfully!");
@@ -121,6 +127,7 @@ public class EditPersonActivity extends AppCompatActivity {
 
             @Override
             public void onFailure(Call<Person> call, Throwable t) {
+                mLoadingIndicator.setVisibility(View.INVISIBLE);
                 Toast.makeText(EditPersonActivity.this, "Something went wrong", Toast.LENGTH_LONG).show();
                 Log.d("MY_ERROR", "something is wrong with person update");
             }
@@ -175,6 +182,8 @@ public class EditPersonActivity extends AppCompatActivity {
         email.setText(person.getEmail());
         phone.setText(person.getPhone());
         company.setText(person.getCompanyName());
+
+        mLoadingIndicator.setVisibility(View.INVISIBLE);
     }
 
     private void setSpinnerVehicle(Person person) {

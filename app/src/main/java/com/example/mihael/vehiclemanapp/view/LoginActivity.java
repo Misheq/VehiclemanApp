@@ -8,6 +8,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.EditText;
+import android.widget.ProgressBar;
 import android.widget.Toast;
 
 import com.example.mihael.vehiclemanapp.R;
@@ -27,6 +28,7 @@ public class LoginActivity extends AppCompatActivity {
     private View view;
     private EditText inputEmail;
     private EditText inputPassword;
+    private ProgressBar mLoadingIndicator;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -53,6 +55,7 @@ public class LoginActivity extends AppCompatActivity {
 
     private void setLoginDataFromForm() {
 
+        mLoadingIndicator = findViewById(R.id.pb_loading_indicator);
         inputEmail = findViewById(R.id.inputEmail);
         inputPassword = findViewById(R.id.inputPassword);
 
@@ -83,16 +86,16 @@ public class LoginActivity extends AppCompatActivity {
 
     private void loginWithManager(String email) {
 
+        mLoadingIndicator.setVisibility(View.VISIBLE);
         ApiInterface apiInterface = ApiClient.getApiClient().create(ApiInterface.class);
 
         Call<Manager> call = apiInterface.login(LoginManager.getLogedInManagerToken(), email);
         call.enqueue(new Callback<Manager>() {
             @Override
             public void onResponse(Call<Manager> call, Response<Manager> response) {
-
+                mLoadingIndicator.setVisibility(View.INVISIBLE);
                 if(response.code() == 200) {
                     Manager manager = response.body();
-                    // save or pass to activity
                     LoginManager.setManager(manager);
                     startManageActivity();
 
@@ -105,6 +108,7 @@ public class LoginActivity extends AppCompatActivity {
 
             @Override
             public void onFailure(Call<Manager> call, Throwable t) {
+                mLoadingIndicator.setVisibility(View.INVISIBLE);
                 Toast.makeText(LoginActivity.this, "Something went wrong", Toast.LENGTH_LONG).show();
             }
         });

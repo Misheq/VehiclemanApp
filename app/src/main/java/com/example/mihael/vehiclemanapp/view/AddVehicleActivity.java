@@ -9,6 +9,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.DatePicker;
 import android.widget.EditText;
+import android.widget.ProgressBar;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -44,7 +45,6 @@ import static com.example.mihael.vehiclemanapp.helpers.Constants.TAP_TO_SET_SERV
 
 public class AddVehicleActivity extends AppCompatActivity implements DatePickerDialog.OnDateSetListener {
 
-    private ApiInterface apiInterface;
     private View view;
     private SpinnerLoader spinnerLoader;
     private EditText type;
@@ -53,6 +53,7 @@ public class AddVehicleActivity extends AppCompatActivity implements DatePickerD
     private EditText description;
     private TextView serviceDate;
     private Spinner spinnerWithPersons;
+    private ProgressBar mLoadingIndicator;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -77,13 +78,15 @@ public class AddVehicleActivity extends AppCompatActivity implements DatePickerD
 
     private void saveVehicle(Vehicle vehicle) {
 
-        apiInterface = ApiClient.getApiClient().create(ApiInterface.class);
+        mLoadingIndicator.setVisibility(View.VISIBLE);
+        ApiInterface apiInterface = ApiClient.getApiClient().create(ApiInterface.class);
 
         Call<Vehicle> call = apiInterface.createVehicle(LoginManager.getLogedInManagerToken(), vehicle);
         call.enqueue(new Callback<Vehicle>() {
             @Override
             public void onResponse(Call<Vehicle> call, Response<Vehicle> response) {
                 int statusCode = response.code();
+                mLoadingIndicator.setVisibility(View.INVISIBLE);
 
                 if(statusCode == 201) {
                     Log.d("STATUS_CODE", "status:" + statusCode + "\nVehicle created successfully!");
@@ -103,6 +106,7 @@ public class AddVehicleActivity extends AppCompatActivity implements DatePickerD
 
             @Override
             public void onFailure(Call<Vehicle> call, Throwable t) {
+                mLoadingIndicator.setVisibility(View.INVISIBLE);
                 Toast.makeText(AddVehicleActivity.this, "Something went wrong", Toast.LENGTH_LONG).show();
                 Log.d("MY_ERROR", "something is wrong with vehicle create");
             }
@@ -118,6 +122,7 @@ public class AddVehicleActivity extends AppCompatActivity implements DatePickerD
         description = findViewById(R.id.inputDescription);
         serviceDate = findViewById(R.id.inputServiceDate);
         spinnerWithPersons = findViewById(R.id.spinnerPersons);
+        mLoadingIndicator = findViewById(R.id.pb_loading_indicator);
     }
 
     private Vehicle createVehicleFromUi() {
