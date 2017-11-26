@@ -5,7 +5,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.TextView;
 
 import com.example.mihael.vehiclemanapp.R;
@@ -56,7 +56,7 @@ public class PersonRecyclerAdapter extends RecyclerView.Adapter<PersonRecyclerAd
         final TextView firstName;
         final TextView lastName;
         final TextView email; // id, phone, company;
-        final Button deleteButton;
+        final ImageButton deleteButton;
 
         public MyViewHolder(View itemView) {
             super(itemView);

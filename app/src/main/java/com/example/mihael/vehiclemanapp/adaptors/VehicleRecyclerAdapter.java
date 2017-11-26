@@ -5,7 +5,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.TextView;
 
 import com.example.mihael.vehiclemanapp.R;
@@ -50,7 +50,7 @@ public class VehicleRecyclerAdapter extends RecyclerView.Adapter<VehicleRecycler
     public class MyViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
         final TextView type;
         final TextView reg;
-        final Button deleteButton;
+        final ImageButton deleteButton;
 
         MyViewHolder(View itemView) {
             super(itemView);

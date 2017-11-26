@@ -12,7 +12,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -132,7 +132,7 @@ public class PersonsActivity extends AppCompatActivity {
                 .setCancelable(false)
                 .setPositiveButton(DIALOG_BOX_YES, new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int id) {
-                        Button button = view.findViewById(R.id.buttonDelete);
+                        ImageButton button = view.findViewById(R.id.buttonDelete);
                         int personId = Integer.parseInt((String) button.getTag());
 
                         deletePersonById(personId);
