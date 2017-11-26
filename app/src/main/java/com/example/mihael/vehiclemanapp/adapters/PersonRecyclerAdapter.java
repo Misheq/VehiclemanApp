@@ -1,4 +1,4 @@
-package com.example.mihael.vehiclemanapp.adaptors;
+package com.example.mihael.vehiclemanapp.adapters;
 
 import android.content.Intent;
 import android.support.v7.widget.RecyclerView;

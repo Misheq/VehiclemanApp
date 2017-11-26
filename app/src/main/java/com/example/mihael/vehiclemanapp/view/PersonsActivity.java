@@ -18,7 +18,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.mihael.vehiclemanapp.R;
-import com.example.mihael.vehiclemanapp.adaptors.PersonRecyclerAdapter;
+import com.example.mihael.vehiclemanapp.adapters.PersonRecyclerAdapter;
 import com.example.mihael.vehiclemanapp.api.ApiClient;
 import com.example.mihael.vehiclemanapp.api.ApiInterface;
 import com.example.mihael.vehiclemanapp.entities.Person;
