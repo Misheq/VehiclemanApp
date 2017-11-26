@@ -71,7 +71,7 @@ public class ProfileActivity extends AppCompatActivity {
 
             @Override
             public void onFailure(Call<Manager> call, Throwable t) {
-                Toast.makeText(ProfileActivity.this, "Something went wrong whit get manager by id", Toast.LENGTH_LONG).show();
+                Toast.makeText(ProfileActivity.this, "Getting manager failed", Toast.LENGTH_LONG).show();
                 Log.d("MY_ERROR", "something is wrong with get manager");
             }
         });
