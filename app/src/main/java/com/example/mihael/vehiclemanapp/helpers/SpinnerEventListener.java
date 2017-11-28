@@ -1,4 +1,4 @@
-package com.example.mihael.vehiclemanapp.interfaces;
+package com.example.mihael.vehiclemanapp.helpers;
 
 /**
  * Simple interface for event listener

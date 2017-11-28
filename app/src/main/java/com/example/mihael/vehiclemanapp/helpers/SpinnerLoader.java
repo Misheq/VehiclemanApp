@@ -9,7 +9,6 @@ import com.example.mihael.vehiclemanapp.api.ApiClient;
 import com.example.mihael.vehiclemanapp.api.ApiInterface;
 import com.example.mihael.vehiclemanapp.entities.Person;
 import com.example.mihael.vehiclemanapp.entities.Vehicle;
-import com.example.mihael.vehiclemanapp.interfaces.SpinnerEventListener;
 
 import java.util.ArrayList;
 import java.util.List;

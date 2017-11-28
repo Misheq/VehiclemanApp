@@ -24,7 +24,7 @@ import com.example.mihael.vehiclemanapp.helpers.DatePickerFragment;
 import com.example.mihael.vehiclemanapp.helpers.InputValidator;
 import com.example.mihael.vehiclemanapp.helpers.LoginManager;
 import com.example.mihael.vehiclemanapp.helpers.SpinnerLoader;
-import com.example.mihael.vehiclemanapp.interfaces.SpinnerEventListener;
+import com.example.mihael.vehiclemanapp.helpers.SpinnerEventListener;
 
 import org.json.JSONObject;
 
