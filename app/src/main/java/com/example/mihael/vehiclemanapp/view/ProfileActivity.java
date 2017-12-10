@@ -92,6 +92,7 @@ public class ProfileActivity extends AppCompatActivity {
         if (inVal.isPersonInputValid()) {
             Manager manager = createManagerFromUiTexts();
             manager.setManagerId(LoginManager.getManager().getManagerId());
+            manager.setPassword(LoginManager.getManager().getPassword());
 
             editManager(manager);
         }

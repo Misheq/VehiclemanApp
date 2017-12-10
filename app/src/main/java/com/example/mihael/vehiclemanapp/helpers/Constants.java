@@ -41,12 +41,12 @@ public class Constants {
     public static final String MANAGER_REGISTERED = "Manager registered";
     public static final String MANAGER_UPDATED = "Manager updated";
     public static final String UPDATE_VEHICLE_SUCCESSFUL = "Vehicle updated";
-    public static final String UPDATE_PERSON_SUCCESSFUL = "Person updated";
+    public static final String UPDATE_PERSON_SUCCESSFUL = "Employee updated";
     public static final String CREATE_VEHICLE_SUCCESSFUL = "Vehicle created";
     public static final String CREATE_PERSON_SUCCESSFUL = "Employee created";
 
     public static final String DELETE_VEHICLE_SUCCESSFUL = "Vehicle deleted";
-    public static final String DELETE_PERSON_SUCCESSFUL = "Person deleted";
+    public static final String DELETE_PERSON_SUCCESSFUL = "Employee deleted";
     //public static final String DELETE_FAILED = "Delete failed.\nPlease try again.";
     // public static final String WRONG_CREDENTIALS = "Incorrect email or password.\nPlease try again.";
     // public static final String SERVER_ERROR = "Server error.\nPlease try again later.";

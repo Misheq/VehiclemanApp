@@ -110,6 +110,7 @@ public class LoginActivity extends AppCompatActivity {
                                 "Status code: " + statusCode + "\n"
                                         + error.getString("error"), Toast.LENGTH_LONG).show();
                     } catch (Exception e) {
+                        Toast.makeText(LoginActivity.this, "Login failed\nStatus code: " + statusCode, Toast.LENGTH_LONG).show();
                         e.printStackTrace();
                     }
                 }
