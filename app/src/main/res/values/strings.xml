@@ -33,7 +33,6 @@
     <string name="hint_plate_number">Plate number</string>
     <string name="hint_color">Color</string>
     <string name="hint_description">Add description</string>
-    <string name="hint_tap_to_set_servicing_date"> Tap to set servicing date</string>
 
     <!-- ui text -->
     <string name="text_no_employees">You have no employees\nAdd an employee</string>

@@ -88,8 +88,7 @@ public class AddPersonActivity extends AppCompatActivity {
                     try {
                         JSONObject error = new JSONObject(response.errorBody().string());
                         Toast.makeText(AddPersonActivity.this,
-                                "Status code: " + statusCode + "\n"
-                                        + error.getString("error"), Toast.LENGTH_LONG).show();
+                                error.getString("error"), Toast.LENGTH_LONG).show();
                     } catch (Exception e) {
                         e.printStackTrace();
                     }

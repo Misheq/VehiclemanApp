@@ -129,8 +129,7 @@ public class EditVehicleActivity extends AppCompatActivity implements DatePicker
                     try {
                         JSONObject error = new JSONObject(response.errorBody().string());
                         Toast.makeText(EditVehicleActivity.this,
-                                "Status code: " + statusCode + "\n"
-                                        + error.getString("error"), Toast.LENGTH_LONG).show();
+                                error.getString("error"), Toast.LENGTH_LONG).show();
                     } catch (Exception e) {
                         e.printStackTrace();
                     }

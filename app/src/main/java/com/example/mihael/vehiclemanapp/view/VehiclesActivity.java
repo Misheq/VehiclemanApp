@@ -113,8 +113,7 @@ public class VehiclesActivity extends AppCompatActivity {
                     try {
                         JSONObject error = new JSONObject(response.errorBody().string());
                         Toast.makeText(VehiclesActivity.this,
-                                "Status code: " + statusCode + "\n"
-                                        + error.getString("error"), Toast.LENGTH_LONG).show();
+                                error.getString("error"), Toast.LENGTH_LONG).show();
                     } catch (Exception e) {
                         e.printStackTrace();
                     }
@@ -181,8 +180,7 @@ public class VehiclesActivity extends AppCompatActivity {
                     try {
                         JSONObject error = new JSONObject(response.errorBody().string());
                         Toast.makeText(VehiclesActivity.this,
-                                "Status code: " + statusCode + "\n"
-                                        + error.getString("error"), Toast.LENGTH_LONG).show();
+                                error.getString("error"), Toast.LENGTH_LONG).show();
                     } catch (Exception e) {
                         e.printStackTrace();
                     }

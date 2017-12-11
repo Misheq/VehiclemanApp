@@ -95,10 +95,9 @@ public class RegistrationActivity extends AppCompatActivity {
                     try {
                         JSONObject error = new JSONObject(response.errorBody().string());
                         Toast.makeText(RegistrationActivity.this,
-                                "Status code: " + statusCode + "\n" + error.getString("error"),
-                                Toast.LENGTH_LONG).show();
+                                error.getString("error"), Toast.LENGTH_LONG).show();
                     } catch (Exception e) {
-                        Toast.makeText(RegistrationActivity.this, "Registration failed\nStatus code: " + statusCode, Toast.LENGTH_LONG).show();
+                        Toast.makeText(RegistrationActivity.this, "Registration unsuccessful", Toast.LENGTH_LONG).show();
                         e.printStackTrace();
                     }
                 }

@@ -66,7 +66,8 @@ public class ProfileActivity extends AppCompatActivity {
                 } else {
                     try {
                         JSONObject error = new JSONObject(response.errorBody().string());
-                        Toast.makeText(ProfileActivity.this, "Status code: " + statusCode + "\n" + error.getString("error"), Toast.LENGTH_LONG).show();
+                        Toast.makeText(ProfileActivity.this,
+                                error.getString("error"), Toast.LENGTH_LONG).show();
                     } catch (Exception e) {
                         e.printStackTrace();
                     }
@@ -115,8 +116,7 @@ public class ProfileActivity extends AppCompatActivity {
                     try {
                         JSONObject error = new JSONObject(response.errorBody().string());
                         Toast.makeText(ProfileActivity.this,
-                                "Status code: " + statusCode + "\n"
-                                        + error.getString("error"), Toast.LENGTH_LONG).show();
+                                error.getString("error"), Toast.LENGTH_LONG).show();
                     } catch (Exception e) {
                         e.printStackTrace();
                     }
